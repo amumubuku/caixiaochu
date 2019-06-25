@@ -1,0 +1,148 @@
+.my-address {
+  .address-wrp {
+    .address-item {
+      width: 342px;
+      height: 92px;
+      border-bottom: 1px solid rgba(112, 112, 112, .1);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .address-info {
+        font-size: 15px;
+        font-weight: bold;
+        color: rgba(0, 0, 0, .87);
+        display: flex;
+        flex: 1;
+
+        .address-position {
+          height: 14px;
+
+          font-size: 11px;
+          font-weight: bold;
+          text-align: center;
+          position: relative;
+          top: 3px;
+          line-height: 16px;
+          margin-right: 8px;
+          padding: 0 4px;
+          white-space: nowrap;
+        }
+
+        .small-1 {
+          background: rgba(201, 233, 255, 1);
+
+          color: rgba(38, 166, 255, 1);
+        }
+
+        .small-2 {
+          color: rgba(254, 168, 53, 1);
+          background: rgba(255, 238, 214, 1);
+        }
+
+        .small-3 {
+          background: rgba(246, 255, 206, 1);
+          color: rgba(189, 219, 59, 1);
+
+        }
+
+        .small-4 {
+          background: red;
+          color: blue;
+        }
+
+        .address-content {
+          .top-content {
+            display: flex;
+            padding-bottom: 12px;
+
+            .user-name {
+              margin-right: 6px;
+            }
+          }
+
+          .address-des {
+            font-size: 11px;
+            font-weight: 400;
+            line-height: 16px;
+            color: rgba(0, 0, 0, .87);
+          }
+        }
+      }
+
+      .address-fuc {
+        height: 20px;
+        display: flex;
+        align-items: center;
+
+        .delete {
+          padding-right: 16px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-right: 1px solid rgba(112, 112, 112, .12)
+        }
+
+        .edit {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding-left: 16px;
+
+        }
+
+        img {
+          width: 25px;
+          height: 25px;
+        }
+      }
+    }
+  }
+
+  .null-address {
+    position: fixed;
+    bottom: 0;
+    top: 134px;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-flow: column nowrap;
+
+    img {
+      width: 179px;
+      height: 104px;
+    }
+
+    span {
+      width: 234px;
+      padding-top: 24px;
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 26px;
+      text-align: center;
+      color: rgba(0, 0, 0, .87);
+    }
+
+  }
+
+  .add-address {
+    width: 323px;
+    height: 50px;
+    background: rgba(254, 168, 53, 1);
+    box-shadow: 0px 8px 20px rgba(254, 168, 53, 0.55);
+    border-radius: 100px;
+    margin: 0 auto;
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 50px;
+    color: rgba(255, 255, 255, 1);
+    position: fixed;
+    bottom: 22px;
+    text-align: center;
+    left: 0;
+    right: 0;
+  }
+}

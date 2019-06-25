@@ -1,0 +1,339 @@
+page {
+  background-color: #F4F4F4;
+  margin-bottom: 120px;
+  overflow-y: scroll;
+}
+
+.order-detail {
+  .order-state {
+    font-size: 15px;
+    height: 44px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, .87);
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    .order-icon{
+      position: relative;
+      top: 2.5px;
+      width: 31px;
+        height: 31px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    
+  }
+
+  .order-address {
+    width: 375px;
+    height: 101px;
+    background: rgba(255, 255, 255, 1);
+    opacity: 1;
+    margin: 10px 0;
+
+    .address-content {
+      padding: 0 16px;
+      height: 100%;
+
+      .top {
+        height: 35px;
+        border-bottom: 1px solid rgba(112, 112, 112, .1);
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 18px;
+        color: rgba(0, 0, 0, .6);
+        line-height: 35px;
+      }
+
+      .address-info {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 66px;
+
+        .select-address {
+          display: flex;
+          align-items: center;
+          width: 105px;
+          font-size: 15px;
+          font-weight: 400;
+          line-height: 21px;
+          color: rgba(0, 0, 0, .87);
+          flex: 1;
+
+          img {
+            width: 14px;
+            height: 14px;
+            padding: 6px;
+          }
+        }
+
+        .address-des {
+          display: flex;
+          flex-flow: column nowrap;
+          justify-content: space-around;
+          height: 100%;
+
+          .address-title {
+            display: flex;
+            font-size: 17px;
+            font-weight: 400;
+            color: rgba(0, 0, 0, .87);
+          }
+
+          .but {
+            font-size: 11px;
+            font-weight: 400;
+            line-height: 16px;
+            color: rgba(0, 0, 0, .87);
+          }
+        }
+
+        .more {
+          width: 15px;
+          height: 15px;
+          padding: 4px;
+          box-sizing: content-box;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  .order-wrp {
+    width: 375px;
+    height: 101px;
+    background: rgba(255, 255, 255, 1);
+    opacity: 1;
+    margin: 10px 0;
+
+    .order-content {
+      padding: 0 16px;
+      height: 100%;
+      .order-head {
+        height: 35px;
+        border-bottom: 1px solid rgba(112, 112, 112, .1);
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 18px;
+        color: rgba(0, 0, 0, .6);
+        line-height: 35px;
+      }
+
+      .order-info {
+        display: flex;
+        align-items: flex-start;
+        height: 66px;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-around;
+
+        .order-no {
+          display: flex;
+          font-size: 17px;
+          font-weight: 400;
+          color: rgba(0, 0, 0, .87);
+          font-size: 15px;
+          font-weight: 400;
+          line-height: 21px;
+          color: rgba(0, 0, 0, .87);
+        }
+
+        .time {
+          font-size: 11px;
+          font-weight: 400;
+          line-height: 16px;
+          color: rgba(0, 0, 0, .87);
+        }
+
+      }
+    }
+  }
+
+  .note {
+    padding-left: 16px;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 18px;
+    color: rgba(0, 0, 0, .87);
+    line-height: 34px;
+    height: 34px;
+    background: rgba(255, 255, 255, 1);
+    margin-bottom: 10px;
+  }
+
+  .good-info {
+    padding: 0 16px;
+    height: 104px;
+    background: rgba(255, 255, 255, 1);
+    opacity: 1;
+    margin-bottom: 10px;
+
+    .small:last-child {
+      border-bottom: none;
+    }
+
+    .small {
+      height: 34px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 18px;
+      color: rgba(0, 0, 0, .6);
+      border-bottom: 1px solid rgba(112, 112, 112, .1);
+
+      .select-coupon {
+        display: flex;
+        align-items: center;
+
+        img {
+          width: 15px;
+          height: 15px;
+        }
+      }
+
+    }
+  }
+
+  .oder-kefu {
+    font-size: 11px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 1);
+    height: 70px;
+    background: rgba(255, 255, 255, 1);
+    line-height: 70px;
+    text-align: center;
+  }
+
+  .kf-btn {
+    width: 114px;
+    height: 50px;
+    position: fixed;
+    bottom: 26px;
+    left: 0px;
+    right: 0px;
+    background: rgba(254, 168, 53, 1);
+    box-shadow: 0px 8px 20px rgba(254, 168, 53, 0.55);
+    border-radius: 100px;
+    margin: 0 auto;
+
+
+    button {
+      background: none !important;
+      color: #fff !important;
+      font-size: 17px;
+      font-weight: 400;
+      text-align: center;
+      line-height: 50px;
+    }
+
+    button::after {
+      border: none;
+    }
+  }
+
+  .shop-content {
+    background-color: #fff;
+    padding: 0 16px;
+    margin-bottom: 10px;
+
+    .shop-wrp {
+      .shop-head {
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px 1px solid rgba(112, 112, 112, .1);
+
+        .shop-title {
+          width: 52px;
+          font-size: 13px;
+          font-weight: 400;
+          line-height: 18px;
+          color: rgba(0, 0, 0, .6);
+        }
+
+        .service {
+          display: flex;
+          flex: 1;
+          justify-content: flex-end;
+          align-items: center;
+
+          p {
+            font-size: 11px;
+            font-weight: 400;
+            line-height: 16px;
+            color: rgba(0, 0, 0, .87);
+          }
+
+          img {
+            width: 15px;
+            height: 15px;
+          }
+        }
+      }
+
+      .shop-list {
+        .good-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 12px;
+
+          .good-left {
+            display: flex;
+
+            .good-cove {
+              width: 50px;
+              height: 50px;
+              background: rgba(190, 190, 190, .66);
+              margin-right: 12px;
+            }
+
+            .order-info {
+              display: flex;
+              justify-content: space-around;
+              flex-flow: column nowrap;
+
+              .order-name {
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 20px;
+                color: rgba(0, 0, 0, .87);
+              }
+
+              .order-num {
+                font-size: 11px;
+                font-weight: 400;
+                line-height: 16px;
+                color: rgba(0, 0, 0, .5);
+              }
+            }
+
+          }
+
+          .good-right {
+            height: 21px;
+            font-size: 13px;
+            font-weight: bold;
+            line-height: 18px;
+            color: rgba(0, 0, 0, .87);
+          }
+        }
+      }
+    }
+  }
+}

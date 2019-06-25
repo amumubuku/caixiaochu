@@ -1,0 +1,163 @@
+.address {
+  .address-wrp {
+    .address-info {
+      border-bottom: 10px solid rgba(244, 244, 244, 1);
+      .my-address {
+        height: 34px;
+        background: rgba(244, 244, 244, 1);
+        line-height: 34px;
+        font-size: 13px;
+        font-family: PingFang SC;
+        font-weight: 400;
+        color: rgba(0, 0, 0, 0.6);
+        padding-left: 16px;
+      }
+      .more {
+        height: 36px;
+        font-size: 14px;
+        font-family: PingFang SC;
+        font-weight: 500;
+        line-height: 36px;
+        color: rgba(0, 0, 0, 0.6);
+        text-align: center;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+          width: 15px;
+          height: 15px;
+        }
+      }
+      .addressGroup {
+        display: flex;
+        margin: 0 12px;
+        justify-content: space-between;
+        align-items: center;
+        flex-flow: row nowrap;
+        border-bottom: 1px solid rgba(112, 112, 112, 0.1);
+        .group-left {
+          .address {
+            display: flex;
+            height: 21px;
+            font-size: 15px;
+            font-family: PingFang SC;
+            font-weight: bold;
+            color: rgba(0, 0, 0, 0.87);
+            padding: 6px 0;
+            .address-name {
+              padding-right: 6px;
+            }
+          }
+          .address-des {
+            height: 32px;
+            font-size: 11px;
+            font-family: PingFang SC;
+            font-weight: 400;
+            line-height: 16px;
+            color: rgba(0, 0, 0, 0.87);
+          }
+        }
+        .group-right {
+          .address-edit {
+            img {
+              width: 15px;
+              height: 15px;
+            }
+          }
+        }
+      }
+    }
+    .location-info {
+      .location-title {
+        height: 35px;
+        font-size: 14px;
+        font-family: PingFang SC;
+        font-weight: 400;
+        color: rgba(0, 0, 0, 0.6);
+        line-height: 35px;
+        margin: 0 12px;
+        border-bottom: 1px solid rgba(112, 112, 112, 0.1);
+      }
+      .addressGroup {
+        margin-left: 12px;
+        padding: 16px 0;
+        p {
+          height: 18px;
+          font-size: 14px;
+          font-family: PingFang SC;
+          font-weight: 400;
+          line-height: 18px;
+          color: rgba(0, 0, 0, 0.87);
+        }
+      }
+    }
+    .header {
+      width: 100%;
+      height: 46px;
+      box-sizing: border-box;
+      border-bottom: 1px solid rgba(243, 243, 243, 1);
+      .header-wrp {
+        padding: 10rpx 15rpx 20rpx 25rpx;
+        display: flex;
+        flex-flow: row nowrap;
+        .location-box {
+          margin-right: 20rpx;
+          display: flex;
+          align-items: center;
+          img {
+            width: 14px;
+            height: 14px;
+          }
+          p {
+            height: 19px;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 19px;
+            color: rgba(174, 174, 174, 1);
+            width: 56px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+        .form {
+          flex: 1;
+          .btn {
+            display: flex;
+            flex-flow: row nowrap;
+            align-items: center;
+            justify-content: center;
+            height: 25px;
+            background: rgba(238, 238, 238, 1);
+            border-radius: 13px;
+            img {
+              width: 20px;
+              height: 20px;
+            }
+            span {
+              font-size: 14px;
+              font-weight: 500;
+              line-height: 20px;
+              color: rgba(174, 174, 174, 1);
+            }
+          }
+        }
+      }
+    }
+  }
+  .newAddress {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    font-family: PingFang SC;
+    height: 50px;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 50px;
+    color: #fff;
+    background: rgba(254, 168, 53, 1);
+    border-radius: 5px 5px 0px 0px;
+  }
+}

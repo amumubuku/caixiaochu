@@ -1,0 +1,128 @@
+.address {
+  .address-wrp {
+    .location-info {
+      height: 45px;
+      background: rgba(244, 244, 244, 1);
+
+      .location-title {
+        font-size: 14px;
+        font-weight: 400;
+        color: rgba(0, 0, 0, 0.6);
+        line-height: 45px;
+        margin: 0 12px;
+        border-bottom: 1px solid rgba(112, 112, 112, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .position {
+          width: 68px;
+          height: 24px;
+          background: rgba(254, 168, 53, 1);
+          box-shadow: 0px 3px 6px rgba(254, 168, 53, 0.45);
+          border-radius: 5px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          img {
+            width: 16px;
+            height: 16px;
+          }
+
+          p {
+            font-size: 11px;
+            font-weight: 400;
+            line-height: 16px;
+            color: rgba(255, 255, 255, 1);
+          }
+        }
+      }
+
+      .addressGroup {
+        margin-left: 12px;
+        padding: 16px 0;
+
+        p {
+          height: 18px;
+          font-size: 14px;
+          font-family: PingFang SC;
+          font-weight: 400;
+          line-height: 18px;
+          color: rgba(0, 0, 0, 0.87);
+        }
+      }
+    }
+
+    .header {
+      width: 100%;
+      height: 46px;
+      box-sizing: border-box;
+      border-bottom: 1px solid rgba(243, 243, 243, 1);
+
+      .header-wrp {
+        padding: 10rpx 15rpx 20rpx 25rpx;
+        display: flex;
+        flex-flow: row nowrap;
+
+        .location-box {
+          margin-right: 20rpx;
+          display: flex;
+          align-items: center;
+
+          img {
+            width: 14px;
+            height: 14px;
+          }
+
+          p {
+            height: 19px;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 19px;
+            color: rgba(174, 174, 174, 1);
+            width: 56px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+
+        .form {
+          flex: 1;
+
+          .input-wrp {
+            display: flex;
+            flex-flow: row nowrap;
+            align-items: center;
+            justify-content: center;
+            height: 25px;
+            background: rgba(238, 238, 238, 1);
+            border-radius: 13px;
+
+            .input {
+              font-size: 14px;
+              font-weight: 500;
+              line-height: 20px;
+              width: 100%;
+              padding-left: 12px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .newAddress {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    font-family: PingFang SC;
+    height: 50px;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 50px;
+    color: #fff;
+    background: rgba(254, 168, 53, 1);
+    border-radius: 5px 5px 0px 0px;
+  }
+}

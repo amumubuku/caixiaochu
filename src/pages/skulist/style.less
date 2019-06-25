@@ -1,0 +1,128 @@
+.skulist {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  .skulist-wrp {
+    display: flex;
+    height: calc(100% - 53px);
+    font-size: 24rpx;
+    position: relative;
+
+    .category-list {
+      width: 90px;
+      background-color: #f4f4f4;
+      height: 100%;
+      font-size: 26rpx;
+
+      .category-item {
+        position: relative;
+        width: 100%;
+        min-height: 100rpx;
+        max-height: 130rpx;
+        padding: 0 20rpx;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 21px;
+        font-size: 15px;
+        line-height: 21px;
+        color: rgba(0, 0, 0, 0.87);
+
+        .category-item-flag {
+          width: 6rpx;
+          height: 26rpx;
+          background: #fea835;
+          position: absolute;
+          left: 0;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+      }
+
+      .active {
+        color: rgba(254, 168, 53, 1);
+        background-color: #fff;
+        font-weight: bold;
+      }
+    }
+
+    .sku-container {
+      position: relative;
+      height: 100%;
+    }
+  }
+
+  .goood-container {
+    width: calc(100% - 90px);
+    height: 100%;
+    position: relative;
+
+    .goods-null {
+      position: absolute;
+      bottom: 0;
+      top: 134px;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      flex-flow: column nowrap;
+
+      img {
+        width: 179px;
+        height: 117px;
+      }
+
+      p {
+        padding-top: 24px;
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 26px;
+        color: rgba(0, 0, 0, 1);
+        text-align: center;
+        width: 100%;
+        padding-left: 12px;
+      }
+    }
+  }
+
+  .card-icon {
+    position: fixed;
+    width: 52px;
+    height: 52px;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.08);
+    border-radius: 50%;
+    right: 15px;
+    bottom: 20px;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .num-wrp {
+      width: 19px;
+      height: 19px;
+      background: rgba(255, 99, 4, 1);
+      border-radius: 50%;
+      position: absolute;
+      font-size: 16px;
+      font-family: PingFang SC;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 1);
+      line-height: 19px;
+      text-align: center;
+      top: 1px;
+      right: 1px;
+    }
+
+    img {
+      width: 36px;
+      height: 36px;
+    }
+  }
+}

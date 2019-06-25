@@ -1,0 +1,569 @@
+.shop {
+  background-color: #f5f5f5;
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  .footer-war {
+    position: fixed;
+    height: 50px;
+    width: 100%;
+    background: rgba(255, 255, 255, 1);
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 999;
+
+    .select-all {
+      flex: 0 0 130px;
+      display: flex;
+      align-items: center;
+      height: 21px;
+      font-size: 15px;
+      font-family: PingFang SC;
+      font-weight: 500;
+      line-height: 21px;
+      color: rgba(0, 0, 0, 0.87);
+
+      .icon {
+        background: rgba(255, 255, 255, 1);
+        border-radius: 50%;
+        margin: 0 7px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 26px;
+        height: 24px;
+
+        .circle {
+          width: 20px;
+          height: 20px;
+          background: rgba(255, 255, 255, 1);
+          border: 1px solid rgba(112, 112, 112, .45);
+          border-radius: 50%;
+        }
+
+        img {
+          width: 26px;
+          height: 26px;
+          position: relative;
+          top: 3px;
+  
+        }
+      }
+    }
+
+    .card-info {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      .card-info-rifht {
+        flex: 0 0 100px;
+        margin-left: 6px;
+        background: rgba(254, 168, 53, 1);
+        height: 50px;
+        line-height: 50px;
+        width: 49px;
+        font-size: 15px;
+        font-family: PingFang SC;
+        font-weight: 400;
+        text-align: center;
+        color: rgba(255, 255, 255, 1);
+      }
+
+      .card-info-left {
+        .price-num {
+          height: 24px;
+          font-size: 15px;
+          font-weight: 800;
+          line-height: 21px;
+          color: rgba(245, 45, 60, 1);
+        }
+
+        .coupon {
+          height: 16px;
+          font-size: 11px;
+          font-weight: 400;
+          line-height: 16px;
+          color: rgba(0, 0, 0, .87);
+          opacity: 0.87;
+        }
+      }
+    }
+  }
+
+  .shop-wrp {
+    .shop-top {
+      position: fixed;
+      width: 100%;
+      z-index: 999;
+      background-color: #fff;
+    }
+
+    .recomend-wrp {
+      padding-bottom: 50px;
+    }
+
+    .card {
+      padding: 50px 16px 15px 16px;
+      width: 100%;
+      box-sizing: border-box;
+      overflow: hidden;
+
+
+      .card-item {
+        height: 124px;
+        background: rgba(255, 255, 255, 1);
+        border-radius: 5px;
+        overflow: hidden;
+        margin-bottom: 4px;
+
+        .card-wrp[data-type="0"] {
+          transform: translate3d(0, 0, 0);
+        }
+
+        .card-wrp[data-type="1"] {
+          transform: translate3d(-34px, 0, 0);
+        }
+
+        .card-wrp {
+          position: relative;
+          transition: all 0.2s;
+          height: 100%;
+          width: 100%;
+
+          .card-centent {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            font-size: 0;
+
+            .card-left {
+              flex: 0 0 102px;
+              height: 102px;
+              border-radius: 5px;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+
+              .onSelect {
+                width: 26px;
+                height: 93%;
+                margin: 0 7px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                .circle {
+                  width: 20px;
+                  height: 20px;
+                  background: rgba(255, 255, 255, 1);
+                  border: 1px solid rgba(112, 112, 112, .45);
+                  border-radius: 50%;
+                }
+
+                img {
+                  width: 26px;
+                  height: 26px;
+                  position: relative;
+                  top: 2px;
+                }
+              }
+
+              .active {
+                width: 20px;
+                height: 20px;
+                margin: 0 7px;
+                background-image: url(http://ppoaxj723.bkt.clouddn.com/cX1nC1hB3gB2nE7s.png);
+                background-size: 40px 40px;
+                padding: 1px;
+                background-position: center;
+                background-position-y: -7px;
+
+              }
+
+              .card-cover {
+                width: 102px;
+                height: 102px;
+                background: rgba(232, 232, 232, 1);
+                opacity: 1;
+                border-radius: 5px;
+              }
+            }
+
+            .card-right {
+              display: flex;
+              height: 100%;
+              justify-content: space-around;
+              flex-flow: column nowrap;
+              flex: 1;
+              margin: 0 10px;
+
+              .name-wrp {
+
+                font-size: 15px;
+                font-weight: bold;
+                line-height: 21px;
+                color: rgba(64, 64, 64, 1);
+
+                .unit {
+                  font-size: 11px;
+                  font-weight: bold;
+                  line-height: 16px;
+                  color: rgba(0, 0, 0, .45);
+                  opacity: 0.45;
+                }
+              }
+
+              .price-wrp {
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: space-between;
+                align-items: flex-end;
+
+                .price {
+                  color: #f52d3c;
+                }
+
+                .menu-left {
+                  flex: 1;
+
+                  .price {
+                    display: flex;
+                    height: 24px;
+                    font-size: 17px;
+                    font-weight: bold;
+                    color: rgba(245, 45, 60, 1);
+                    flex-flow: row nowrap;
+                    align-items: center;
+
+                    .money {
+                      font-size: 14px;
+                    }
+                  }
+
+                  .dash-price-info {
+                    display: flex;
+                    justify-content: start;
+                    flex-flow: row nowrap;
+                    align-items: center;
+
+                    .dash-price {
+                      font-size: 14px;
+                      ;
+                      font-weight: 400;
+                      color: rgba(29, 29, 29, 1);
+                      text-align: left;
+
+                      margin-right: 4px;
+                    }
+
+                    .small {
+                      text-decoration: line-through;
+                    }
+
+                    .vip-price {
+                      width: 30px;
+                      height: 11px;
+                      display: flex;
+                      align-items: center;
+
+                      img {
+                        width: 28px;
+                        height: 11px;
+                      }
+                    }
+                  }
+                }
+
+                .numAction {
+                  width: 80px;
+                  height: 26px;
+                  background: rgba(255, 255, 255, 1);
+                  opacity: 1;
+                  border-radius: 13px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  padding: 0 4px;
+
+                  .value {
+
+                    font-size: 15px;
+                    font-weight: 400;
+                    line-height: 21px;
+                    color: rgba(0, 0, 0, .87);
+                  }
+
+                  .active {
+                    width: 18px;
+                    height: 18px;
+                    background: rgba(242, 242, 242, 1);
+                    border-radius: 50%;
+                    position: relative;
+                  }
+
+                  .extend::after {
+                    content: '';
+                    position: absolute;
+                    top: -10px;
+                    left: -10px;
+                    right: -10px;
+                    bottom: -10px;
+                  }
+
+                  .subtract {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    img {
+                      width: 16px;
+                      height: 16px;
+                    }
+                  }
+
+                  .add {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    img {
+                      width: 14px;
+                      height: 14px;
+                    }
+                  }
+                }
+              }
+            }
+
+          }
+
+
+          .delete-card {
+            width: 34px;
+            height: 124px;
+            background: rgba(254, 168, 53, 1);
+            border-radius: 0px 5px 5px 0px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+            right: -34px;
+
+            img {
+              width: 20px;
+              height: 20px;
+
+            }
+          }
+        }
+
+      }
+    }
+
+    .invalid-wrp {
+      padding: 0 15px 23px 15px;
+      color:rgba(64,64,64,.6) !important;
+      .hand-box {
+        margin: 0 auto;
+        width: 343px;
+        height: 32px;
+        background: rgba(0, 0, 0, .6);
+        display: flex;
+        align-items: center;
+        padding: 0 12px;
+        box-sizing: border-box;
+        justify-content: space-between;
+
+        p {
+          font-size: 13px;
+          font-weight: 400;
+          line-height: 18px;
+          color: rgba(255, 255, 255, 1);
+        }
+
+        img {
+          width: 20px;
+          height: 20px;
+        }
+      }
+
+      .card-item {
+        height: 124px;
+        background: rgba(255, 255, 255, 1);
+        border-radius: 5px;
+        overflow: hidden;
+        margin-bottom: 4px;
+
+        .card-wrp[data-type="0"] {
+          transform: translate3d(0, 0, 0);
+        }
+
+        .card-wrp[data-type="1"] {
+          transform: translate3d(-34px, 0, 0);
+        }
+
+        .card-wrp {
+          position: relative;
+          transition: all 0.2s;
+          height: 100%;
+          width: 100%;
+
+          .card-centent {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            font-size: 0;
+
+            .card-left {
+              flex: 0 0 102px;
+              height: 102px;
+              border-radius: 5px;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              .good-state {
+                margin: 0 5px;
+                width: 30px;
+                height: 13px;
+                background: rgba(197, 197, 197, 1);
+                border-radius: 8px;
+                text-align: center;
+
+                .invalid-icon {
+
+                  font-size: 9px;
+
+                  font-weight: 500;
+                  line-height: 13px;
+                  color: rgba(255, 255, 255, 1);
+
+                }
+              }
+              .card-cover {
+                width: 102px;
+                height: 102px;
+                background: rgba(232, 232, 232, 1);
+                opacity: 1;
+                border-radius: 5px;
+              }
+
+            }
+
+            .card-right {
+              display: flex;
+              height: 100%;
+              justify-content: space-between;
+              flex-flow: column nowrap;
+              flex: 1;
+              margin: 0 10px;
+              padding: 12px 0;
+              box-sizing: border-box;
+
+              .name-wrp {
+
+                font-size: 15px;
+                font-weight: bold;
+                line-height: 21px;
+                color: rgba(64, 64, 64, 1);
+
+                .unit {
+                  font-size: 11px;
+                  font-weight: bold;
+                  line-height: 16px;
+                  color: rgba(0, 0, 0, .45);
+                  opacity: 0.45;
+                }
+              }
+
+              .price-wrp {
+                height: 18px;
+                font-size: 13px;
+                font-weight: 400;
+                line-height: 18px;
+                color: rgba(64, 64, 64, .6);
+              }
+            }
+
+          }
+
+
+          .delete-card {
+            width: 34px;
+            height: 124px;
+            background: rgba(254, 168, 53, 1);
+            border-radius: 0px 5px 5px 0px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+            right: -34px;
+
+            img {
+              width: 20px;
+              height: 20px;
+
+            }
+          }
+        }
+
+      }
+    }
+
+    .shop-info {
+      display: flex;
+      flex-flow: column wrap;
+      align-items: center;
+      justify-content: space-around;
+      margin: 75px 0;
+
+      .shop-prompt {
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 26px;
+        color: rgba(0, 0, 0, 1);
+        text-align: center;
+        padding: 9px 0 15px 0;
+      }
+
+      .card-empty {
+        width: 179px;
+        height: 103px;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+      button {
+        width: 77px;
+        height: 30px;
+        background: rgba(254, 168, 53, 1);
+        box-shadow: 0px 2px 6px rgba(254, 168, 53, 0.75);
+        opacity: 1;
+        border-radius: 15px;
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 30px;
+        color: rgba(255, 255, 255, 1);
+        text-align: center;
+      }
+    }
+  }
+}
