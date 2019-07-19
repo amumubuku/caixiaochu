@@ -17,7 +17,7 @@
                <span class="or-user" v-if="!user.is_vip">普通用户</span>
             </div>
             <div class="vip-titme" v-if="user.is_vip">{{user.vip_end_time}}会员到期</div>
-            <p v-if="!user.is_vip">还需消费<span style="color:#FF150A;font-size:13px;">{{100 - user.money_at}}</span>元可成为会员</p>
+            <p v-if="!user.is_vip">还需消费<span style="color:#FF150A;font-size:13px;">{{~~user.vip_price_at - user.money_at}}</span>元可成为会员</p>
           </div>
         </div>
         <div class="vip-box">
@@ -33,14 +33,14 @@
                 <img src="http://p2.icaixiaochu.com/Fapjmoe49dgo4GP3.png" mode="aspectFit" alt>
               </div>
               <div class="icon-item" data-type="1">
-                <img src="http://p2.icaixiaochu.com/3453453@2x.png" mode="aspectFit" alt>
+                <img src="https://img.icaixiaochu.com/3453453@2x%20%282%29.png" mode="aspectFit" alt>
               </div>
               <div class="icon-item" data-type="2">
-                <img src="http://p2.icaixiaochu.com/78@2x.png" mode="aspectFit" alt>
+                <img src="http://p2.icaixiaochu.com/78@2x.png" style="heigth:17px" mode="aspectFit" alt>
               </div>
             </div>
             <div class="icon-item">
-              <img src="http://p2.icaixiaochu.com/567575@2x.png" mode="aspectFit" alt>
+              <img src="http://p2.icaixiaochu.com/567575@2x.png"  mode="aspectFit" alt>
             </div>
           </div>
         </div>

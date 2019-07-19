@@ -3,7 +3,7 @@
  * @Author: fizz
  * @LastEditors: Please set LastEditors
  * @Date: 2019-04-16 09:40:27
- * @LastEditTime: 2019-06-22 17:39:48
+ * @LastEditTime: 2019-07-17 15:20:56
  */
 var Fly = require('flyio/dist/npm/wx') // npm引入方式
 const fly = new Fly()
@@ -12,17 +12,11 @@ fly.interceptors.request.use((request) => {
   wx.showLoading({ title: '加载中..' })
   wx.showNavigationBarLoading() // 显示导航条加载动画
   let wxToken = wx.getStorageSync('token') || ''
-  let uuid = wx.getStorageSync('uuid')
   request.headers = {
     'X-Tag': 'Fizz',
     'content-type': 'application/json'
   }
   let authParams = {
-    'timestamp': new Date().getTime(),
-    'sign': 'string',
-    'uuid': uuid,
-    'reqSource': 'wxapp',
-    'version': '1.0.1',
     'token': wxToken
   }
 
@@ -40,8 +34,6 @@ fly.interceptors.request.use((request) => {
 })
 // 添加响应拦截器
 fly.interceptors.response.use((response) => {
-  wx.hideLoading()
-  wx.hideNavigationBarLoading()
   if (response.data.status === 0) {
     if (response.data.info === 'fail.empty token') {
       wx.navigateTo({
@@ -56,16 +48,15 @@ fly.interceptors.response.use((response) => {
         duration: 2000
       })
     }, 170)
-
-    return
   }
-
+  wx.hideLoading()
+  wx.hideNavigationBarLoading()
   return response.data
 },
 (err) => { // 请求出错，根据返回状态码判断出错原因
   if (err) {
     wx.showToast({
-      title: '网络请求错误',
+      title: '网络错误',
       icon: 'none',
       duration: 2000
     })

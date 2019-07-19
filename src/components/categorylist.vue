@@ -1,15 +1,20 @@
 <template>
   <div class="sku-container">
     <div class="skulist-wrp">
-      <scroll-view class="good-list" scroll-y="true" @scroll="scroll" style="height:100%;">
-        <div v-for="(item, index) in goods" :key="index" @click="goodDetail(item)" class="sku-item">
+      <scroll-view
+        class="good-list"
+        scroll-y="true"
+        enable-back-to-top="true"
+        @scroll="scroll"
+      >
+        <div v-for="(item, index) in categoryGoodData" :key="index" @click="goodDetail(item)" class="sku-item">
           <div class="icon">
             <img :src="item.cover" mode="aspectFill" alt>
           </div>
           <div class="good-detal">
             <div class="good-top">
               <div class="good-info">
-                <text class="couple" style="background: #E2F3FF; color: #26A6FF">{{item.label}}</text>
+                <img class="tag-icon" :src="item.label_id" alt v-if="item.label_id">
                 <text class="good-name">{{item.title}}</text>
               </div>
               <text class="good-title">{{item.description}}</text>
@@ -41,7 +46,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   props: {
     goods: {
@@ -51,8 +56,11 @@ export default {
   },
   data () {
     return {
-      scrollTop: ''
+      categoryGoodData: []
     }
+  },
+  computed: {
+    ...mapGetters(['cart'])
   },
   methods: {
     goodDetail (item) {
@@ -76,11 +84,8 @@ export default {
           })
       }
     },
-    toSearchPage () {
-      // 跳转到搜索页面
-    },
     scroll (e) {
-      // this.scrollTop = e.mp.detail.scrollTop
+      this.scrollTop = e.mp.detail.scrollTop
     },
     create (item) {
       this.create_db(item)
@@ -88,9 +93,30 @@ export default {
     ...mapActions(['create_db'])
   },
   mounted () {
-    this.$watch('goods', () => {
-      // this.scrollTop = 0
-    })
+    // console.log(this.goods)
+    // this.categoryGoodData = this.goods.map((ele) => {
+    //   this.cart.forEach(element => {
+    //     if (ele.goods_id === element.good_id) {
+    //       ele.cartNum = element.count
+    //     }
+    //   })
+    //   return ele
+    // })
+  },
+  watch: {
+    goods: {
+      handler (newVal, oldVal) {
+        this.categoryGoodData = newVal.map((ele) => {
+          this.cart.forEach(element => {
+            if (ele.goods_id === element.good_id) {
+              ele.cartNum = element.count
+            }
+          })
+          return ele
+        })
+      },
+      immediate: true
+    }
   }
 }
 </script>
@@ -105,6 +131,7 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
+      height: 100%;
       .sku-item {
         height: 110px;
         display: flex;
@@ -126,11 +153,11 @@ export default {
         }
         // margin-bottom: 16px;
         .icon {
-          flex: 0 0 110px;
-          height: 110px;
+          flex: 0 0 105px;
+          height: 105px;
           img {
-            max-width: 110px;
-            max-height: 110px;
+            max-width: 105px;
+            max-height: 105px;
           }
         }
         .good-detal {
@@ -138,16 +165,23 @@ export default {
           display: flex;
           flex-flow: column nowrap;
           justify-content: space-between;
-          margin: 0 12px;
+          padding: 0 12px;
+          width: 1px;
           height: 100%;
           padding-bottom: 7px;
           border-bottom: 1px solid rgba(243, 243, 243, 1);
+          box-sizing: border-box;
           .good-top {
             display: flex;
             flex-flow: column nowrap;
             .good-info {
               display: flex;
               align-items: center;
+              .tag-icon {
+                width: 28px;
+                height: 14px;
+                padding-right: 4px;
+              }
               .footer-text {
                 height: 21px;
                 font-size: 15px;
@@ -163,6 +197,9 @@ export default {
                 font-weight: bold;
                 line-height: 21px;
                 color: rgba(0, 0, 0, 0.87);
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
               }
               .couple {
                 border-radius: 5px;
@@ -178,6 +215,9 @@ export default {
               font-weight: bold;
               line-height: 16px;
               color: rgba(0, 0, 0, 0.45);
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
             }
           }
           .footer-menu {
@@ -197,6 +237,8 @@ export default {
                 color: rgba(245, 45, 60, 1);
                 flex-flow: row nowrap;
                 align-items: center;
+                display: table-cell;
+                vertical-align: bottom;
                 .money {
                   font-size: 14px;
                 }
@@ -212,11 +254,11 @@ export default {
                   font-weight: 400;
                   color: rgba(29, 29, 29, 1);
                   text-align: left;
-
                   margin-right: 4px;
                 }
                 .small {
                   text-decoration: line-through;
+                  color: rgba(29, 29, 29, 0.5);
                 }
                 .vip-price {
                   width: 30px;

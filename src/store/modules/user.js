@@ -1,14 +1,15 @@
 import {saveSearch, deleteSearch, clearSearch, loadSearch} from '@/utils/cache'
+import {setStorageSync, getStorageSync} from '@/utils/storage'
 const state = {
   data: [],
-  cityName: '北京市',
+  cityName: '广州市',
   city: [],
-  user: wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '',
+  user: getStorageSync('userInfo') ? getStorageSync('userInfo') : '',
   address: '',
   searchHitory: loadSearch(),
   goods: [],
   conponData: {},
-  DefaultAddress: wx.getStorageSync('DefaultAddress') ? wx.getStorageSync('DefaultAddress') : ''
+  DefaultAddress: getStorageSync('DefaultAddress')
 }
 
 const mutations = {
@@ -17,7 +18,7 @@ const mutations = {
   },
   SET_DfAD: (state, DefaultAddress) => {
     state.DefaultAddress = DefaultAddress
-    wx.setStorageSync('DefaultAddress', DefaultAddress)
+    setStorageSync('DefaultAddress', DefaultAddress)
   },
   SET_COUPONDATA: (state, data) => {
     state.conponData = data
@@ -36,7 +37,7 @@ const mutations = {
   },
   SET_USER: (state, user) => {
     state.user = user
-    wx.setStorageSync('userInfo', user)
+    setStorageSync('userInfo', user)
   },
   SET_SEARCH_HITORY: (state, hitory) => {
     state.searchHitory = hitory

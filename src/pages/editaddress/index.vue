@@ -12,7 +12,7 @@
         <input type="text" placeholder="11位电话号码" v-model="addressInfo.tel">
       </div>
     </div>
-    <div class="select-city" @click="selectCity">
+    <div class="select-city" @click="chooseAddr">
       <div class="select-row">
         <p class="city">选择城市</p>
         <p>{{addressInfo.city}}</p>
@@ -70,9 +70,22 @@ export default {
     ...mapGetters(['address'])
   },
   methods: {
-    selectCity () {
-      wx.navigateTo({
-        url: `../selectaddress/main`
+    chooseAddr () {
+      wx.chooseLocation({
+        success: (res) => {
+          let pos = {
+            lat: res.latitude.toString(),
+            lng: res.longitude.toString()
+          }
+          let address = res.name
+          this.$http.post('/inDistance', pos).then(res => {
+            if (res.status === 1) {
+              this.addressInfo.lng = pos.lng
+              this.addressInfo.lat = pos.lat
+              this.addressInfo.city = address
+            }
+          })
+        }
       })
     },
     toggle (index) {
@@ -82,7 +95,6 @@ export default {
       wx.navigateBack({ changed: true })
     },
     savaAddress () {
-      console.log(this.addressInfo)
       this.$http.post('/editAddress', this.addressInfo).then(res => {
         if (res.status === 1) {
           wx.showToast({
@@ -91,13 +103,7 @@ export default {
             duration: 2000
           })
           wx.navigateBack({ changed: true })
-          return
         }
-        wx.showToast({
-          title: '未知错误',
-          icon: 'none',
-          duration: 2000
-        })
       })
     },
     getAddressInfo () {
@@ -111,15 +117,7 @@ export default {
   },
   mounted () {
     this.addressId = this.$root.$mp.query.id
-    if (this.addressId) {
-      this.getAddressInfo()
-    }
-  },
-  onShow () {
-    let {lng, lat} = this.address.location
-    this.addressInfo.lng = lng
-    this.addressInfo.lat = lat
-    this.addressInfo.city = this.address.address
+    this.getAddressInfo()
   }
 }
 </script>

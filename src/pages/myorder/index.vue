@@ -1,7 +1,7 @@
 <template>
   <div class="order">
     <div class="order-wrp">
-      <div class="coupon-nav">
+      <div class="order-nav">
         <block v-for="(item,index) in tabs" :key="index">
           <div
             :id="index"
@@ -32,11 +32,9 @@
             <div class="order-content" v-for="(item,index) in orders.all" :key="index">
               <div class="order-contetn-top">
                 <div class="flex-left">
-                  <img src="http://p2.icaixiaochu.com/doubt.png" alt>
-                  <p>半小时达</p>
+                  <p class="time">{{item.time_create}}</p>
                 </div>
                 <div class="flex-right">
-                  <p class="time">{{item.time_create}}</p>
                   <p
                     class="order-state"
                   >{{item.status == 0? '待支付':item.status == 1? '待配送':item.status == 2? '待收货': '已完成'}}</p>
@@ -50,12 +48,16 @@
                   <p>共{{item.goods.length}}件商品</p>
                   <p>实付：¥{{item.money_pay}}</p>
                 </div>
-                <div class="good-content-btn" v-if="item.status === 0" @click="payment(item)">去付款</div>
+                <div
+                  class="good-content-btn"
+                  v-if="item.status === 0"
+                  @click="orderDetail(item)"
+                >去付款</div>
                 <div class="order-detail" v-if="item.status != 0" @click="orderDetail(item)">查看详情</div>
               </div>
             </div>
             <div class="null-oder-wrp" v-if="!orders.all.length>=1">
-              <img src="https://img.icaixiaochu.com/7LhCHrYBQSsHrtgV" alt>
+              <img src="https://img.icaixiaochu.com/7LhCHrYBQSsHrtgV.png" alt />
               <p>你还没有订单~快去逛逛吧~！</p>
               <button class="btn" @click="toHome()">去逛逛</button>
             </div>
@@ -71,11 +73,9 @@
             <div class="order-content" v-for="(item,index) in orders.unPay" :key="index">
               <div class="order-contetn-top">
                 <div class="flex-left">
-                  <img src="http://p2.icaixiaochu.com/doubt.png" alt>
-                  <p>半小时达</p>
+                  <p class="time">{{item.time_create}}</p>
                 </div>
                 <div class="flex-right">
-                  <p class="time">{{item.time_create}}</p>
                   <p
                     class="order-state"
                   >{{item.status == 0? '待支付':item.status == 1? '待配送':item.status == 2? '待收货': '已完成'}}</p>
@@ -89,12 +89,15 @@
                   <p>共{{item.goods.length}}件商品</p>
                   <p>实付：¥{{item.money_pay}}</p>
                 </div>
-                <div class="good-content-btn" @click="payment(item)">去付款</div>
+                <div class="order-fun-handle">
+                  <div class="order-detail"  @click="orderDetail(item)">查看详情</div>
+                 <div class="good-content-btn" @click="payment(item)">去付款</div>
+                </div>
               </div>
             </div>
           </scroll-view>
           <div class="null-oder-wrp" v-if="!orders.unPay.length>=1">
-            <img src="https://img.icaixiaochu.com/7LhCHrYBQSsHrtgV" alt>
+            <img src="https://img.icaixiaochu.com/7LhCHrYBQSsHrtgV.png" alt />
             <p>你还没有订单~快去逛逛吧~!</p>
             <button class="btn" @click="toHome()">去逛逛</button>
           </div>
@@ -109,11 +112,9 @@
             <div class="order-content" v-for="(item,index) in orders.unShipping" :key="index">
               <div class="order-contetn-top">
                 <div class="flex-left">
-                  <img src="http://p2.icaixiaochu.com/doubt.png" alt>
-                  <p>半小时达</p>
+                  <p class="time">{{item.time_create}}</p>
                 </div>
                 <div class="flex-right">
-                  <p class="time">{{item.time_create}}</p>
                   <p
                     class="order-state"
                   >{{item.status == 0? '待支付':item.status == 1? '待配送':item.status == 2? '待收货': '已完成'}}</p>
@@ -127,12 +128,16 @@
                   <p>共{{item.goods.length}}件商品</p>
                   <p>实付：¥{{item.money_pay}}</p>
                 </div>
-                <div class="order-detail" @click="orderDetail(item)">提醒发货</div>
+                <div class="order-fun-handle">
+                  <div class="order-detail" @click="orderDetail(item)">查看详情</div>
+                   <div class="order-detail" @click="orderDetail(item)">提醒发货</div>
+                </div>
+              
               </div>
             </div>
           </scroll-view>
           <div class="null-oder-wrp" v-if="!orders.unShipping.length>=1">
-            <img src="https://img.icaixiaochu.com/7LhCHrYBQSsHrtgV" alt>
+            <img src="https://img.icaixiaochu.com/7LhCHrYBQSsHrtgV.png" alt />
             <p>你还没有订单~快去逛逛吧~!</p>
             <button class="btn" @click="toHome()">去逛逛</button>
           </div>
@@ -147,11 +152,9 @@
             <div class="order-content" v-for="(item,index) in orders.shipping" :key="index">
               <div class="order-contetn-top">
                 <div class="flex-left">
-                  <img src="http://p2.icaixiaochu.com/doubt.png" alt>
-                  <p>半小时达</p>
+                  <p class="time">{{item.time_create}}</p>
                 </div>
                 <div class="flex-right">
-                  <p class="time">{{item.time_create}}</p>
                   <p
                     class="order-state"
                   >{{item.status == 0? '待支付':item.status == 1? '待配送':item.status == 2? '待收货': '已完成'}}</p>
@@ -165,12 +168,15 @@
                   <p>共{{item.goods.length}}件商品</p>
                   <p>实付：¥{{item.money_pay}}</p>
                 </div>
-                <div class="good-content-btn" @click="shipping(item)">确认收货</div>
+                <div class="order-fun-handle">
+                  <div class="order-detail" @click="orderDetail(item)">查看详情</div>
+                  <div class="good-content-btn" @click="shipping(item)">确认收货</div>
+                </div>
               </div>
             </div>
           </scroll-view>
           <div class="null-oder-wrp" v-if="!orders.shipping.length>=1">
-            <img src="https://img.icaixiaochu.com/7LhCHrYBQSsHrtgV" alt>
+            <img src="https://img.icaixiaochu.com/7LhCHrYBQSsHrtgV.png" alt />
 
             <p>你还没有订单~快去逛逛吧~!</p>
             <button class="btn" @click="toHome()">去逛逛</button>
@@ -186,11 +192,9 @@
             <div class="order-content" v-for="(item,index) in orders.finish" :key="index">
               <div class="order-contetn-top">
                 <div class="flex-left">
-                  <img src="http://p2.icaixiaochu.com/doubt.png" alt>
-                  <p>半小时达</p>
+                  <p class="time">{{item.time_create}}</p>
                 </div>
                 <div class="flex-right">
-                  <p class="time">{{item.time_create}}</p>
                   <p
                     class="order-state"
                   >{{item.status == 0? '待支付':item.status == 1? '待配送':item.status == 2? '待收货': '已完成'}}</p>
@@ -213,7 +217,7 @@
             </div>
           </scroll-view>
           <div class="null-oder-wrp" v-if="!orders.finish.length>=1">
-            <img src="https://img.icaixiaochu.com/7LhCHrYBQSsHrtgV" alt>
+            <img src="https://img.icaixiaochu.com/7LhCHrYBQSsHrtgV.png" alt />
             <p>你还没有订单~快去逛逛吧~!</p>
             <button class="btn" @click="toHome()">去逛逛</button>
           </div>
@@ -236,6 +240,7 @@ export default {
         3: 'shipping',
         4: 'finish'
       },
+
       orders: {
         all: [],
         unPay: [],
@@ -276,27 +281,11 @@ export default {
       loading: false,
       activeIndex: 0,
       winWidth: 0,
-      winHeight: 0
+      winHeight: 0,
+      navbarSliderClass: ''
     }
   },
   computed: {
-    navbarSliderClass () {
-      if (this.activeIndex == 0) {
-        return 'navbar_slider_0'
-      }
-      if (this.activeIndex == 1) {
-        return 'navbar_slider_1'
-      }
-      if (this.activeIndex == 2) {
-        return 'navbar_slider_2'
-      }
-      if (this.activeIndex == 3) {
-        return 'navbar_slider_3'
-      }
-      if (this.activeIndex == 4) {
-        return 'navbar_slider_4'
-      }
-    },
     contentHeight () {
       return this.winHeight + 'px'
     }
@@ -309,6 +298,14 @@ export default {
       wx.navigateBack({
         delta: 1
       })
+    }
+  },
+  watch: {
+    activeIndex: {
+      handler (newVal, oldVal) {
+        this.navbarSliderClass = `navbar_slider_${newVal}`
+      },
+      immediate: true
     }
   },
   methods: {
@@ -328,6 +325,7 @@ export default {
             _this.$http
               .post('/confirmGoods', { order_id: item.order_id })
               .then(res => {
+                _this.page = 1
                 _this.getOrders()
               })
           } else if (res.cancel) {
@@ -357,9 +355,7 @@ export default {
             return
           }
 
-          this.orders[this.status] = this.orders[this.status].concat(
-            res.data
-          )
+          this.orders[this.status] = this.orders[this.status].concat(res.data)
         })
     },
     getOrders () {
@@ -390,7 +386,7 @@ export default {
     },
     payment (item) {
       wx.navigateTo({
-        url: `../payorder/main?id=${item.order_id}`
+        url: `../orderdetail/main?id=${item.order_id}`
       })
     },
     orderDetail (item) {
@@ -406,10 +402,6 @@ export default {
     var res = wx.getSystemInfoSync()
     this.winWidth = res.windowWidth
     this.winHeight = res.windowHeight
-  },
-  onShow () {
-    this.page = 1
-    this.getOrders()
   },
   onPullDownRefresh () {
     this.getOrders()

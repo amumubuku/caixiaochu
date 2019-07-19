@@ -19,7 +19,7 @@
             :animation="index == curIndex ? animationData : animationData2"
             class="slider"
           >
-            <img :src="item" alt>
+            <img :src="item" mode="aspectFit" alt>
           </div>
         </swiper-item>
       </block>
@@ -66,11 +66,6 @@ export default {
   data () {
     return {
       curIndex: 0,
-      bannerList: [
-        'http://p2.icaixiaochu.com/%E7%BB%84%20838@3x.png',
-        'http://p2.icaixiaochu.com/%E7%BB%84%20836@3x.png',
-        'http://p2.icaixiaochu.com/%E7%BB%84%20840@3x.png'
-      ],
       circular: false, // 设置衔接滑动
       previousMargin: '63rpx',
       nextMargin: '63rpx',
@@ -78,7 +73,8 @@ export default {
       animationData2: {}, // 卡片缩小动画
       autoplay: false,
       interval: 3000,
-      duration: 300
+      duration: 300,
+      bannerList: ['http://p2.icaixiaochu.com/%E7%BB%84%20838@3x.png', 'http://p2.icaixiaochu.com/%E7%BB%84%20836@3x.png', 'http://p2.icaixiaochu.com/%E7%BB%84%20840@3x.png']
     }
   },
   mounted () {
@@ -166,11 +162,9 @@ export default {
     margin: 0 3px;
   }
   .disable {
-    width: 12px;
-    height: 12px;
+    width: 12px !important;
+    height: 12px !important;
     background: rgba(236, 200, 119, 1);
-    border-radius: 50%;
-    opacity: 1;
   }
 }
 // 指示点

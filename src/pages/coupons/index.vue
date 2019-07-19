@@ -6,35 +6,35 @@
     </div>
     <p class="title">
       <i style="padding-right: 5px;">!</i>
-      优惠劵不能同时使用多个</p>
+      优惠劵不能同时使用多个
+    </p>
     <div class="coupon-list">
       <div class="coupon-item" v-for="(item,index) in coupons" :key="index">
-      <div class="flex-left">
-        <div class="coupon-price">
-          <i>¥</i>
-          <p>{{item.price}}</p>
-        </div>
-        <div class="coupon-des">
-          <p>{{item.price}}元优惠卷</p>
-          <div>
-            满
-            <i>{{item.threshold_price}}</i>
-            元可用
+        <div class="flex-left">
+          <div class="coupon-price">
+            <i>¥</i>
+            <p>{{item.price}}</p>
+          </div>
+          <div class="coupon-des">
+            <p>{{item.price}}元优惠卷</p>
+            <div>
+              满
+              <i>{{item.threshold_price}}</i>
+              元可用
+            </div>
           </div>
         </div>
+        <div class="flex-right">
+          <p>有效期至</p>
+          <p class="time">{{item.expire_time}}</p>
+          <div class="submit" @click="userCoupon(item)">使用</div>
+        </div>
       </div>
-      <div class="flex-right">
-        <p>有效期至</p>
-        <p class="time">{{item.expire_time}}</p>
-        <div class="submit" @click="userCoupon(item)">使用</div>
+      <div class="null-coupon-wrp" v-if="!coupons.length>=1">
+        <img src="https://img.icaixiaochu.com/3CdMibRjn1kKjMMA.png" alt>
+        <p>无可用优惠券</p>
       </div>
     </div>
-     <div class="null-coupon-wrp" v-if="!coupons.length>=1">
-      <img src="https://img.icaixiaochu.com/3CdMibRjn1kKjMMA" alt>
-      <p>无可用优惠券</p>
-    </div>
-    </div>
-    
   </div>
 </template>
 

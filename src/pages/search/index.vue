@@ -53,7 +53,7 @@
       <div class="search-null" v-if="searchState">
         <scroll-view class="search-scroll" scroll-y="true">
           <div class="scroll-content">
-            <img src="https://img.icaixiaochu.com/DCMMpzKdEogCSdeO" alt>
+            <img src="https://img.icaixiaochu.com/DCMMpzKdEogCSdeO.png" alt>
             <span>抱歉，没有找到相关商品</span>
             <span>您可以换个词试试</span>
             <div class="recommend-wrp">
@@ -71,6 +71,7 @@ import recommend from '@/components/recommend'
 import goodlist from '@/components/goodlist'
 import { mapGetters, mapActions } from 'vuex'
 import subTitle from '@/components/sub-title'
+import { dobounce } from '../../utils/util'
 export default {
   components: {
     recommend,
@@ -123,7 +124,7 @@ export default {
       this.$http
         .get('/keySearch', { content: this.keyWords, page: 1 })
         .then(res => {
-          if (!res.data) {
+          if (!res.data || res.data.length < 1) {
             this.searchState = true
             this.recommend()
           } else {
@@ -142,6 +143,13 @@ export default {
   },
   mounted () {
     this.getsearchHot()
+    this.$watch(
+      'keyWords',
+      dobounce(newVal => {
+        if (!newVal) return
+        this.search(newVal)
+      }, 500)
+    )
   }
 }
 </script>

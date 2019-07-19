@@ -61,6 +61,12 @@ export default {
   },
   mounted () {
     this.getCurLocation()
+    this.$watch(
+      'keywords',
+      dobounce(newVal => {
+        this.getSuggestion()
+      }, 500)
+    )
   },
   methods: {
     ...mapMutations({
@@ -95,14 +101,6 @@ export default {
     addAddress () {
       util.checkLogin(`../addaddress/main`)
     }
-  },
-  onShow () {
-    this.$watch(
-      'keywords',
-      dobounce(newVal => {
-        this.getSuggestion()
-      }, 500)
-    )
   }
 }
 </script>

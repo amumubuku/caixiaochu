@@ -25,7 +25,7 @@
               <span class="or-user" v-if="!user.is_vip">普通用户</span>
             </div>
             <p v-if="user.is_vip">{{user.vip_end_time}}会员到期</p>
-            <p v-if="!user.is_vip">还需消费{{100 - user.money_at}}元可成为会员</p>
+            <p v-if="!user.is_vip">还需消费{{~~user.vip_price_at - user.money_at}}元可成为会员</p>
           </div>
         </div>
         <div class="content-wrp">
@@ -46,7 +46,7 @@
             </div>
           </div>
           <div class="vip-welfare">
-            <div class="welfare-top">
+            <div class="welfare-top"  @click="interPopup">
               <div class="welfare-top-row">
                 <p v-if="user.is_vip">
                   会员期间为您节省
@@ -83,11 +83,11 @@
               </div>
             </div>
           </div>
-          <div class="welfare-but">
+          <div class="welfare-but" @click="jumpScore">
             <div class="welfare-left">
               <p>查看积分情况</p>
             </div>
-            <div class="welfare-right" @click="interPopup">
+            <div class="welfare-right" >
               <img src="http://p2.icaixiaochu.com/more.png" alt class="icon">
             </div>
           </div>
@@ -142,7 +142,7 @@
         </div>
         <h3>关于有效期：</h3>
         <p>
-          消费满100元以后即可成为优享会员，满足条件
+          消费满{{user.vip_price_at}}元以后即可成为优享会员，满足条件
           后次日起开始计算，3个月为一个周期清算。
         </p>
       </div>
@@ -209,6 +209,11 @@ export default {
         // 用户按了拒绝按钮
       }
     },
+    jumpScore () {
+      wx.navigateTo({
+        url: `../myscore/main`
+      })
+    },
     getVipgoods () {
       this.$http.get('/getVipGoods', { type: 'limit' }).then(res => {
         this.vipGood = res.data
@@ -228,15 +233,7 @@ export default {
       this.$refs.vipPopup.toggle('show')
     },
     interPopup () {
-      if (this.user.is_vip) {
-        this.$refs.integPopup.toggle('show')
-        return
-      }
-      wx.showToast({
-        title: '你还不是会员',
-        icon: 'none',
-        duration: 2000
-      })
+      this.$refs.integPopup.toggle('show')
     },
     getUserData () {
       if (wx.getStorageSync('userInfo') && wx.getStorageSync('token')) {
@@ -254,7 +251,6 @@ export default {
   },
   mounted () {
     this.getVipgoods()
-    this.vipStart = this.user.vip_start_time.split('-')
   },
   onPullDownRefresh () {
     this.getUserData()

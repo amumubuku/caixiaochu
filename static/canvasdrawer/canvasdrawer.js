@@ -6,7 +6,6 @@ Component({
       type: Object,
       value: {view: []},
       observer (newVal, oldVal) {
-        console.log(newVal, oldVal)
         if (!this.data.isPainting) {
           if (JSON.stringify(newVal) !== JSON.stringify(oldVal) &&
             newVal && newVal.width && newVal.height) {
@@ -139,7 +138,7 @@ Component({
         bolder = false,
         textDecoration = 'none'
       } = params
-      
+
       this.ctx.beginPath()
       this.ctx.setTextBaseline('top')
       this.ctx.setTextAlign(textAlign)
@@ -169,13 +168,13 @@ Component({
             this.drawTextLine(left, fillTop, textDecoration, color, fontSize, fillText)
             fillText = ''
             fillTop += lineHeight
-            lineNum ++
+            lineNum++
           }
         }
         this.ctx.fillText(fillText, left, fillTop)
         this.drawTextLine(left, fillTop, textDecoration, color, fontSize, fillText)
       }
-      
+
       this.ctx.restore()
 
       if (bolder) {
@@ -184,7 +183,7 @@ Component({
           left: left + 0.3,
           top: top + 0.3,
           bolder: false,
-          textDecoration: 'none' 
+          textDecoration: 'none'
         })
       }
     },
@@ -226,7 +225,7 @@ Component({
         this.ctx.setFillStyle(background)
         this.ctx.fillRect(left, top, width, height)
       }
-      
+
       this.ctx.restore()
     },
     getImageInfo (url) {
@@ -276,7 +275,7 @@ Component({
         },
         fail: res => {
 
-        } 
+        }
       }, this)
     }
   }

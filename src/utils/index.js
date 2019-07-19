@@ -18,11 +18,6 @@ export function formatTime (date) {
   return `${t1} ${t2}`
 }
 
-export function time () {
-  var now = new Date()
-  var curTime = now.getTime() + 1000 * 60 * 40
-  return formatTime(new Date(curTime)).split(' ')
-}
 // -------------------------------------------------------------------------请求的封装
 
 const host = 'https://www.easy-mock.com/mock/5cb8574ed123f60eac85d601/caixiaochu_copy'

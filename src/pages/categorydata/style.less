@@ -28,14 +28,16 @@
         align-items: center;
         justify-content: center;
         height: 21px;
-        font-size: 15px;
+        font-size: 13px;
         line-height: 21px;
-        color: rgba(0, 0, 0, 0.87);
+        color: rgba(0, 0, 0, .6);
+        font-weight:500;
 
         .category-item-flag {
-          width: 6rpx;
-          height: 26rpx;
-          background: #fea835;
+          width: 4px;
+          height: 21px;
+          background: linear-gradient(180deg, rgba(250, 177, 68, 1) 0%, rgba(252, 142, 89, 1) 100%);
+          border-radius: 0px 3px 3px 0px;
           position: absolute;
           left: 0;
           top: 50%;
@@ -44,9 +46,9 @@
       }
 
       .active {
-        color: rgba(254, 168, 53, 1);
+        color:rgba(0,0,0,.87);
         background-color: #fff;
-        font-weight: bold;
+        font-weight: 400;
       }
     }
 
@@ -57,6 +59,8 @@
   }
 
   .goood-container {
+    padding-left: 5px;
+    box-sizing: border-box;
     width: calc(100% - 90px);
     height: 100%;
     position: relative;
@@ -74,18 +78,17 @@
 
       img {
         width: 179px;
-        height: 117px;
+        height: 143px;
       }
 
       p {
-        padding-top: 24px;
         font-size: 15px;
         font-weight: 500;
         line-height: 26px;
         color: rgba(0, 0, 0, 1);
         text-align: center;
         width: 100%;
-        padding-left: 12px;
+        padding-top: 24px;
       }
     }
   }

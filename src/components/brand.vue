@@ -7,11 +7,11 @@
       </div>
       <div class="brand-item">
           <img src="http://p2.icaixiaochu.com/enter.png" alt="" class="icon">
-          <p>便捷切配</p>
+          <p>10:00-21:00</p>
       </div>
       <div class="brand-item">
           <img src="http://p2.icaixiaochu.com/enter.png" alt="" class="icon">
-          <p>3km内半小时送达</p>
+          <p>3km范围配送</p>
       </div>
     </div>
   </div>

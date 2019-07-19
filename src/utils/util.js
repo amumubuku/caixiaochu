@@ -2,12 +2,12 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-04-16 09:40:27
- * @LastEditTime: 2019-05-29 19:10:01
+ * @LastEditTime: 2019-07-03 09:26:41
  * @LastEditors: Please set LastEditors
  */
 
 // import api from '@/utils/api'
-import { rsa } from '@/utils/rsa'
+import {setStorageSync, getStorageSync} from './storage'
 function formatTime (date) {
   var year = date.getFullYear()
   var month = date.getMonth() + 1
@@ -62,8 +62,8 @@ function request (url, data = {}, method = 'GET') {
               }, 'POST').then(res => {
                 if (res.errno === 0) {
                   // 存储用户信息
-                  wx.setStorageSync('userInfo', res.data.userInfo)
-                  wx.setStorageSync('token', res.data.token)
+                  setStorageSync('userInfo', res.data.userInfo)
+                  setStorageSync('token', res.data.token)
                   resolve(res)
                 } else {
                   reject(res)
@@ -159,7 +159,7 @@ function getUserInfo () {
  * @return: null
  */
 function checkLogin (url) {
-  if (wx.getStorageSync('userInfo') && wx.getStorageSync('token')) {
+  if (getStorageSync('userInfo') && getStorageSync('token')) {
     wx.navigateTo({
       url
     })
@@ -177,30 +177,6 @@ function showErrorToast (msg) {
     image: '/static/images/icon_error.png'
   })
 }
-function sign () {
-  var timestamp = Date.parse(new Date())
-  var param = {
-    timestamp,
-    page: 111,
-    good_id: 1111111
-  }
-  var sign = rsa(param)
-  param.sgin = sign
-  return param
-}
-
-function uuid () {
-  var d = new Date().getTime()
-  var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
-    /[xy]/g,
-    function (c) {
-      var r = ((d + Math.random() * 16) % 16) | 0
-      d = Math.floor(d / 16)
-      return (c == 'x' ? r : (r & 0x7) | 0x8).toString(16)
-    }
-  )
-  return uuid
-}
 
 const util = {
   formatTime,
@@ -209,9 +185,7 @@ const util = {
   showErrorToast,
   checkSession,
   login,
-  getUserInfo,
-  sign,
-  uuid
+  getUserInfo
 }
 
 export default util

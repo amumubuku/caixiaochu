@@ -21,7 +21,7 @@
             class="slider"
             @click="jump(item)"
           >
-            <img :src="item.image" alt>
+            <img :src="item.image" mode="scaleToFill" alt>
           </div>
         </swiper-item>
       </block>
@@ -87,7 +87,13 @@ export default {
             // 数据源
             urls: [item.image]
           })
+        },
+        4: (item) => {
+          wx.navigateTo({
+            url: item.value_id
+          })
         }
+
         /**
          *
          *

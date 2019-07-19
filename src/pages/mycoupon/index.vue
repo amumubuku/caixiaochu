@@ -23,7 +23,12 @@
     >
       <swiper-item class="coupon-list">
         <scroll-view class="coupon_scroll" scroll-y="true">
-          <div class="coupon-item" v-for="(item,index) in coupons.unused" :key="index" @click="toHome">
+          <div
+            class="coupon-item"
+            v-for="(item,index) in coupons.unused"
+            :key="index"
+            @click="toHome"
+          >
             <div class="flex-left">
               <div class="coupon-price">
                 <i style="font-size: 14px">¥</i>
@@ -43,6 +48,10 @@
               <p class="time">{{item.expire_time}}</p>
               <div class="submit">立即使用</div>
             </div>
+          </div>
+          <div class="null-coupon-wrp" v-if="!coupons.unused.length>=1">
+            <img src="https://img.icaixiaochu.com/3CdMibRjn1kKjMMA.png" alt>
+            <p>无可用优惠券</p>
           </div>
         </scroll-view>
       </swiper-item>
@@ -66,8 +75,12 @@
             <div class="flex-right">
               <p>有效期至</p>
               <p class="time">{{item.expire_time}}</p>
-              <div class="hasCoupon">已使用</div>
+              <div class="submit" style="background: #B2B2B2; box-shadow:none;">已使用</div>
             </div>
+          </div>
+          <div class="null-coupon-wrp" v-if="!coupons.has_used.length>=1">
+            <img src="https://img.icaixiaochu.com/3CdMibRjn1kKjMMA.png" alt>
+            <p>暂无已用优惠券</p>
           </div>
         </scroll-view>
       </swiper-item>
@@ -93,6 +106,10 @@
               <p class="time">{{item.expire_time}}</p>
               <div class="submit" style="background: #B2B2B2; box-shadow:none;">过期</div>
             </div>
+          </div>
+          <div class="null-coupon-wrp" v-if="!coupons.expired.length>=1">
+            <img src="https://img.icaixiaochu.com/3CdMibRjn1kKjMMA.png" alt>
+            <p>暂无已过期优惠券</p>
           </div>
         </scroll-view>
       </swiper-item>
@@ -130,21 +147,11 @@ export default {
         }
       ],
       winWidth: 0,
-      winHeight: 0
+      winHeight: 0,
+      navbarSliderClass: ''
     }
   },
   computed: {
-    navbarSliderClass () {
-      if (this.activeIndex == 0) {
-        return 'navbar_slider_0'
-      }
-      if (this.activeIndex == 1) {
-        return 'navbar_slider_1'
-      }
-      if (this.activeIndex == 2) {
-        return 'navbar_slider_2'
-      }
-    },
     contentHeight () {
       return this.winHeight + 'px'
     }
@@ -183,8 +190,7 @@ export default {
             : 'expired'
       this.getCoupon(this.status)
     },
-    onAnimationfinish () {
-    }
+    onAnimationfinish () {}
   },
   onPullDownRefresh () {
     this.getCoupon(this.status)
@@ -194,6 +200,14 @@ export default {
     var res = wx.getSystemInfoSync()
     this.winWidth = res.windowWidth
     this.winHeight = res.windowHeight
+  },
+  watch: {
+    activeIndex: {
+      handler (newVal, oldVal) {
+        this.navbarSliderClass = `navbar_slider_${newVal}`
+      },
+      immediate: true
+    }
   }
 }
 </script>

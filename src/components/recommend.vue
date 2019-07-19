@@ -1,49 +1,44 @@
 <template>
-<div class="recommend">
-   <sub-title :info="{'title': '热门商品','sec': '热销好物'}"></sub-title>
-  <div class="recommend-wrp">
-    <div class="list" v-for="(item,index) in goods" :key="item.goods_id" @click="navtodetail(item)">
-      <form-button></form-button>
-      <div class="item-top">
-        <img :src="item.cover"  mode="aspectFill" alt>
-      </div>
-      <div class="footer-info">
-        <div class="footer-title">
-              <!-- <text
-                  class="couple"
-                  style="background: #E2F3FF; color: #26A6FF"
-                >{{item.label}}</text> -->
-                <img class="tag-icon" :src="item.label_id"  alt="" v-if="item.label_id">
-          <text class="footer-text">{{item.title}}</text>
+  <div class="recommend">
+    <sub-title :info="{'title': '热门商品','sec': '热销好物'}"></sub-title>
+    <div class="recommend-wrp">
+      
+      <div class="list" v-for="(item,index) in goods" :key="index" @click="navtodetail(item)">
+        <div class="item-top">
+          <img :src="item.cover" mode="aspectFill"  alt>
         </div>
-        <div class="footer-menu">
-          <div class="menu-left">
-            <div class="price">
-              <span class="icon">¥</span>
-              <span>{{item.sku.market_price}}</span>
-            </div>
-            <div class="dash-price-info">
-              <div
-                :class="item.sku.vip_price>1 ? 'dash-price' : 'dash-price small'"
-              >¥{{item.sku.vip_price>1 ? item.sku.vip_price : item.sku.normal_price}}</div>
-              <div class="vip-price" v-if="item.sku.vip_price>1">
-                <img src="http://p2.icaixiaochu.com/vip-icon.png" alt>
+        <div class="footer-info">
+          <div class="footer-title">
+            <img class="tag-icon" :src="item.label_id" alt v-if="item.label_id">
+            <text class="footer-text">{{item.title}}</text>
+          </div>
+          <div class="footer-menu">
+            <div class="menu-left">
+              <div class="price">
+                <span class="icon">¥</span>
+                <span>{{item.sku.market_price}}</span>
+              </div>
+              <div class="dash-price-info">
+                <div
+                  :class="item.sku.vip_price>1 ? 'dash-price' : 'dash-price small'"
+                >¥{{item.sku.vip_price>1 ? item.sku.vip_price : item.sku.normal_price}}</div>
+                <div class="vip-price" v-if="item.sku.vip_price>1">
+                  <img src="http://p2.icaixiaochu.com/vip-icon.png" alt>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="menu-right" @click.stop="create(item)">
-            <img src="http://p2.icaixiaochu.com/card.png" alt>
+            <div class="menu-right" @click.stop="create(item)">
+              <img src="http://p2.icaixiaochu.com/card.png" alt>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  </div>
 </template>
 <script>
 import { mapActions } from 'vuex'
 import subTitle from '@/components/sub-title'
-import formButton from './form-button'
 export default {
   props: {
     goods: {
@@ -52,7 +47,6 @@ export default {
     }
   },
   components: {
-    formButton,
     subTitle
   },
   methods: {
@@ -73,12 +67,12 @@ export default {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
-  margin: 0 8px;
+  padding: 0 16px;
+  box-sizing: border-box;
   .list {
     position: relative;
-    width: calc(50% - 16px);
+    width: 164px;
     height: 248px;
-    margin: 0 8px;
     margin-bottom: 16px;
     border-radius: 6px;
     overflow: hidden;
@@ -131,15 +125,17 @@ export default {
         .price {
           height: 24px;
           font-size: 17px;
-          font-family: PingFang SC;
           font-weight: bold;
           color: rgba(245, 45, 60, 1);
           opacity: 1;
           display: flex;
           display: flex;
           align-items: center;
+          display: table-cell;
+          vertical-align: bottom;
           .icon {
             font-size: 14px;
+            padding-right: 1px;
           }
         }
         .dash-price-info {
@@ -149,10 +145,10 @@ export default {
           align-items: center;
           .dash-price {
             font-size: 14px;
-            font-family: PingFang SC;
             font-weight: 400;
             color: rgba(32, 32, 32, 1);
             text-align: left;
+            padding-left:1px; 
 
             margin-right: 4px;
           }

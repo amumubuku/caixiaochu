@@ -1,6 +1,6 @@
 <template>
   <div class="skulist">
-    <searchnav :text="keyWords"/>
+    <searchnav :text="keyWords" />
     <div class="skulist-wrp">
       <scroll-view class="category-list" scroll-y="true" style="height:100%;">
         <div
@@ -14,14 +14,14 @@
         </div>
       </scroll-view>
       <div class="goood-container">
-        <skulist :goods="skuitem" v-if="skuitem.length>=1"/>
-           <div class="goods-null" v-else>
-          <img src="https://img.icaixiaochu.com/1@2x%20%281%29.png" alt>
-          <p>暂无商品发布</p>
+        <category-list :goods="categoryListData" v-if="categoryListData.length>=1 && loading"></category-list>
+        <div class="goods-null"  v-else>
+          <img src="https://img.icaixiaochu.com/1@2x.png" mode="aspectFit" alt />
+          <p>商品筹备中</p>
         </div>
       </div>
       <div class="card-icon" @click="toShop">
-        <img src="http://img.icaixiaochu.com/cardIcon.png" alt>
+        <img src="http://img.icaixiaochu.com/cardIcon.png" alt />
         <div class="num-wrp" v-if="cartInfos.num !=0">{{cartInfos.num}}</div>
       </div>
     </div>
@@ -30,7 +30,7 @@
 
 <script>
 import searchnav from '@/components/searchnav'
-import skulist from '@/components/skulist'
+import CategoryList from '@/components/categorylist'
 import { mapGetters } from 'vuex'
 export default {
   data () {
@@ -39,16 +39,20 @@ export default {
       currentId: '',
       navList: [],
       keyWords: '请输入关键字',
-      skuitem: [],
-      parent_id: 1
+      categoryListData: [],
+      parent_id: 1,
+      loading: false
     }
   },
   components: {
     searchnav,
-    skulist
+    CategoryList
   },
   computed: {
     ...mapGetters(['cartInfos'])
+  },
+  onUnload () {
+    this.categoryListData = []
   },
   methods: {
     getCatalogList () {
@@ -59,36 +63,30 @@ export default {
         .then(res => {
           this.navList = res.data
           this.currentId = res.data[0].id
-          this.getCurrentSku(res.data[0].id)
+          this.getCurGoodData(res.data[0].id)
         })
-    },
-    navtodetail (item) {
-      console.log(item)
-      // var goodsId = item.good_id
-      // wx.navigateTo({
-      //   url: `../goods/main?id=${goodsId}`
-      // })
     },
     switchCate (item) {
       var currentID = item.id
       if (this.currentId === currentID) {
         return false
       }
-      this.getCurrentSku(currentID)
+      this.getCurGoodData(currentID)
       this.currentId = item.id
     },
-    getCurrentSku (id) {
+    getCurGoodData (id) {
       this.$http
         .get('/getCategoryGoods', {
           category_id: id
         })
         .then(res => {
-          this.skuitem = res.data
+          this.categoryListData = res.data
+          this.loading = true
         })
     },
     toShop () {
       wx.switchTab({
-        url: '../shop/main'
+        url: '../cart/main'
       })
     }
   },
@@ -97,6 +95,15 @@ export default {
     this.navList = []
     this.parent_id = this.$root.$mp.query.id
     this.getCatalogList()
+  },
+  onShareAppMessage: function (res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+    }
+    return {
+      title: '新品推荐',
+      path: `pages/categorydata/main?id=${this.parent_id}`
+    }
   }
 }
 </script>

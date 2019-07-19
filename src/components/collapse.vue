@@ -48,8 +48,6 @@ export default {
       default: []
     }
   },
-  computed: {
-  },
   ready () {
     if (this.active) {
       this.$emit('collapse-open', this.index)
@@ -74,6 +72,8 @@ export default {
 .is-active {
   height: auto;
   transition: height 0.3s;
+}
+.touchable{
 }
 .collapse {
     .good-item {
@@ -127,6 +127,9 @@ export default {
         text-align: end;
       }
     }
+    .good-item:last-child{
+      margin-bottom: 0; 
+    }
   }
 .collapse-header {
   height: 120px;
@@ -138,18 +141,18 @@ export default {
   justify-content: center;
   height: 36px;
   background-color: #fff;
-  padding: 0 16px;
+  padding:0 16px;
   box-sizing: content-box;
   position: relative;
-  // &:after {
-  //   content: " ";
-  //   position: absolute;
-  //   top: 0px;
-  //   display: block;
-  //   height: 1px;
-  //   width: 342px;
-  //   background-color: #f0f0f0;
-  // }
+  &:after {
+    content: " ";
+    position: absolute;
+    top: 0px;
+    display: block;
+    height: 1px;
+    width: 342px;
+    background-color: #f0f0f0;
+  }
   img {
     transition: all .5s;
     width: 15px;

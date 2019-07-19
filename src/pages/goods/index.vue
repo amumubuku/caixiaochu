@@ -1,5 +1,12 @@
 <template>
-  <div class="goods" v-if="skudetail">
+  <div class="goods" v-if="goods">
+    <navigation-bar
+      :title="'商品详情'"
+      :navBackgroundColor="'#fff'"
+      :titleColor="'#000'"
+      :back-visible="true"
+      :home-path="'/pages/index/main'"
+    ></navigation-bar>
     <div class="goods-wrp">
       <div class="good-banner">
         <swiper
@@ -11,93 +18,155 @@
           @change="handleChange($event)"
         >
           <swiper-item
-            v-for="(item,index) of skudetail.slide_image"
+            v-for="(item,index) of goods.slide_image"
             :key="item.id"
             class="swiper-item"
             @click="previewImage(index)"
           >
-            <img :src="item" mode="scaleToFill">
+            <img :src="item" mode="aspectFill" />
           </swiper-item>
         </swiper>
-        <div class="dots" v-if="skudetail.slide_image.length > 1">
+        <div class="dots" v-if="goods.slide_image.length > 1">
           <span
             class="dot"
-            v-for="(item, index) in skudetail.slide_image"
+            v-for="(item, index) in goods.slide_image"
             :key="index"
             :class="[index === curIndex ? 'disable' : '']"
           ></span>
         </div>
       </div>
-      <div class="sku-ared">
-        <div class="sku-ared-top">
-          <div class="sku-ared-box">
-            <div class="sku-head-wrp">
-              <div class="sku-ared-left">
-                <p class="sku-ared-name">{{skudetail.title}}</p>
-                <button open-type="share" class="share">
-                  <img src="https://img.icaixiaochu.com/IeN6825wiivK5Vo5" alt>
-                </button>
-                <p class="sku-ared-title">{{skudetail.description}}</p>
+      <div class="good-content">
+        <div class="good-content-wrp">
+          <div class="good-info">
+            <div class="good-row-top">
+              <div class="price-box">
+                <span
+                  class="normal-price"
+                >¥{{user.is_vip && goods.sku[0].vip_price > 1 ? goods.sku[0].vip_price : goods.sku[0].market_price}}</span>
+                <span class="price">¥{{goods.sku[0].normal_price}}</span>
               </div>
-              <div class="sku-ared-right">
-                <div class="sku-ared-share" @click="eventDraw">生成海报</div>
-                <i class="sku-ared-icon">
-                  <img src="http://p2.icaixiaochu.com/logo.png" alt>
-                </i>
+              <div class="activity-box">
+                <span>暂无活动</span>
+                <span>尽请期待</span>
               </div>
             </div>
-            <div class="sku-head-info">
-              <div class="sku-info-left">
-                <p
-                  style="font-size:13px;color:#B2B2B2;text-decoration: line-through;"
-                >¥{{skudetail.sku[0].normal_price}}</p>
-                <div class="dash-price">
-                  <p
-                    class="discont-price"
-                  >¥{{user.is_vip && skudetail.sku[0].vip_price > 1 ? skudetail.sku[0].vip_price : skudetail.sku[0].market_price}}</p>
-                  <p class="unit">{{skudetail.label}}</p>
+            <div class="good-row-but">
+              <div class="good-sku-content">
+                <div class="good-sku-left">
+                  <p class="good-sku-name">{{goods.title}}</p>
+                  <p class="good-sku-title">{{goods.description}}</p>
+                  <div class="poster" @click="eventDraw">
+                    <img src="https://img.icaixiaochu.com/post-img.png" alt />
+                    <span>生成海报</span>
+                  </div>
+                </div>
+                <div class="good-sku-right">
+                  <button open-type="share" class="share">
+                    <img src="https://img.icaixiaochu.com/share.png" alt />
+                    <span>分享</span>
+                  </button>
                 </div>
               </div>
-              <p>浏览：{{skudetail.views}}</p>
-              <p>库存：{{skudetail.stock}}</p>
-              <p>已售：{{skudetail.sold}}</p>
+              <div class="good-sku-des">
+                <p>浏览：{{goods.views}}</p>
+                <p>库存：{{goods.stock}}</p>
+                <p>已售：{{goods.sold}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="sku-ared-footer">
+            <div class="sku-footer-left">
+              <img src="https://img.icaixiaochu.com/time-icon2.png" alt class="icon" />
+              <span>配送时间</span>
+            </div>
+            <span>
+              现在下单，预计
+              <span style="color:#F52D3C;">{{currentTime}}</span> 送达
+            </span>
+          </div>
+
+          <div class="good-detail">
+            <div class="switch-fuc">
+              <div
+                :class="curSwitch?'active-left switch-state' : 'switch-state'"
+                @click="changState(1)"
+              >
+                <span>商品详情</span>
+                <i class="tag-icon" v-show="curSwitch"></i>
+              </div>
+              <div
+                :class="curSwitch?'switch-state' : 'switch-state active-right'"
+                @click="changState(0)"
+              >
+                <span>用户评论</span>
+                <i class="tag-icon" v-show="!curSwitch"></i>
+              </div>
+            </div>
+            <div class="good-des">
+              <wxParse
+                :content="goods.detail"
+                noData="没有商品详情"
+                @navigate="navigate"
+                v-if="curSwitch"
+              />
+            </div>
+
+            <div class="good-comments" v-if="!curSwitch">
+              <div class="comments-item">
+                <!-- <div class="comments-top">
+                  <div class="comments-left">
+                    <div class="user-cover">
+                      <img :src="user.avatar_url" alt />
+                    </div>
+                    <div class="user-name">{{user.nick_name}}</div>
+                    <div class="comments-level">
+                      <img src="https://img.icaixiaochu.com/1111@2x.png" alt />
+                      <img src="https://img.icaixiaochu.com/1111@2x.png" alt />
+                      <img src="https://img.icaixiaochu.com/1111@2x.png" alt />
+                      <img src="https://img.icaixiaochu.com/1111@2x.png" alt />
+                      <img src="https://img.icaixiaochu.com/%E6%98%9F_%E5%AE%9E@2x.png" alt />
+                    </div>
+                  </div>
+                  <div class="comments-right">2019-07-12 19:30</div>
+                </div>
+                <div class="comments-des">
+                  <div class="comments-text">
+                    菜小厨生鲜商城上线啦，菜小厨生鲜商城上线啦，
+                    菜小厨生鲜商城上线啦...
+                  </div>
+                  <div class="comments-imgs">
+                    <img
+                      src="https://img.icaixiaochu.com/79d8c9ca226e186847a59ee2258445e50f2ab8df1562224708.png"
+                      alt
+                    />
+                  </div>
+                </div> -->
+              </div>
             </div>
           </div>
         </div>
-        <div class="sku-ared-footer">
-          <img src="http://p2.icaixiaochu.com/doubt.png" alt class="icon">
-          <span>现在下单，预计{{currentTime}}送达</span>
-        </div>
-      </div>
-      <div class="sku-detail-title">图文详情</div>
-      <div class="sku-detail">
-        <wxParse
-          :content="skudetail.detail"
-          noData="没有商品详情"
-          @navigate="navigate"
-        />
       </div>
       <popup ref="buyPopup" type="bottom">
         <div class="buy-info">
           <div class="good-des">
             <div class="buy-content">
               <div class="good-cover">
-                <img :src="skudetail.cover" alt>
+                <img :src="goods.cover" alt />
               </div>
               <div class="good-price">
                 <div class="price-col">
-                  <p>¥{{skudetail.sku[0].market_price}}</p>
-                  <p class="text">¥{{skudetail.sku[0].normal_price}}</p>
+                  <p>¥{{goods.sku[0].market_price}}</p>
+                  <p class="text">¥{{goods.sku[0].normal_price}}</p>
                 </div>
-                <div>库存:{{skudetail.stock}}</div>
+                <div>库存:{{goods.stock}}</div>
               </div>
             </div>
             <div class="buy-num-row">
               <p>购买数量</p>
               <div class="numAction">
-                <div class="action subtract" @click="subtract(index)"></div>
+                <div class="action subtract extend" @click="subtract(index)"></div>
                 <div class="value">{{number}}</div>
-                <div class="action add" @click="add(index)"></div>
+                <div class="action add extend" @click="add(index)"></div>
               </div>
             </div>
           </div>
@@ -107,7 +176,7 @@
       <popup ref="canvasdrawer" type="center">
         <div class="cover-wrp">
           <div class="good-cover">
-            <img :src="shareImage" alt>
+            <img :src="shareImage" alt />
           </div>
           <div class="cover-footer">
             <button @click="hide" class="cancel">取消</button>
@@ -115,22 +184,25 @@
           </div>
         </div>
       </popup>
-      <canvasdrawer :painting="painting" class="canvasdrawer" @getImage="eventGetImage"/>
+      <canvasdrawer :painting="painting" class="canvasdrawer" @getImage="eventGetImage" />
     </div>
-    <div class="good-card">
+    <div class="good-card" :class="{'nav-bar-view-ipx':isIPX}">
       <div class="card-left">
         <div class="to-home" @click="toHome">
-          <img src="http://p2.icaixiaochu.com/home.png" alt>
+          <img src="http://p2.icaixiaochu.com/home.png" alt />
           <p>首页</p>
         </div>
         <div class="to-card" @click="toCard">
-          <img src="http://p2.icaixiaochu.com/card-icon.png" alt>
+          <img src="http://p2.icaixiaochu.com/card-icon.png" alt />
           <p>购物车</p>
         </div>
       </div>
-      <div class="sold" v-if="skudetail.stock <= 0">已售罄</div>
-      <div class="card-right" v-if="skudetail.stock >=1">
-        <div class="add-card" @click.stop="addCard(skudetail)">加入购物车</div>
+      <div
+        class="sold"
+        v-if="goods.stock <= 0 || goods.purchase_status ==1"
+      >{{goods.purchase_status===1?'限购商品':'已售罄'}}</div>
+      <div class="card-right" v-else>
+        <div class="add-card" @click.stop="addCard(goods)">加入购物车</div>
         <div class="buy" @click.stop="buy">
           <form-button></form-button>立即购买
         </div>
@@ -145,24 +217,36 @@ import wxParse from 'mpvue-wxparse'
 import util from '@/utils/util'
 import popup from '@/components/popup'
 import formButton from '@/components/form-button'
+import { setStorageSync, getStorageSync } from '@/utils/storage'
+import navigationBar from '@/components/navigationBar.vue'
+let app = getApp()
+
 export default {
   data () {
     return {
-      skudetail: '',
+      goods: '',
       painting: {},
       shareImage: '',
       number: 1,
       good_id: '',
       curIndex: 0,
       currentTime: '',
-      is_cart: true
+      is_cart: true,
+      isIPX: null,
+      curSwitch: 1
     }
   },
   computed: {
     ...mapGetters(['user'])
   },
-  components: { popup, wxParse, formButton },
+  onError (err) {
+    console.log(err)
+  },
+  components: { popup, wxParse, formButton, navigationBar },
   methods: {
+    changState (state) {
+      this.curSwitch = state
+    },
     Hour () {
       this.$http.post('/getHalfHour').then(res => {
         this.currentTime = res.data
@@ -172,7 +256,7 @@ export default {
       this.curIndex = e.mp.detail.current
     },
     previewImage (index) {
-      let imgs = this.skudetail.slide_image
+      let imgs = this.goods.slide_image
 
       wx.previewImage({
         current: index,
@@ -193,7 +277,7 @@ export default {
           title: '绘制分享图片中',
           mask: true
         })
-        let cover = this.skudetail.cover
+        let cover = this.goods.cover
         this.painting = {
           width: 315,
           height: 472,
@@ -241,7 +325,7 @@ export default {
             },
             {
               type: 'text',
-              content: this.skudetail.title,
+              content: this.goods.title,
               fontSize: 19,
               color: '#1D1D1D',
               textAlign: 'left',
@@ -251,7 +335,7 @@ export default {
             },
             {
               type: 'text',
-              content: `¥${this.skudetail.sku[0].market_price}`,
+              content: `¥${this.goods.sku[0].market_price}`,
               fontSize: 15,
               color: '#F52D3C',
               textAlign: 'left',
@@ -299,7 +383,7 @@ export default {
     },
     toCard () {
       wx.switchTab({
-        url: '../shop/main'
+        url: '../cart/main'
       })
     },
     toHome () {
@@ -331,60 +415,95 @@ export default {
       }
       let goods = {
         goods_id: this.good_id,
-        goods_title: this.skudetail.title,
-        cover: this.skudetail.cover,
-        label: this.skudetail.label,
+        goods_title: this.goods.title,
+        cover: this.goods.cover,
+        label: this.goods.label,
         number: this.number,
-        price: this.skudetail.sku[0].normal_price,
+        price: this.goods.sku[0].normal_price,
         real_price:
-          this.user.is_vip && this.skudetail.sku[0].vip_price > 1
-            ? this.skudetail.sku[0].vip_price
-            : this.skudetail.sku[0].market_price,
-        sku_id: this.skudetail.sku[0].id
+          this.user.is_vip && this.goods.sku[0].vip_price > 1
+            ? this.goods.sku[0].vip_price
+            : this.goods.sku[0].market_price,
+        sku_id: this.goods.sku[0].id
       }
       this.setGood([goods])
     },
     add () {
+      if (this.goods.is_limit) {
+        if (this.number >= this.goods.limit_num) {
+          wx.showToast({
+            title: `此商品限购${this.goods.limit_num}份`,
+            icon: 'none',
+            duration: 2000
+          })
+          return
+        }
+        this.number++
+        return
+      }
+
       this.number++
     },
     subtract () {
-      if (this.number <= 0) {
+      if (this.number <= 1) {
         return
       }
       this.number--
     },
-    getskudetail () {
+    goodDetail () {
       this.$http
         .get('/goodsDetail', {
           good_id: this.good_id
         })
         .then(res => {
-          this.skudetail = res.data
+          this.goods = res.data
         })
     },
     ...mapActions(['create_db', 'setGood'])
   },
-  mounted () {
-    this.good_id = this.$root.$mp.query.id || wx.getStorageSync('goodId')
-    wx.setStorageSync('goodId', this.good_id)
-    this.getskudetail()
-    this.Hour()
-  },
-  onShow () {
-    if (this.skudetail) {
+  onUnload () {
+    if (this.$refs.buyPopup) {
       this.$refs.buyPopup.toggle('hide')
-      this.getskudetail()
     }
+  },
+  mounted (e) {
+    this.Hour()
+    let _this = this
+    if (!_this.globalData.isIPX) {
+      wx.getSystemInfo({
+        success: result => {
+          if (result.model.search('iPhone X') != -1) {
+            _this.globalData.isIPX = true
+          }
+          wx.setStorageSync('model', result.model)
+        },
+        fail: () => {},
+        complete: () => {}
+      })
+    }
+    this.isIPX = _this.globalData.isIPX
+    var goodId = ''
+    var scene = wx.getLaunchOptionsSync().scene
+    if (scene === 1012) {
+      goodId = wx.getLaunchOptionsSync().query.scene
+    } else {
+      goodId = this.$root.$mp.query.id
+    }
+    if (goodId) {
+      setStorageSync('goodId', goodId)
+    } else {
+      goodId = getStorageSync('goodId')
+    }
+    this.good_id = goodId
+    this.goodDetail()
   },
   onShareAppMessage: function (res) {
     if (res.from === 'button') {
-      // 来自页面内转发按钮
-      console.log(res.target)
     }
     return {
-      title: this.skudetail.title,
+      title: this.goods.title,
       path: `pages/goods/main?id=${this.good_id}`,
-      imageUrl: this.skudetail.cover
+      imageUrl: this.goods.cover
     }
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="category">
-    <searchnav :text="keyWords"/>
+    <searchnav :text="keyWords" />
     <div class="category-wrp">
       <div
         class="item"
@@ -8,8 +8,11 @@
         :key="index"
         @click="navToskudetail(item)"
       >
-        <img :src="item.image" alt>
-        <text class="category-text">{{item.title}}</text>
+        <div class="category-flex-left">
+          <text class="category-text">{{item.title}}</text>
+          <text class="category-des">{{item.description}}</text>
+        </div>
+        <img :src="item.image" alt />
       </div>
     </div>
   </div>
@@ -19,6 +22,7 @@
 import { mapGetters } from 'vuex'
 import { setTabBarBadge } from '@/utils'
 import searchnav from '@/components/searchnav'
+
 export default {
   components: {
     searchnav
@@ -50,16 +54,25 @@ export default {
     navToskudetail (item) {
       var caregoryId = item.id
       wx.navigateTo({
-        url: `../skulist/main?id=${caregoryId}`
+        url: `../categorydata/main?id=${caregoryId}`
       })
     }
   },
   mounted () {
     this.getCategorys()
+  },
+  onShareAppMessage: function (res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+    }
+    return {
+      title: '分类',
+      path: 'pages/category/main'
+    }
   }
 }
 </script>
 <style lang="less" scoped>
-@import './style.less';
+@import "./style.less";
 </style>
 

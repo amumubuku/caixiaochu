@@ -2,5 +2,7 @@
   "navigationBarTitleText": "商品详情",
   "usingComponents": {
     "canvasdrawer": "../../../static/canvasdrawer/canvasdrawer"
-  }
+  },
+  "navigationStyle":"custom",
+  "backgroundColor": "#f4f4f4"
 }

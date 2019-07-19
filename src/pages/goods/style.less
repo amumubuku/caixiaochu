@@ -1,7 +1,7 @@
 .goods {
-  .goods-wrp {
-    padding-bottom: 50px;
+  padding-bottom: 75px;
 
+  .goods-wrp {
     .good-banner {
       width: 375px;
       height: 375px;
@@ -25,217 +25,402 @@
       // 指示点
       .dots {
         display: flex;
-        justify-content: flex-end;
+        justify-content: center;
         position: absolute;
-        bottom: 12px;
+        bottom: 21px;
         width: 100%;
-        padding-right: 47px;
         box-sizing: border-box;
 
         .dot {
-          width: 8px;
-          height: 8px;
-          margin: 0 3px;
-          background: rgba(255, 255, 255, 0.5);
+          width: 6px;
+          height: 6px;
+          margin: 0 2px;
+          background: #EFEFEF;
           border-radius: 50%;
+          transition: width .4s;
         }
 
         .disable {
+          width: 29px;
+          border-radius: 11px;
           background-color: rgba(255, 255, 255, 1);
+          box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
         }
       }
+
+
 
 
     }
 
 
 
-   
 
-    .sku-ared {
-      height: 183px;
+
+    .good-content {
       border-bottom: 10px solid rgba(242, 242, 242, 0.8);
+      padding: 0 10px;
+      background: #F4F4F4;
 
-      .sku-ared-top {
-        height: 143px;
+      .good-content-wrp {
+        position: relative;
+        top: -20px;
 
-        .sku-ared-box {
-          height: 100%;
-          display: flex;
-          justify-content: space-around;
-          flex-flow: column nowrap;
-          border-bottom: 1px solid rgba(112, 112, 112, 0.1);
-          margin: 0 12px;
+        .good-info {
+          border-radius: 10px;
+          margin-bottom: 10px;
+          box-shadow: 0px 3px 12px rgba(0, 0, 0, 0.05);
+          border-radius: 10px;
+          overflow: hidden;
 
-          .sku-head-wrp {
+          .good-row-top {
+            height: 50px;
+            position: relative;
             display: flex;
-            justify-content: space-between;
             align-items: flex-end;
 
-            .sku-ared-left {
+            .price-box {
+              height: 44px;
+              flex: 1;
+              background: linear-gradient(270deg, rgba(255, 111, 71, 1) 0%, rgba(245, 78, 96, 1) 100%);
               display: flex;
-              flex-flow: column nowrap;
-              position: relative;
+              align-items: baseline;
+              padding-top: 7px;
+              box-sizing: border-box;
+              border-radius: 10px 0 0 0;
 
-              .sku-ared-name {
-                height: 29px;
-                font-size: 21px;
-                font-weight: bold;
-                line-height: 29px;
-                color: rgba(64, 64, 64, 1);
-              }
-              .share {
-                width: 26px;
-                height: 26px;
-                position: absolute;
-                top: 1px;
-                right: -32px;
-          
-                img {
-                  width: 22px;
-                  height: 22px;
-                  position: absolute;
-                  top: 4px;
-                  left: 6px;
-                }
+              .normal-price {
+                font-size: 22px;
+                font-weight: 400;
+                color: rgba(255, 255, 255, 1);
+                padding: 0 22px 0 10px;
+
               }
 
-              .sku-ared-title {
-                height: 21px;
-                font-size: 15px;
-                font-weight: 500;
-                line-height: 21px;
-                color: rgba(64, 64, 64, 0.65);
+              .price {
+                font-size: 14px;
+                font-weight: 300;
+                color: rgba(255, 255, 255, .7);
+                text-decoration: line-through;
               }
+
             }
 
-            .sku-ared-right {
+            .activity-box {
+              position: absolute;
+              right: 0;
+              top: 0;
+              width: 127px;
+              height: 50px;
+              background: url('https://img.icaixiaochu.com/good-bg-detail.png') no-repeat;
+              background-position: center;
+              background-size: 100% 100%;
+              font-size: 13px;
+              font-weight: 400;
+              line-height: 18px;
+              color: rgba(255, 255, 255, 1);
               display: flex;
-              justify-content: space-between;
               align-items: center;
-              position: relative;
-              height: 26px;
-              background: rgba(255, 99, 4, 1);
-              box-shadow: 0px 2px 6px rgba(255, 99, 4, 0.34);
-              opacity: 0.75;
-              width: 76px;
-              height: 26px;
-              background: rgba(255, 99, 4, 1);
-              box-shadow: 0px 2px 6px rgba(255, 99, 4, 0.34);
-              opacity: 1;
-              border-radius: 5px;
-
-              .sku-ared-icon {
-                position: absolute;
-                top: -18px;
-                right: 6px;
-
-                img {
-                  width: 21px;
-                  height: 21px;
-                }
-              }
-
-              .sku-ared-share {
-                font-size: 12px;
-                font-weight: 500;
-                line-height: 17px;
-                color: rgba(255, 255, 255, 1);
-                text-align: center;
-                width: 100%;
-              }
+              justify-content: center;
+              flex-flow: column nowrap;
+              z-index: 1;
             }
           }
 
-          .sku-head-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
+          .good-row-but {
+            height: 169px;
+            background: rgba(255, 255, 255);
 
-            .sku-info-left {
-              .dash-price {
+            .good-sku-content {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              height: 120px;
+
+              .good-sku-left {
+                padding-left: 12px;
+                flex: 1;
+                height: 100%;
                 display: flex;
+                flex-flow: column nowrap;
+                justify-content: space-evenly;
 
-                .discont-price {
-                  font-size: 16px;
+                .good-sku-name {
+
+                  font-size: 17px;
                   font-weight: bold;
-                  line-height: 18px;
-                  color: #f52d3c;
-                  opacity: 1;
+
+                  color: rgba(64, 64, 64, 1);
                 }
 
-                .unit {
-                  font-size: 13px;
-                  font-weight: bold;
-                  color: rgba(0, 0, 0, 0.3);
+                .good-sku-title {
+
+                  height: 21px;
+                  font-size: 15px;
+
+                  font-weight: 500;
+
+                  color: rgba(64, 64, 64, .6);
+
                 }
+
+                .poster {
+                  width: 82px;
+                  height: 29px;
+                  background: rgba(250, 140, 109, 1);
+                  box-shadow: 0px 1px 6px rgba(250, 140, 109, 0.5);
+                  border-radius: 15px;
+                  display: flex;
+                  align-items: center;
+
+                  img {
+                    width: 14px;
+                    height: 14px;
+                    padding: 0 4px 0 8px;
+                  }
+
+                  span {
+
+                    font-size: 12px;
+                    font-weight: 500;
+                    color: rgba(255, 255, 255, 1);
+                  }
+                }
+              }
+
+              .good-sku-right {
+
+
+                button::after {
+                  border: none;
+                }
+
+                button {
+                  width: 58px;
+                  height: 24px;
+                  background: rgba(246, 246, 246, 1);
+                  border-radius: 12px 0px 0px 12px;
+                  margin: 0;
+                  padding: 0;
+                  display: flex;
+                  align-items: center;
+
+                  span {
+                    font-size: 11px;
+                    font-weight: 500;
+                    line-height: 16px;
+                    color: rgba(64, 64, 64, .5);
+                  }
+
+                  img {
+                    height: 14px;
+                    width: 14px;
+                    padding: 0 4px 0 6px;
+                  }
+
+                }
+
+
               }
             }
 
-            p {
-
+            .good-sku-des {
+              margin: 0 12px;
+              height: 49px;
+              border-top: 1px solid rgba(112, 112, 112, .1);
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
               font-size: 13px;
               font-weight: 500;
               line-height: 18px;
-              color: rgba(64, 64, 64, .6);
+              color: rgba(0, 0, 0, .6);
 
             }
           }
         }
-      }
 
-      .sku-ared-footer {
-        display: flex;
-        height: 44px;
-        align-items: center;
-        padding-left: 15px;
+        .good-detail {
+          overflow: hidden;
 
-        .icon {
-          width: 19px;
-          height: 12px;
-          padding-right: 6px;
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
+
+          .switch-fuc {
+            background: #F4F4F4;
+            height: 54px;
+            display: flex;
+            align-items: center;
+
+            .switch-state {
+              height: 100%;
+              flex: 1;
+              font-size: 13px;
+              font-weight: 400;
+              color: rgba(0, 0, 0, .7);
+              text-align: center;
+              display: flex;
+              flex-flow: column nowrap;
+              align-items: center;
+
+              box-sizing: border-box;
+              justify-content: flex-end;
+
+              span {
+                padding-bottom: 14px;
+              }
+
+              .tag-icon {
+                width: 24px;
+                height: 4px;
+                background: rgba(254, 168, 53, 1);
+                box-shadow: 0px 1px 6px rgba(254, 168, 53, 0.4);
+                border-radius: 12px;
+              }
+            }
+
+            .active-right {
+              background: url('https://img.icaixiaochu.com/switch-right.png') no-repeat;
+              background-position: center;
+              background-size: 100% 100%;
+              font-weight: bold;
+              color: #000;
+            }
+
+            .active-left {
+              background: url('https://img.icaixiaochu.com/switch-left.png') no-repeat;
+              background-position: center;
+              background-size: 100% 100%;
+              font-weight: bold;
+              color: #000;
+            }
+
+          }
+
+          .good-des {
+            background: #fff;
+            padding-top: 10px;
+          }
+
+          .good-comments {
+            background: #fff;
+
+            .comments-item {
+              height: 193px;
+              padding: 9px 12px;
+              border-bottom: 1px solid rgba(112, 112, 112, .1);
+
+              .comments-top {
+                height: 28px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                .comments-left {
+                  display: flex;
+                  align-items: center;
+
+                  .user-cover {
+                    display: flex;
+                    align-items: center;
+
+                    img {
+                      width: 26px;
+                      height: 26px;
+                    }
+                  }
+
+                  .user-name {
+
+                    font-size: 13px;
+                    font-weight: bold;
+                    color: rgba(0, 0, 0, .87);
+
+                    padding: 0 16px 0 6px;
+                  }
+
+                  img {
+                    height: 14px;
+                    width: 14px;
+                  }
+                }
+
+                .comments-right {
+
+                  font-size: 11px;
+
+                  font-weight: 400;
+                  line-height: 16px;
+                  color: rgba(0, 0, 0, .5);
+
+
+
+                }
+              }
+
+              .comments-des {
+                .comments-text {
+
+                  font-size: 13px;
+                  font-weight: 400;
+                  color: rgba(0, 0, 0, .87);
+
+                }
+
+                .comments-imgs {
+                  padding: 13px 0;
+
+                  img {
+                    width: 90px;
+                    height: 90px;
+                  }
+                }
+              }
+            }
+
+          }
         }
 
-        span {
-          height: 18px;
+        .sku-ared-footer {
+          height: 41px;
+          background: #fff;
+          align-items: center;
+          display: flex;
+          justify-content: space-between;
+          padding: 0 12px;
           font-size: 13px;
-          font-weight: 500;
+          font-weight: 400;
           line-height: 18px;
-          color: rgba(64, 64, 64, 1);
-          opacity: 0.75;
+          color: rgba(0, 0, 0, .87);
+          border-radius: 10px;
+
+          .sku-footer-left {
+            display: flex;
+            align-items: center;
+
+            img {
+              height: 14px;
+              width: 14px;
+              padding-right: 4px;
+            }
+          }
+
         }
       }
+
+
     }
 
-    .sku-detail-title {
-      height: 44px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      font-size: 13px;
-      font-weight: 400;
-      color: rgba(64, 64, 64, 1);
-      opacity: 0.87;
-      background-color: #fff;
-    }
 
-    .sku-detail {
-      img {
-        height: 780px;
-        width: 100%;
-      }
-    }
 
 
     .buy-info {
-      height: 186px;
       width: 375px;
       background-color: #fff;
 
       .good-des {
         padding: 0 12px;
-        height: 136px;
+        height: 150px;
 
         .buy-content {
           display: flex;
@@ -282,7 +467,7 @@
 
         .buy-num-row {
           display: flex;
-          height: 40px;
+          height: 50px;
           justify-content: space-between;
           align-items: center;
 
@@ -310,7 +495,16 @@
               height: 18px;
               background: rgba(242, 242, 242, 1);
               border-radius: 50%;
-              opacity: 1;
+              position: relative;
+            }
+
+            .extend::after {
+              content: '';
+              position: absolute;
+              top: -10px;
+              left: -10px;
+              right: -10px;
+              bottom: -10px;
             }
 
             .subtract {
@@ -333,16 +527,17 @@
       }
 
       .enter-buy {
-        width: 375px;
-        height: 50px;
-        background: rgba(255, 99, 4, 1);
-        opacity: 1;
-        font-size: 19px;
+        width: 343px;
+        height: 40px;
+        background: linear-gradient(270deg, rgba(250, 177, 68, 1) 0%, rgba(250, 177, 68, 1) 1%, rgba(252, 142, 89, 1) 100%);
+        box-shadow: 0px 1px 6px rgba(252, 144, 88, 0.5);
+        font-size: 15px;
         font-weight: 400;
-        line-height: 26px;
         color: rgba(255, 255, 255, 1);
         text-align: center;
-        line-height: 49px;
+        line-height: 40px;
+        border-radius: 20px;
+        margin: 0 auto;
       }
     }
 
@@ -408,7 +603,7 @@
   }
 
   .good-card {
-    height: 49px;
+    padding: 6px 0;
     position: fixed;
     width: 100%;
     bottom: 0;
@@ -417,6 +612,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 0 5px;
+    box-sizing: border-box;
 
     .card-left {
       flex: 0 0 155px;
@@ -456,25 +653,31 @@
     .sold {
       flex: 1;
       width: 220px;
-      height: 100%;
-      background: rgba(0, 0, 0, .3);
-      line-height: 49px;
+      height: 40px;
+      line-height: 40px;
       font-size: 15px;
       font-weight: 400;
       color: rgba(255, 255, 255, 1);
       text-align: center;
+      background: rgba(178, 178, 178, 1);
+      box-shadow: 0px 1px 6px rgba(178, 178, 178, 0.5);
+      border-radius: 20px;
     }
 
     .card-right {
       flex: 1;
+      height: 40px;
       position: relative;
       display: flex;
       align-items: center;
-      line-height: 49px;
+      line-height: 40px;
       font-size: 15px;
       font-weight: 400;
       color: rgba(255, 255, 255, 1);
       text-align: center;
+      border-radius: 20px;
+      overflow: hidden;
+
 
       button {
         position: absolute;
@@ -490,17 +693,26 @@
       }
 
       .add-card {
+        flex: 1;
         width: 110px;
-        height: 49px;
-        background: rgba(254, 168, 53, 1);
+        width: 110px;
+        height: 40px;
+        background: linear-gradient(90deg, rgba(250, 177, 68, 1) 0%, rgba(252, 142, 89, 1) 100%);
         z-index: 11;
       }
 
       .buy {
         width: 110px;
-        height: 49px;
+
+        height: 40px;
+        background: rgba(255, 99, 4, 1);
         background: rgba(255, 99, 4, 1);
       }
     }
+  }
+
+  .nav-bar-view-ipx {
+    padding-bottom: 34px;
+    padding-top: 6px;
   }
 }

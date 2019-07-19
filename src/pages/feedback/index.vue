@@ -12,7 +12,7 @@
     </div>
 
     <div class="isSuccess" v-if="isSuccess">
-      <img src="https://img.icaixiaochu.com/G84XO8i0zMcZvyt5" alt>
+      <img src="https://img.icaixiaochu.com/G84XO8i0zMcZvyt5.png" alt>
       <p>意见反馈成功</p>
     </div>
     <form @submit="submit" report-submit="true">
@@ -62,7 +62,14 @@ export default {
       })
     }
   },
-  mounted () {}
+  mounted () {
+    console.log(this.$data)
+    this.$data = {
+      text: '',
+      isSuccess: false,
+      submitText: '提交'
+    }
+  }
 }
 </script>
 <style lang="less" scoped>

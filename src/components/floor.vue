@@ -1,15 +1,15 @@
 <template>
-  <div class="floor">
+  <div class="floor" v-if="categoryAreaList.length>=1">
     <div class="head">
       <div class="title">热门分类</div>
       <p>热销好物</p>
     </div>
     <div class="floor-wrp">
-      <div class="floor-list" v-for="(item, index) in skuitem" :key="index">
+      <div class="floor-list" v-for="(item, index) in categoryAreaList" :key="index">
         <div class="floor-banner" @click="jumpCategory(item.category_id)">
           <img :src="item.image" alt>
         </div>
-        <slide :skulist="item.goods"/>
+        <slide :skulist="item.goods" :id="item.category_id" @jump="jumpCategory"/>
       </div>
     </div>
   </div>
@@ -18,18 +18,21 @@
 import { mapActions } from 'vuex'
 import slide from '@/components/slide'
 export default {
-  props: {
-    skuitem: {
-      type: Array,
-      default: []
+  data () {
+    return {
+      categoryAreaList: []
     }
   },
   components: {
     slide
   },
   methods: {
+    getCategory () {
+      this.$http.get('/getIndexGoods').then(res => {
+        this.categoryAreaList = Object.freeze(res.data)
+      })
+    },
     addCard (item) {
-      console.log(item)
       this.create_db(item)
     },
     navtodetail (item) {
@@ -40,10 +43,13 @@ export default {
     },
     jumpCategory (id) {
       wx.navigateTo({
-        url: `../skulist/main?id=${id}`
+        url: `../categorydata/main?id=${id}`
       })
     },
     ...mapActions(['create_db'])
+  },
+  mounted () {
+    this.getCategory()
   }
 }
 </script>

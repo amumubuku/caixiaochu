@@ -1,5 +1,10 @@
 <template>
   <div class="member">
+         <navigation-bar :title="'会员专区'"
+            :navBackgroundColor="'#fff'"
+            :titleColor="'#000'"
+            :back-visible="true"
+            :home-path="'/pages/index/main'"></navigation-bar>
       <banner :banner="banner"/>
       <div class="member-wrp">
       <goodlist :goods="goods"/>
@@ -10,6 +15,7 @@
 <script>
 import banner from '@/components/banner'
 import goodlist from '@/components/goodlist'
+import navigationBar from '@/components/navigationBar.vue'
 export default {
   data () {
     return {
@@ -19,7 +25,8 @@ export default {
   },
   components: {
     banner,
-    goodlist
+    goodlist,
+    navigationBar
   },
   methods: {
     getVipgoods () {
@@ -36,6 +43,15 @@ export default {
   mounted () {
     this.getVipgoods()
     this.getBnaner()
+  },
+  onShareAppMessage: function (res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+    }
+    return {
+      title: '会员专区',
+      path: 'pages/member/main'
+    }
   }
 }
 </script>

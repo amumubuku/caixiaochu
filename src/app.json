@@ -3,9 +3,9 @@
     "pages/index/main",
     "pages/category/main",
     "pages/vip/main",
-    "pages/shop/main",
+    "pages/cart/main",
     "pages/my/main",
-    "pages/skulist/main",
+    "pages/categorydata/main",
     "pages/goods/main",
     "pages/pointgoods/main",
     "pages/search/main",
@@ -31,7 +31,11 @@
     "pages/myscore/main",
     "pages/login/main",
     "pages/orderdetail/main",
-    "pages/payorder/main"
+    "pages/map/main",
+    "pages/payorder/main",
+    "pages/refunded/main",
+    "pages/refundeddetail/main",
+    "pages/service/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -64,7 +68,7 @@
         "text": "会员"
       },
       {
-        "pagePath": "pages/shop/main",
+        "pagePath": "pages/cart/main",
         "iconPath": "static/images/ic_menu_shoping_nor.png",
         "selectedIconPath": "static/images/ic_menu_shoping_pressed.png",
         "text": "购物车"
@@ -84,7 +88,7 @@
   },
   "permission": {
     "scope.userLocation": {
-      "desc": "菜小厨默认获取你的位置信息,为了更多便捷的服务"
+      "desc": "菜小厨默认获取你的位置信息,为了提供方便便捷的服务"
     }
   },
   "debug": false

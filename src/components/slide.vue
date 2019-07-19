@@ -7,19 +7,14 @@
           v-for="(item,index) in skulist"
           :key="index"
           @click.stop="navtodetail(item)"
+          :class="{'text-danger': index === skulist.length-1}"
         >
-          <div class="tag-icon" v-if="index === 0">爆款</div>
-          <!-- <form-button></form-button> -->
           <div class="item-top">
-            <img :src="item.cover" mode="scaleToFill" alt>
+            <img :src="item.cover" mode="aspectFill"  alt />
           </div>
           <div class="footer-info">
             <div class="footer-title">
-              <text
-                v-if="item.label"
-                class="couple"
-                style="background: #E2F3FF; color: #26A6FF"
-              >{{item.label}}</text>
+              <img class="tag-icon" :src="item.label_id" alt v-if="item.label_id" />
               <h5 class="footer-text">{{item.title}}</h5>
             </div>
             <div class="footer-menu">
@@ -33,14 +28,20 @@
                     :class="item.sku.vip_price>1? 'dash-price' : 'dash-price small'"
                   >¥{{item.sku.vip_price>1 ? item.sku.vip_price : item.sku.normal_price}}</div>
                   <div class="vip-price" v-if="item.sku.vip_price>1">
-                    <img src="http://p2.icaixiaochu.com/vip-icon.png" alt>
+                    <img src="http://p2.icaixiaochu.com/vip-icon.png" alt />
                   </div>
                 </div>
               </div>
               <div class="menu-right" @click.stop="addCard(item)">
-                <img src="http://p2.icaixiaochu.com/card.png" alt>
+                <img src="http://p2.icaixiaochu.com/card.png" alt />
               </div>
             </div>
+          </div>
+        </div>
+        <div class="more-goods" @click.stop="jumpCategory()">
+          <div class="content">
+            <p>查看更多</p>
+            <img src="https://img.icaixiaochu.com/76BRQDjYW5N60AnQ" alt />
           </div>
         </div>
       </div>
@@ -55,6 +56,10 @@ export default {
     skulist: {
       type: Array,
       default: []
+    },
+    id: {
+      type: Number,
+      default: 0
     }
   },
   methods: {
@@ -66,11 +71,8 @@ export default {
         url: `../goods/main?id=${item.goods_id}`
       })
     },
-    jumpCategory (item) {
-      var categoryId = item.id
-      wx.navigateTo({
-        url: `../skulist/main?id=${categoryId}`
-      })
+    jumpCategory () {
+      this.$emit('jump', this.id)
     },
     ...mapActions(['create_db'])
   }
@@ -82,9 +84,8 @@ export default {
   .shop-list {
     display: flex;
     flex-flow: row nowrap;
-    padding-left: 16px;
-    padding: 12px 0 20px 16px;
-
+    padding: 12px 0px 20px 16px;
+    align-items: center;
     .list {
       position: relative;
       flex: 0 0 130px;
@@ -98,17 +99,9 @@ export default {
       overflow: hidden;
       position: relative;
       .tag-icon {
-        position: absolute;
-        width: 42px;
-        height: 20px;
-        background: rgba(255, 99, 4, 1);
-        text-align: center;
-        box-shadow: 0px 2px 6px rgba(255, 99, 4, 0.33);
-        border-radius: 0px 0px 5px 0px;
-        font-size: 13px;
-        font-weight: bold;
-        line-height: 20px;
-        color: rgba(255, 255, 255, 1);
+        width: 28px;
+        height: 14px;
+        padding-right: 4px;
       }
       .footer-info {
         padding: 6px 8px 12px 8px;
@@ -216,6 +209,37 @@ export default {
         img {
           width: 100%;
           height: 100%;
+        }
+      }
+    }
+    .text-danger {
+      margin: 0;
+    }
+    .more-goods {
+      flex: 0 0 63px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .content {
+        display: flex;
+        flex: 0 0 43px;
+        height: 164px;
+        background: rgba(52, 52, 52, 0.8);
+        border-radius: 0px 5px 5px 0px;
+        align-items: center;
+        justify-content: center;
+        flex-flow: column wrap;
+        img {
+          width: 17px;
+          height: 17px;
+        }
+        p {
+          width: 13px;
+          height: 66px;
+          font-size: 13px;
+          font-weight: 400;
+          line-height: 16px;
+          color: rgba(255, 255, 255, 1);
         }
       }
     }

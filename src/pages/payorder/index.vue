@@ -2,7 +2,7 @@
   <div class="order-detail" v-if="orderDetail">
     <div class="order-state">
       <div class="order-icon">
-        <img src="http://p2.icaixiaochu.com/3q60ua1hd1r4Hczi" alt>
+        <img src="http://p2.icaixiaochu.com/3q60ua1hd1r4Hczi.png" alt>
       </div>
       <p>{{orderDetail.status == 0? '待支付':orderDetail.status == 1? '待配送':orderDetail.status == 2? '待收货': '已完成'}}</p>
     </div>

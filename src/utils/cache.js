@@ -1,7 +1,6 @@
+
 const SEARCH_KEY = '_search_'
-const PLAY_KEY = '_paly_'
 const SEARCH_MAX_LEN = 10
-const PLAYLIST_MAX_LEN = 220
 function insertArray (arr, val, compare, maxLen) {
   const index = arr.findIndex(compare)
   if (index === 0) {
@@ -30,7 +29,7 @@ export function saveSearch (query) {
   return searches
 }
 export function deleteSearch (query) {
-  let searches = wx.getStorageSync(SEARCH_KEY) || []
+  let searches = wx.getStorageSync(SEARCH_KEY)
   deleteFromArray(searches, (item) => {
     return item === query
   })
@@ -43,5 +42,5 @@ export function clearSearch () {
   return []
 }
 export function loadSearch () {
-  return wx.getStorageSync(SEARCH_KEY) || []
+  return wx.getStorageSync(SEARCH_KEY)
 }

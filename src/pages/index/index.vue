@@ -3,21 +3,21 @@
     <div class="header">
       <div class="header-wrp">
         <div class="location-box" @click="toAddresPage">
-          <img src="http://p2.icaixiaochu.com/location.png" alt class="location-icon">
+          <img src="http://p2.icaixiaochu.com/location.png" alt class="location-icon" />
           <p>{{cityName}}</p>
-          <img src="http://p2.icaixiaochu.com/down.png" alt>
+          <img src="http://p2.icaixiaochu.com/down.png" alt />
         </div>
         <form class="form" @click="toSearchPage">
           <div class="btn">
-            <img src="http://p2.icaixiaochu.com/search.png" alt>
+            <img src="http://p2.icaixiaochu.com/search.png" alt />
             <span>请输入关键字</span>
           </div>
         </form>
       </div>
     </div>
     <div class="app-wrp">
-       <brand/>
-      <banner :data="banner"/>
+      <brand />
+      <banner :data="banner" />
       <div class="catogory">
         <div class="catogory-wrp">
           <div
@@ -26,43 +26,43 @@
             :key="index"
             @click="jumpCatogory(item)"
           >
-            <img :src="item.icon" alt>
+            <img :src="item.icon" alt />
             <p>{{item.title}}</p>
           </div>
         </div>
       </div>
-      <div class="activity">
+      <div class="activity" v-if="Activity.length>=1">
         <div class="activity-left" @click="toActivity">
           <div class="head">
             <h4>限时抢</h4>
             <div class="time-row">
-              <div class="time-col">{{countDownArr[0].hou}}</div>:
-              <div class="time-col">{{countDownArr[0].min}}</div>:
-              <div class="time-col">{{countDownArr[0].sec}}</div>
+              <div class="time-col">{{countDownTime.hou}}</div>:
+              <div class="time-col">{{countDownTime.min}}</div>:
+              <div class="time-col">{{countDownTime.sec}}</div>
             </div>
           </div>
-          <p>{{limit.hour}}点场 距离下场还有</p>
-          <img :src="limit.image" alt>
+          <p style="padding-left:13px">{{Activity[0].hour+Activity[0].description}}</p>
+          <img :src="Activity[0].image" mode="aspectFill" alt />
         </div>
         <div class="activity-right">
           <div class="top" @click="toDiscount">
             <div class="info">
-              <p>店长推荐</p>
-              <span>好物多多不容错过</span>
-              <text>去查看</text>
+              <p>{{Activity[1].title}}</p>
+              <span>{{Activity[1].description}}</span>
+              <text>{{Activity[1].btn_str}}</text>
             </div>
             <div class="icon">
-              <img src="http://img.icaixiaochu.com/shagnhaiqing.png" alt>
+              <img :src="Activity[1].image" mode="aspectFill" alt />
             </div>
           </div>
           <div class="but" @click="toCoupon">
             <div class="info">
-              <p>领劵中心</p>
-              <span>福利多多不容错过</span>
-              <text>去领卷</text>
+              <p>{{Activity[2].title}}</p>
+              <span>{{Activity[2].description}}</span>
+              <text>{{Activity[2].btn_str}}</text>
             </div>
             <div class="icon">
-              <img src="http://p2.icaixiaochu.com/mOPLA7r1jzwMuisnw9Jk.png" alt>
+              <img :src="Activity[2].image" alt />
             </div>
           </div>
         </div>
@@ -71,27 +71,28 @@
         <div class="exclusive-wrp">
           <div class="ex-title">
             <div class="text">
-                   <div class="head">
-          <div class="new-title">新品推荐</div>
-          <p class="small">不容错过</p>
-        </div>
+              <div class="head">
+                <div class="new-title">新品推荐</div>
+                <p class="small">不容错过</p>
+              </div>
             </div>
             <div class="more" @click="tonewarea">
               <p class="more-small">查看更多</p>
-              <img src="http://p2.icaixiaochu.com/more.png" alt class="more-icon">
+              <img src="http://p2.icaixiaochu.com/more.png" alt class="more-icon" />
             </div>
           </div>
           <div class="shop">
             <scroll-view width="100%" class="scroll" scroll-x="true">
-              <div class="shop-list">
+              <div class="shop-list" v-if="newSkulist.length>=1">
                 <div
                   class="list"
                   v-for="(item,index) in newSkulist"
                   :key="index"
                   @click.stop="navtodetail(item)"
+                  :class="{'text-danger': index === newSkulist.length-1}"
                 >
                   <div class="item-top">
-                    <img :src="item.cover" mode="scaleToFill" alt>
+                    <img :src="item.cover" mode="aspectFill" alt />
                   </div>
                   <div class="footer-info">
                     <div class="footer-title">
@@ -108,9 +109,15 @@
                         </div>
                       </div>
                       <div class="menu-right" @click.stop="addCard(item)">
-                        <img src="http://p2.icaixiaochu.com/card.png" alt>
+                        <img src="http://p2.icaixiaochu.com/card.png" alt />
                       </div>
                     </div>
+                  </div>
+                </div>
+                <div class="more-goods" @click.stop="tonewarea">
+                  <div class="content">
+                    <p>查看更多</p>
+                    <img src="https://img.icaixiaochu.com/76BRQDjYW5N60AnQ" alt />
                   </div>
                 </div>
               </div>
@@ -118,9 +125,9 @@
           </div>
         </div>
       </div>
-      <floor :skuitem="categoryAreaList"/>
+      <floor />
       <div class="hot-container">
-        <recommend :goods="recommend"/>
+        <recommend :goods="recommendGoods" />
       </div>
     </div>
   </div>
@@ -131,7 +138,7 @@ import brand from '@/components/brand'
 import banner from '@/components/bannerslide'
 import floor from '@/components/floor'
 import { setTabBarBadge } from '@/utils'
-import {reverseGeocoder} from '@/utils/address'
+import { reverseGeocoder } from '@/utils/address'
 import recommend from '@/components/recommend'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 import QQMapWX from 'qqmap-wx-jssdk'
@@ -145,14 +152,14 @@ export default {
       location: '',
       navlist: [],
       banner: [],
-      categoryAreaList: [],
-      recommend: [],
+      recommendGoods: [],
       countDownList: [],
       limit: [],
-      goodsList: [{actEndTime: ''}],
-      countDownArr: [{}],
+      goodsList: [{ actEndTime: '' }],
+      countDownTime: '',
       page: 1,
-      loading: true
+      loading: false,
+      Activity: []
     }
   },
   computed: {
@@ -167,9 +174,8 @@ export default {
   onReachBottom () {
     if (this.loading) {
       this.page++
-      setTimeout(() => {
-        this.getHotGoods()
-      }, 70)
+      this.loading = false
+      this.getHotGoods(this.page)
     }
   },
   onShow () {
@@ -185,20 +191,40 @@ export default {
     this.getCurLocation()
     this.getHotGoods()
     this.getprodectlist()
+    this.appInfo()
+    let _this = this
+    wx.getSystemInfo({
+      success: result => {
+        if (result.model.search('iPhone X') != -1) {
+          _this.globalData.isIPX = true
+        }
+        wx.setStorageSync('model', result.model)
+      },
+      fail: () => {},
+      complete: () => {}
+    })
   },
   methods: {
-    getHotGoods () {
-      this.$http.get('/fetchHotGoods', {page: this.page}).then(res => {
-        if (res.data.length < 1 && this.page > 1) {
-          this.loading = false
+    getHotGoods (page = 1) {
+      this.$http.get('/fetchHotGoods', { page }).then(res => {
+        if (res.data.length < 1 && this.page >= 1) {
           wx.showToast({
-            title: '没有更多订单了',
+            title: '没有商品了',
             icon: 'none',
             duration: 2000
           })
           return
         }
-        this.recommend = this.recommend.concat(res.data)
+        this.loading = true
+        this.recommendGoods = Object.freeze(
+          this.recommendGoods.concat(res.data)
+        )
+      })
+    },
+    appInfo () {
+      this.$http.post('/getNav').then(res => {
+        this.Activity = res.data
+        this.countDown()
       })
     },
     Result (data) {
@@ -211,34 +237,28 @@ export default {
     },
     countDown () {
       let newTime = new Date().getTime()
-      let endTimeList = [this.limit.time]
-      let countDownArr = []
-      endTimeList.forEach(o => {
-        let endTime = new Date(o).getTime()
-        let obj = null
-        if (endTime - newTime > 0) {
-          let time = (endTime - newTime) / 1000
-          let day = parseInt(time / (60 * 60 * 24))
-          let hou = parseInt(time % (60 * 60 * 24) / 3600)
-          let min = parseInt(time % (60 * 60 * 24) % 3600 / 60)
-          let sec = parseInt(time % (60 * 60 * 24) % 3600 % 60)
-          obj = {
-            day: this.timeFormat(day),
-            hou: this.timeFormat(hou),
-            min: this.timeFormat(min),
-            sec: this.timeFormat(sec)
-          }
-        } else { // 活动已结束，全部设置为'00'
-          obj = {
-            day: '00',
-            hou: '00',
-            min: '00',
-            sec: '00'
-          }
+      let countDownTime = this.Activity[0].time
+      let endTime = new Date(countDownTime).getTime()
+      let obj = null
+      if (endTime - newTime > 0) {
+        let time = (endTime - newTime) / 1000
+        let day = parseInt(time / (60 * 60 * 24))
+        let hou = parseInt((time % (60 * 60 * 24)) / 3600)
+        let min = parseInt(((time % (60 * 60 * 24)) % 3600) / 60)
+        let sec = parseInt(((time % (60 * 60 * 24)) % 3600) % 60)
+        obj = {
+          day: this.timeFormat(day),
+          hou: this.timeFormat(hou),
+          min: this.timeFormat(min),
+          sec: this.timeFormat(sec)
         }
-        countDownArr.push(obj)
-      })
-      this.countDownArr = countDownArr
+      } else {
+        // 活动已结束，全部设置为'00'
+        this.appInfo()
+        return
+      }
+
+      this.countDownTime = obj
       setTimeout(this.countDown, 1000)
     },
     addCard (item) {
@@ -273,33 +293,15 @@ export default {
       this.$http.get('/getIndexHead').then(res => {
         this.banner = res.data.slide_show
         this.navlist = res.data.navlist
-      })
-      this.$http.post('/getNextPurchase').then(res => {
-        // console.log(Date.parse(new Date()), res.data.time)
-        // res.data.time = formatTime(new Date(res.data.time * 1000))
-        res.data.time = res.data.time
-        this.goodsList[0].actEndTime = res.data.time
-        this.limit = res.data
-        this.countDown()
-      })
-      this.$http.get('/getIndexGoods').then(res => {
-        this.categoryAreaList = res.data
-      })
-      this.$http.get('/getNewGoods').then(res => {
-        this.newSkulist = res.data
+        this.$http.get('/getNewGoods').then(res => {
+          this.newSkulist = res.data
+        })
       })
       wx.stopPullDownRefresh()
-      // get('/index').then(res => {
-      //   this.newSkulist = res.data.newSkulist.itemList
-      //   this.navlist = res.data.navlist
-      //   this.banner = res.data.banner
-      //   this.categoryAreaList = res.data.categoryAreaList
-      //   this.recommend = res.data.recommend
-      // })
     },
     jumpCatogory (item) {
       wx.navigateTo({
-        url: `../skulist/main?id=${item.id}`
+        url: `../categorydata/main?id=${item.id}`
       })
     },
     navtodetail (item) {
@@ -319,15 +321,16 @@ export default {
     },
     ...mapActions(['setUser', 'InfoCart']),
     getCurLocation () {
-      let _this = this
       reverseGeocoder(qqMapSdk).then(res => {
-        _this.setCityname(res.result.address)
-        _this.cityList = res.result.pois
-        _this.city = res.result.address_component.city
+        this.setCityname(res.result.address)
+        this.cityList = res.result.pois
+        this.city = res.result.address_component.city
       })
     }
   },
   onPullDownRefresh () {
+    this.page = 1
+    this.getHotGoods()
     this.getprodectlist()
   },
   onShareAppMessage: function (res) {

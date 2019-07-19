@@ -2,7 +2,7 @@
   <div class="coupon">
     <banner :banner="banner"/>
     <div class="null-coupon-wrp" v-if="!coupons.length>=1">
-      <img src="https://img.icaixiaochu.com/3CdMibRjn1kKjMMA" alt>
+      <img src="https://img.icaixiaochu.com/3CdMibRjn1kKjMMA.png" alt>
       <p>暂无可领取优惠券</p>
     </div>
     <div class="coupon-list">

@@ -12,7 +12,7 @@
       >
         <div v-for="(item, index) in banner" :key="index"  @click="jump(item)">
           <swiper-item class="swiper-item">
-            <img :src="item.image" class="slide-image">
+            <img :src="item.image" class="slide-image" mode="scaleToFill">
           </swiper-item>
         </div>
       </swiper>

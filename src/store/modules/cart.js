@@ -9,10 +9,10 @@ const state = {
 }
 const mutations = {
   UPDATE_CART: (state, carts) => {
-    state.cartList.push(carts)
+    state.cartList = carts
   },
   UPDATE_INVALID: (state, data) => {
-    state.invaldGoods.push(data)
+    state.invaldGoods = data
   },
   TOGGLE_TYPE: (state, {
     index,
@@ -126,14 +126,13 @@ const actions = {
   create_db ({
     commit
   }, shop) {
-    console.log(shop)
     if (wx.getStorageSync('userInfo') && wx.getStorageSync('token')) {
       request.post('addCart', {
         goods_id: shop.goods_id,
         sku_id: shop.sku.id,
         number: 1
       }).then(res => {
-        if (res.status === 1) {
+        if (res.status) {
           let cart = {
             stock: shop.stock,
             cover: shop.cover,
@@ -168,7 +167,7 @@ const actions = {
     request.post('/plus', {
       cart_id: cartid
     }).then(res => {
-      if (res.status === 1) {
+      if (res.status) {
         commit('ADD_DB', index)
         commit('UPDATE_LOCAL')
       }
@@ -183,7 +182,7 @@ const actions = {
     request.post('/reduce', {
       cart_id: cartid
     }).then(res => {
-      if (res.status === 1) {
+      if (res.status) {
         commit('REDUCE_DB', index)
         commit('UPDATE_LOCAL')
       }
@@ -198,7 +197,7 @@ const actions = {
     request.post('deleteCart', {
       cart_id: cartid
     }).then(res => {
-      if (res.status === 1) {
+      if (res.status) {
         commit('DELETE_DB', index)
         commit('UPDATE_LOCAL')
       }
@@ -213,10 +212,11 @@ const actions = {
   InfoCart ({
     commit
   }) {
-    commit('EMPTY_CARTS')
+    // commit('EMPTY_CARTS')
     request.post('/fetchCart').then(res => {
       wx.stopPullDownRefresh()
-
+      var data1 = []
+      var data2 = []
       res.data.forEach(element => {
         let data = {
           cover: element.good.cover,
@@ -235,12 +235,13 @@ const actions = {
           label: element.good.label
         }
         if (element.goods_status) {
-          commit('UPDATE_CART', data)
+          data1.push(data)
         } else {
-          commit('UPDATE_INVALID', data)
+          data2.push(data)
         }
       })
-      commit('UPDATE_LOCAL')
+      commit('UPDATE_CART', data1)
+      commit('UPDATE_INVALID', data2)
     })
   },
   check_db ({

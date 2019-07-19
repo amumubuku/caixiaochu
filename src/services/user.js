@@ -3,6 +3,7 @@
  */
 import request from '@/utils/request'
 import util from '@/utils/util'
+import {setStorageSync, getStorageSync} from '@/utils/storage'
 /**
  * 调用微信登录
  */
@@ -17,8 +18,8 @@ function loginByWeixin (iv, encryptedData) {
         encryptedData
       }).then(res => {
         if (res.status === 1) {
-          wx.setStorageSync('userInfo', res.data.user)
-          wx.setStorageSync('token', res.data.token)
+          setStorageSync('userInfo', res.data.user)
+          setStorageSync('token', res.data.token)
           resolve(res.data)
         } else {
           reject(res)
@@ -36,7 +37,7 @@ function loginByWeixin (iv, encryptedData) {
  */
 function checkLogin () {
   return new Promise(function (resolve, reject) {
-    if (wx.getStorageSync('userInfo') && wx.getStorageSync('token')) {
+    if (getStorageSync('userInfo') && getStorageSync('token')) {
       resolve(true)
     } else {
       reject(false)

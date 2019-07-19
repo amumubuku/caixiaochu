@@ -1,3 +1,4 @@
 {
-  "navigationBarTitleText": "限时抢"
+  "navigationBarTitleText": "限时抢",
+  "navigationStyle":"custom"
 }

@@ -1,5 +1,10 @@
 <template>
   <div class="activity">
+     <navigation-bar :title="'限时抢'"
+            :navBackgroundColor="'#fff'"
+            :titleColor="'#000'"
+            :back-visible="true"
+            :home-path="'/pages/index/main'"></navigation-bar>
     <div class="time-list">
       <scroll-view
         width="100%"
@@ -54,7 +59,7 @@
         >
           <div class="good-cover">
             <div class="tag-box" v-if="index ===0 ">必抢精品</div>
-            <img :src="item.cover" alt>
+            <img :src="item.cover"  mode="aspectFill" alt>
           </div>
           <div class="good-info">
             <div class="good-title">{{item.title}}</div>
@@ -81,7 +86,7 @@
               <div class="buy" v-else :class="[item.sku.sold >= item.sku.stock?'buy-tag': '']">
                 <p>{{item.sku.sold >= item.sku.stock ? '已售罄':'马上抢'}}</p>
                 <img
-                  src="https://img.icaixiaochu.com/1n7tGgHQk7USEDBG"
+                  src="https://img.icaixiaochu.com/1n7tGgHQk7USEDBG.png"
                   v-if="item.sku.sold != item.sku.stock"
                   alt
                 >
@@ -92,13 +97,14 @@
       </scroll-view>
     </div>
     <div class="null-good-list" v-if="!goodList.length >= 1">
-      <img src="https://img.icaixiaochu.com/1@2x.pngFO9zGMz3P6mUD3Wc" alt>
+      <img src="https://img.icaixiaochu.com/1@2x.pngFO9zGMz3P6mUD3Wc.png" alt>
       <p>暂无商品发布</p>
     </div>
   </div>
 </template>
 
 <script>
+import navigationBar from '@/components/navigationBar.vue'
 export default {
   data () {
     return {
@@ -113,7 +119,8 @@ export default {
       scrollId: ''
     }
   },
-  computed: {
+  components: {
+    navigationBar
   },
   methods: {
     timeFormat (param) {
@@ -210,10 +217,7 @@ export default {
           if (res.data.data.length >= 1) {
             res.data.data.forEach(element => {
               var ele = element
-              ele.percent =
-                ele.sku.sold >= ele.sku.stock
-                  ? 1 * 100
-                  : Math.floor(ele.sku.sold / ele.sku.stock * 100)
+              ele.percent = Math.floor(ele.sku.sold / (ele.sku.stock + ele.sku.sold) * 100)
               data.push(ele)
             })
           }

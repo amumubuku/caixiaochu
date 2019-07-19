@@ -1,17 +1,16 @@
 <template>
-  <div class="recommend">
+  <div class="goods-list">
     <div class="list" v-for="(item,index) in goods" :key="index" @click="navtodetail(item)">
-      <form-button></form-button>
       <div class="item-top">
-        <img :src="item.cover"  mode="aspectFill" alt>
+        <img :src="item.cover" mode="aspectFill" alt>
       </div>
       <div class="footer-info">
         <div class="footer-title">
-              <!-- <text
+          <!-- <text
                   class="couple"
                   style="background: #E2F3FF; color: #26A6FF"
-                >{{item.label}}</text> -->
-                <img class="tag-icon" :src="item.label_id"  alt="" v-if="item.label_id">
+          >{{item.label}}</text>-->
+          <img class="tag-icon" :src="item.label_id" alt v-if="item.label_id">
           <text class="footer-text">{{item.title}}</text>
         </div>
         <div class="footer-menu">
@@ -39,16 +38,12 @@
 </template>
 <script>
 import { mapActions } from 'vuex'
-import formButton from './form-button'
 export default {
   props: {
     goods: {
       type: Array,
       default: []
     }
-  },
-  components: {
-    formButton
   },
   methods: {
     create (item) {
@@ -64,16 +59,16 @@ export default {
 }
 </script>
 <style lang="less">
-.recommend {
+.goods-list {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
-  margin: 0 8px;
+  padding: 0 16px;
+  box-sizing: border-box;
   .list {
     position: relative;
-    width: calc(50% - 16px);
+    width: 164px;
     height: 248px;
-    margin: 0 8px;
     margin-bottom: 16px;
     border-radius: 6px;
     overflow: hidden;
@@ -146,14 +141,14 @@ export default {
             font-size: 14px;
             font-family: PingFang SC;
             font-weight: 400;
-          color: rgba(32,32,32,1);
+            color: rgba(32, 32, 32, 1);
             text-align: left;
 
             margin-right: 4px;
           }
           .small {
             text-decoration: line-through;
-            color: rgba(29, 29, 29, .5);
+            color: rgba(29, 29, 29, 0.5);
           }
           .vip-price {
             width: 30px;
