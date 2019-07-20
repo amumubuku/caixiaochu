@@ -6,11 +6,15 @@
       :aria-expanded="active ? 'true' : 'false'"
       :class="active ? 'collapse-header' : 'is-active'"
     >
-
-      <div class="good-item" v-for="(item, index) in goods" @click.stop="goodDetail(item)" :key="index" >
+      <div
+        class="good-item"
+        v-for="(item, index) in goods"
+        @click.stop="goodDetail(item)"
+        :key="index"
+      >
         <div class="order-detail">
           <div class="good-cover">
-            <img :src="item.cover" alt>
+            <img :src="item.cover" alt />
           </div>
           <div class="good-des">
             <p>{{item.goods_title}}</p>
@@ -22,9 +26,9 @@
         </div>
       </div>
     </div>
-    <div class="collapse-footer" @click.stop="toggle" v-if="goods.length>2"> 
+    <div class="collapse-footer" @click.stop="toggle" v-if="goods.length>2">
       <p>{{active ? "展开更多" : "收起"}}</p>
-      <img src="http://p2.icaixiaochu.com/more.png" alt :class="active ? '' : 'normal'">
+      <img src="http://p2.icaixiaochu.com/more.png" alt :class="active ? '' : 'normal'" />
     </div>
   </div>
 </template>
@@ -73,66 +77,74 @@ export default {
   height: auto;
   transition: height 0.3s;
 }
-.touchable{
+.touchable {
 }
 .collapse {
-    .good-item {
+  width: 100%;
+  .good-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    width: 100%;
+    .order-detail {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 14px;
-      width: 100%;
-      .order-detail {
-        display: flex;
-        flex: 1;
-        padding-bottom: 4px;
-        .good-cover {
-          width: 50px;
-          height: 50px;
-          background: rgba(190, 190, 190, 0.66);
-          margin-right: 12px;
-          img {
-            width: 100%;
-            height: 100%;
-          }
-        }
-        .good-des {
-          display: flex;
-          flex-flow: column nowrap;
-          justify-content: space-between;
+      flex: 1;
+      padding-bottom: 4px;
 
-          p {
-            height: 20px;
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 20px;
-            color: rgba(0, 0, 0, 0.87);
-          }
-          .num {
-            height: 16px;
-            font-size: 11px;
-            font-weight: 400;
-            line-height: 16px;
-            color: rgba(0, 0, 0, 0.5);
-          }
+      .good-cover {
+        flex: 0 0 50px;
+        height: 50px;
+        background: rgba(190, 190, 190, 0.66);
+        margin-right: 10px;
+        img {
+          width: 100%;
+          height: 100%;
         }
       }
-      .good-price {
-        flex: 0 0 56px;
-        height: 21px;
-        font-size: 15px;
-        font-weight: bold;
-        line-height: 21px;
-        color: rgba(0, 0, 0, 0.87);
-        text-align: end;
+      .good-des {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-between;
+        flex: 1;
+        overflow: hidden;
+
+        p {
+          height: 20px;
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 20px;
+          color: rgba(0, 0, 0, 0.87);
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+        .num {
+          height: 16px;
+          font-size: 11px;
+          font-weight: 400;
+          line-height: 16px;
+          color: rgba(0, 0, 0, 0.5);
+        }
       }
     }
-    .good-item:last-child{
-      margin-bottom: 0; 
+    .good-price {
+      flex: 0 0 56px;
+      width: 1px;
+      height: 21px;
+      font-size: 15px;
+      font-weight: bold;
+      line-height: 21px;
+      color: rgba(0, 0, 0, 0.87);
+      text-align: end;
     }
   }
+  .good-item:last-child {
+    margin-bottom: 0;
+  }
+}
 .collapse-header {
-  height: 120px;
+  height: 129px;
   overflow: hidden;
 }
 .collapse-footer {
@@ -141,7 +153,7 @@ export default {
   justify-content: center;
   height: 36px;
   background-color: #fff;
-  padding:0 16px;
+  padding: 0 16px;
   box-sizing: content-box;
   position: relative;
   &:after {
@@ -154,7 +166,7 @@ export default {
     background-color: #f0f0f0;
   }
   img {
-    transition: all .5s;
+    transition: all 0.5s;
     width: 15px;
     height: 15px;
     transform: rotate(90deg);

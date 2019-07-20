@@ -13,7 +13,7 @@
       </div>
       <p>{{orderDetail.status == 0? '待支付':orderDetail.status == 1? '已支付,等待买家发货':orderDetail.status == 2? '待收货': '已完成'}}</p>
     </div>
-    <div class="address-info" v-if="false">
+    <div class="address-info" v-if="!orderDetail.delivery_type">
       <div class="address-des">
         <div class="order-icon">
           <img src="https://img.icaixiaochu.com/order-icon.png" alt />
@@ -234,7 +234,7 @@ export default {
   computed: {
     orderIcon () {
       let orderState = this.orderDetail.status
-      return orderState === 0 ? 'http://p2.icaixiaochu.com/3q60ua1hd1r4Hczi.png' : orderState === 1 ? 'http://p2.icaixiaochu.com/pJhA7sAoC5bZEqab.pngs' : orderState === 2 ? 'http://p2.icaixiaochu.com/peisongzhong.png' : 'http://p2.icaixiaochu.com/cancel.png'
+      return orderState === 0 ? 'http://p2.icaixiaochu.com/3q60ua1hd1r4Hczi.png' : orderState === 1 ? 'http://p2.icaixiaochu.com/pJhA7sAoC5bZEqab.png' : orderState === 2 ? 'http://p2.icaixiaochu.com/peisongzhong.png' : orderState === 3 ? 'http://p2.icaixiaochu.com/PZAElTLByI7WZW6d.png' : 'http://p2.icaixiaochu.com/cancel.png'
     },
     refundState () {
       if (!this.orderDetail.refund) {

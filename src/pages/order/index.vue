@@ -77,7 +77,7 @@
         <div class="shop-wrp">
           <div class="shop-head">
             <div class="shop-title">商品信息</div>
-            <div class="service" @click="selectTime">
+            <div class="service" @click="selectTime" v-if="!curSwitch">
               <p>立即配送（预计{{delivery_time}}送达）</p>
               <img src="http://p2.icaixiaochu.com/more.png" alt />
             </div>
@@ -140,7 +140,7 @@
         <div class="content">
           <div class="month">{{month}}</div>
           <div class="time-list" v-if="timelist">
-            <picker-view class="picker-view" @change="changTime" indicator-style="color:#FEA835;"	>
+            <picker-view class="picker-view" @change="changTime"  indicator-class="picker-box" indicator-style="color: #FEBC65;">
               <picker-view-column>
                 <div v-for="(item, index) in timelist" :key="index"><span style="line-height: 34px">{{item}}</span></div>
               </picker-view-column>

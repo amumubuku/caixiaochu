@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "售后订单"
+  "navigationBarTitleText": "售后订单",
+  "backgroundColor": "#ffffff",
+  "backgroundTextStyle": "dark",
+  "enablePullDownRefresh": true
 }

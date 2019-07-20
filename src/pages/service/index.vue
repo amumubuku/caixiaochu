@@ -6,24 +6,11 @@
         <p>{{orderItem.refund_status ===0?'等待商家处理':orderItem.refund_status===1? '退款成功':orderItem.refund_status===2?'拒绝退款':'主动撤销退款'}}</p>
       </div>
       <div class="goods-list">
-        <div class="good-item" v-for="(item, i) in orderItem.goods" :key="i">
-          <div class="order-detail">
-            <div class="good-cover">
-              <img :src="item.cover" alt />
-            </div>
-            <div class="good-des">
-              <p>{{item.goods_title}}</p>
-              <p class="num">数量X{{item.number}}</p>
-            </div>
-          </div>
-          <div class="good-price">
-            <p>¥{{item.real_price}}</p>
-          </div>
-        </div>
+         <collapse :selected="true" :goods="orderItem.goods"></collapse>
       </div>
       <div class="handle-wrp">
         <div class="order-info">
-          <span>共4件商品</span>
+          <span>共{{orderItem.goods.length}}件商品</span>
           <p>款项：{{orderItem.apply_money}}</p>
         </div>
         <div class="handle-col">
@@ -36,7 +23,7 @@
 </template>
 
 <script>
-import popup from '@/components/popup'
+import Collapse from '@/components/collapse'
 export default {
   data () {
     return {
@@ -54,7 +41,7 @@ export default {
       return '12px solid  #F47C85'
     }
   },
-  components: { popup },
+  components: { Collapse },
   mounted () {
     this.serviceList()
   },
@@ -90,6 +77,7 @@ export default {
     serviceList () {
       this.$http.post('/listRefund').then(res => {
         this.serviceData = res.data
+        wx.stopPullDownRefresh()
       })
     },
     toggleOpt (state) {
@@ -133,6 +121,9 @@ export default {
         urls: ['https://img.icaixiaochu.com/map-img.png'] // 需要预览的图片http链接列表
       })
     }
+  },
+  onPullDownRefresh () {
+    this.serviceList()
   }
 }
 </script>

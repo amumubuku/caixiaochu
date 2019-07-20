@@ -94,17 +94,16 @@
           <span class="text">待收货</span>
           <i class="state-icon" v-if="orderState.shipping>0">{{orderState.shipping}}</i>
         </div>
-        <div class="list-item" @click="toOrder(4)">
+        <div class="list-item" @click="service">
           <div class="item-icon">
             <img
-              src="http://p2.icaixiaochu.com/my-icon14.png"
+              src="https://img.icaixiaochu.com/service-icon.png"
               mode="aspectFit"
               alt
               style="width: 28px; height: 34px"
             >
           </div>
-          <span class="text">已完成</span>
-          <i class="state-icon" v-if="orderState.finish>0">{{orderState.finish}}</i>
+          <span class="text">售后/退款</span>
         </div>
       </div>
     </div>
@@ -201,6 +200,16 @@ export default {
       } else {
         // 用户按了拒绝按钮
       }
+    },
+    service () {
+      wx.navigateTo({
+        url: '../service/main',
+        success: (result) => {
+
+        },
+        fail: () => {},
+        complete: () => {}
+      })
     },
     toOrder (index) {
       util.checkLogin(`../myorder/main?activeIndex=${index}`)
