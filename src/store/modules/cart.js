@@ -8,11 +8,11 @@ const state = {
   invaldGoods: []
 }
 const mutations = {
-  UPDATE_CART: (state, carts) => {
-    state.cartList = carts
+  UPDATE_CART: (state, data) => {
+    state.cartList.push(data)
   },
   UPDATE_INVALID: (state, data) => {
-    state.invaldGoods = data
+    state.invaldGoods.push(data)
   },
   TOGGLE_TYPE: (state, {
     index,
@@ -212,11 +212,9 @@ const actions = {
   InfoCart ({
     commit
   }) {
-    // commit('EMPTY_CARTS')
+    commit('EMPTY_CARTS')
     request.post('/fetchCart').then(res => {
       wx.stopPullDownRefresh()
-      var data1 = []
-      var data2 = []
       res.data.forEach(element => {
         let data = {
           cover: element.good.cover,
@@ -235,13 +233,11 @@ const actions = {
           label: element.good.label
         }
         if (element.goods_status) {
-          data1.push(data)
+          commit('UPDATE_CART', data)
         } else {
-          data2.push(data)
+          commit('UPDATE_INVALID', data)
         }
       })
-      commit('UPDATE_CART', data1)
-      commit('UPDATE_INVALID', data2)
     })
   },
   check_db ({

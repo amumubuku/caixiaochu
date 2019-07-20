@@ -51,12 +51,12 @@
               </div>
             </div>
             <div class="fot-wrp">
-              <div class="fot-wrp-left">
+              <div class="fot-wrp-left" @click="selectTime">
                 <div class="box-time">
                   <p class="text1">{{delivery_time}}</p>
                   <p class="text2">自取时间</p>
                 </div>
-                <div class="more" @click="selectTime">
+                <div class="more" >
                   <img src="http://p2.icaixiaochu.com/more.png" alt />
                 </div>
               </div>
@@ -140,7 +140,7 @@
         <div class="content">
           <div class="month">{{month}}</div>
           <div class="time-list" v-if="timelist">
-            <picker-view class="picker-view" @change="changTime"  indicator-class="picker-box" indicator-style="color: #FEBC65;">
+            <picker-view class="picker-view" @change="changTime"  indicator-class="picker-box" indicator-style="color: #FEBC65;" value="0">
               <picker-view-column>
                 <div v-for="(item, index) in timelist" :key="index"><span style="line-height: 34px">{{item}}</span></div>
               </picker-view-column>
@@ -297,25 +297,27 @@ export default {
       setDefaultAddress: 'SET_DfAD'
     }),
     subOrder () {
-      if (this.goodTotal <= this.delivery.price_send) {
-        wx.showModal({
-          title: '',
-          content: `不满${this.delivery.price_send}元起送价, 不支持配送`,
-          showCancel: false,
-          confirmText: '确定',
-          confirmColor: '#FEA835',
-          success: result => {},
-          fail: () => {},
-          complete: () => {}
-        })
-        return false
+      if (!this.curSwitch) {
+        if (this.goodTotal < this.delivery.price_send) {
+          wx.showModal({
+            title: '',
+            content: `不满${this.delivery.price_send}元起送价, 不支持配送`,
+            showCancel: false,
+            confirmText: '确定',
+            confirmColor: '#FEA835',
+            success: result => {},
+            fail: () => {},
+            complete: () => {}
+          })
+          return false
+        }
       }
       let phone = this.tel
-      if (this.defaultAddress) {
+      if (this.defaultAddress || this.curSwitch) {
         if (this.curSwitch) {
           if (!/^1[3456789]\d{9}$/.test(phone)) {
             wx.showToast({
-              title: '请填写正确的手机号',
+              title: '请填写到店自取手机号',
               icon: 'none',
               duration: 2000
             })
@@ -324,7 +326,7 @@ export default {
         }
         this.$http
           .post('/createOrder', {
-            address_id: this.defaultAddress.id,
+            address_id: this.curSwitch ? '' : this.defaultAddress.id,
             coupon_id: this.conponData ? this.conponData.id : 0,
             goods: JSON.stringify(this.goods),
             delivery_time: this.delivery_time,

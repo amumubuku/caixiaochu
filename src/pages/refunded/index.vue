@@ -127,17 +127,18 @@ export default {
         return false
       }
       let total = 0
-      var selectState = this.goods.every(ele => ele.select
-      )
+      let selectState = this.goods.every(ele => ele.select)
+      let fee = parseFloat(this.orderDetail.extends.shipping_fee)
       this.goods.forEach(element => {
         if (element.select) {
-          total += element.real_price
+          total += parseFloat(element.real_price)
         }
       })
+
       if (total) {
-        this.price = selectState ? (total + this.orderDetail.extends.shipping_fee).toFixed(2) : total
+        this.price = selectState ? (total + fee).toFixed(2) : total
       }
-      return total < 0.1 ? 0 : (total - (selectState ? 0 : this.orderDetail.extends.shipping_fee)).toFixed(2)
+      return total < 0.001 ? 0 : (total - (selectState ? 0 : fee)).toFixed(2)
     }
   },
   components: { popup },
@@ -244,6 +245,14 @@ export default {
         })
       })
     },
+    Isselect () {
+      this.goods.forEach(element => {
+        if (element.select) {
+          return true
+        }
+      })
+      return false
+    },
     submitRefunded () {
       if (!this.causeId) {
         wx.showToast({
@@ -259,7 +268,12 @@ export default {
         })
         return false
       }
-      if (!this.goods.every(ele => ele.select)) {
+      this.goods.forEach(element => {
+        if (element.select) {
+
+        }
+      })
+      if (!this.Isselect) {
         wx.showToast({
           title: '请选择退款商品',
           icon: 'none',

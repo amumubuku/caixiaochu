@@ -120,10 +120,11 @@
             <p class="price-num">合计：¥{{cartInfos.price}}</p>
             <p class="coupon">优惠：¥{{cartInfos.couponPrice }}</p>
           </div>
-          <div class="card-info-rifht">
+          <div class="card-info-rifht" @click="subOrder">
             <form>
-              <div class="style1" v-if="delivery.price_send <=cartInfos.price"  @click="subOrder">立即支付</div>
-              <div class="style2" v-else>还差{{deliveryPrice}}元</div>
+              <div class="style1">立即支付</div>
+               <!-- v-if="delivery.price_send <=cartInfos.price" -->
+              <!-- <div class="style2" v-else>还差{{deliveryPrice}}元</div> -->
             </form>
           </div>
         </div>

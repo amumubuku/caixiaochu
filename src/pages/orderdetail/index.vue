@@ -11,7 +11,7 @@
       <div class="order-icon">
         <img :src="orderIcon" alt />
       </div>
-      <p>{{orderDetail.status == 0? '待支付':orderDetail.status == 1? '已支付,等待买家发货':orderDetail.status == 2? '待收货': '已完成'}}</p>
+      <p>{{orderDetail.status == 0? '待支付':orderDetail.status == 1? '已支付,等待买家发货':orderDetail.status == 2? '待收货': orderDetail.status == 3?'已完成':orderDetail.status == 4? '商家已接单':'已取消'}}</p>
     </div>
     <div class="address-info" v-if="!orderDetail.delivery_type">
       <div class="address-des">
@@ -55,17 +55,11 @@
             <p class="text1">16：09</p>
             <p class="text2">自取时间</p>
           </div>
-          <div class="more">
-            <img src="http://p2.icaixiaochu.com/more.png" alt />
-          </div>
         </div>
         <div class="fot-wrp-right">
           <div class="box-phone">
             <p class="text1">15625139874</p>
             <p class="text2">预留电话</p>
-          </div>
-          <div class="more">
-            <img src="http://p2.icaixiaochu.com/more.png" alt />
           </div>
         </div>
       </div>
@@ -131,7 +125,7 @@
     </div>
     <div class="prompt-msg">如果收到的商品出现质量、错发、漏发等情况可联系客服</div>
     <div class="order-fuc-wrp">
-      <div class="kefu-btn" v-if="orderDetail.status && orderDetail.status != 2">
+      <div class="kefu-btn" v-if="orderDetail.status && orderDetail.status != 2 &&orderDetail.status!=4">
         <button open-type="contact">联系客服</button>
       </div>
       <div class="order-wrp-state" v-else>
@@ -141,7 +135,7 @@
           v-if="orderDetail.refund && !orderDetail.refund.refund_status && orderDetail.status"
         >撤销退款申请
         </div>
-        <div class="order-tag" @click="orderHandle" v-else>{{orderDetail.status && orderDetail.status !=5?'申请退款':'取消订单'}}</div>
+        <div class="order-tag" @click="orderHandle" v-else>{{orderDetail.status && orderDetail.status !=5 ?'申请退款':'取消订单'}}</div>
         <div class="fnc-btn">
           <div class="parment"  @click="payment" v-if="orderDetail.status ===0">
             <p>去支付</p>
@@ -234,7 +228,7 @@ export default {
   computed: {
     orderIcon () {
       let orderState = this.orderDetail.status
-      return orderState === 0 ? 'http://p2.icaixiaochu.com/3q60ua1hd1r4Hczi.png' : orderState === 1 ? 'http://p2.icaixiaochu.com/pJhA7sAoC5bZEqab.png' : orderState === 2 ? 'http://p2.icaixiaochu.com/peisongzhong.png' : orderState === 3 ? 'http://p2.icaixiaochu.com/PZAElTLByI7WZW6d.png' : 'http://p2.icaixiaochu.com/cancel.png'
+      return orderState === 0 ? 'http://p2.icaixiaochu.com/3q60ua1hd1r4Hczi.png' : orderState === 1 ? 'http://p2.icaixiaochu.com/pJhA7sAoC5bZEqab.png' : orderState === 2 ? 'http://p2.icaixiaochu.com/peisongzhong.png' : orderState === 3 ? 'http://p2.icaixiaochu.com/PZAElTLByI7WZW6d.png' : orderState === 4 ? 'http://p2.icaixiaochu.com/pJhA7sAoC5bZEqab.png' : 'http://p2.icaixiaochu.com/cancel.png'
     },
     refundState () {
       if (!this.orderDetail.refund) {
@@ -267,6 +261,11 @@ export default {
     selectCause (item) {
       this.causeId = item.id
       this.causeTitle = item.title
+      this.$http.post('/cancelUnpayOrder', {cancel_id: this.causeId, order_id: this.orderId}).then(res => {
+        if (res.status) {
+          wx.navigateBack({ changed: true })
+        }
+      })
     },
     orderHandle () {
       if (this.orderDetail.status) {
@@ -392,6 +391,16 @@ export default {
   },
   onPullDownRefresh () {
     this.getcoupon(this.status)
+  },
+  onUnload () {
+    var pages = getCurrentPages()
+    var currentPage = pages[pages.length - 2]
+    var url = currentPage.route
+    if (url === 'pages/order/main') {
+      wx.navigateBack({
+        delta: 1
+      })
+    }
   }
 }
 </script>
