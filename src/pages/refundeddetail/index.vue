@@ -6,7 +6,7 @@
         <div class="top">
           <img v-if="refundedData.refund.refund_status!=3" src="https://img.icaixiaochu.com/time-icon.png" alt />
           <img v-else src="https://img.icaixiaochu.com/cancel.png" alt />
-          <p>等待商家处理</p>
+          <p>{{refundTitle}}</p>
         </div>
         <p v-if="refundedData.refund.refund_status===0">商家将在{{countDownTime.hou}}小时{{countDownTime.min}}分内处理</p>
         <p v-else>{{refundDes}}</p>
@@ -120,14 +120,14 @@ export default {
         return ''
       }
       var state = this.refundedData.refund.refund_status
-      return state === 0 ? '#FABE6D' : state === 1 ? '#77C4FA' : state === 2 ? '#F52D3C' : '#000000'
+      return state === 0 ? '#FABE6D' : state === 1 ? '#77C4FA' : state === 2 ? '#F52D3C' : '#484848'
     },
     arrowColor () {
       if (!this.refundedData) {
         return ''
       }
       let state = this.refundedData.refund.refund_status
-      return `12px solid  ${state === 0 ? '#FABE6D' : state === 1 ? '#77C4FA' : state === 2 ? '#F52D3C' : '#000000'}`
+      return `12px solid  ${state === 0 ? '#FABE6D' : state === 1 ? '#77C4FA' : state === 2 ? '#F52D3C' : '#484848'}`
     },
     refundState () {
       if (!this.refundedData) {

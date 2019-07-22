@@ -23,10 +23,10 @@
         </div>
         <div class="address-fuc">
           <div class="delete" @click.stop="deleteAddress(item.id)">
-            <img src="http://img.icaixiaochu.com/delete.png" alt />
+            <img src="http://img.icaixiaochu.com/delete.png"   alt />
           </div>
           <div class="edit" @click.stop="edit(item)">
-            <img src="http://img.icaixiaochu.com/edit.png" alt />
+            <img src="http://img.icaixiaochu.com/edit.png" style="width:22px;height:22px;" alt />
           </div>
         </div>
       </div>

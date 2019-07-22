@@ -90,11 +90,12 @@ export default {
         align-items: center;
         padding-bottom: 6px;
         .tag-icon {
-          width: 28px;
+          flex:   0 0 28px;
           height: 14px;
           padding-right: 4px;
         }
         .footer-text {
+          flex: 1;
           font-size: 13px;
           font-family: PingFang SC;
           font-weight: bold;

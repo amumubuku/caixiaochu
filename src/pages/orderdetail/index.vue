@@ -34,7 +34,7 @@
         <p>{{orderDetail.address}}</p>
       </div>
       <div class="content-wrp">
-        <div class="refund-state" v-if="orderDetail.refund" :style="{background:refundState}">
+        <div class="refund-state" v-if="orderDetail.refund" :style="{background:refundState}"  @click="refundedDetail">
           <p class="refund-text">退款详情：{{refundText}}</p>
           <img src="https://img.icaixiaochu.com/more-icon.png" alt />
         </div>
@@ -52,13 +52,13 @@
       <div class="fot-wrp">
         <div class="fot-wrp-left">
           <div class="box-time">
-            <p class="text1">16：09</p>
+            <p class="text1">{{orderDetail.extends.delivery_time}}</p>
             <p class="text2">自取时间</p>
           </div>
         </div>
         <div class="fot-wrp-right">
           <div class="box-phone">
-            <p class="text1">15625139874</p>
+            <p class="text1">{{orderDetail.extends.tel}}</p>
             <p class="text2">预留电话</p>
           </div>
         </div>
@@ -80,7 +80,7 @@
       <div class="shop-wrp">
         <div class="shop-head">
           <div class="shop-title">商品信息</div>
-          <div class="service" @click="selectTime" v-if="orderDetail.extends">
+          <div class="service" @click="selectTime" v-if="!orderDetail.delivery_type" >
             <p>立即配送(预计{{orderDetail.extends.delivery_time}}送达)</p>
           </div>
         </div>
@@ -125,17 +125,17 @@
     </div>
     <div class="prompt-msg">如果收到的商品出现质量、错发、漏发等情况可联系客服</div>
     <div class="order-fuc-wrp">
-      <div class="kefu-btn" v-if="orderDetail.status && orderDetail.status != 2 &&orderDetail.status!=4">
+      <div class="kefu-btn" v-if="(orderDetail.refund && orderDetail.refund.refund_status > 1) || orderDetail.status ===5 || orderDetail.status ===3">
         <button open-type="contact">联系客服</button>
       </div>
       <div class="order-wrp-state" v-else>
         <div
           class="order-tag"
           @click="cancelRefunded"
-          v-if="orderDetail.refund && !orderDetail.refund.refund_status && orderDetail.status"
+          v-if="(orderDetail.refund && orderDetail.refund.refund_status===0) && orderDetail.status"
         >撤销退款申请
         </div>
-        <div class="order-tag" @click="orderHandle" v-else>{{orderDetail.status && orderDetail.status !=5 ?'申请退款':'取消订单'}}</div>
+        <div class="order-tag" @click="orderHandle" v-else>{{orderDetail.status && orderDetail.status !=5?'申请退款':'取消订单'}}</div>
         <div class="fnc-btn">
           <div class="parment"  @click="payment" v-if="orderDetail.status ===0">
             <p>去支付</p>
@@ -258,6 +258,12 @@ export default {
     }
   },
   methods: {
+    previewImage () {
+      wx.previewImage({
+        current: 'https://img.icaixiaochu.com/address-map.png', // 当前显示图片的http链接
+        urls: ['https://img.icaixiaochu.com/address-map.png'] // 需要预览的图片http链接列表
+      })
+    },
     selectCause (item) {
       this.causeId = item.id
       this.causeTitle = item.title
@@ -291,6 +297,8 @@ export default {
       })
     },
     cancelRefunded () {
+      let _this = this
+      let refundId = this.orderDetail.refund.refund_id
       wx.showModal({
         title: '确认撤销退款申请',
         content: '撤销后，将无法再次申请',
@@ -301,13 +309,10 @@ export default {
         confirmColor: '#FEA835',
         success: result => {
           if (result.confirm) {
-            let refundId = this.refundedData.refund.id
-            this.$http
+            _this.$http
               .post('/repealApply', { refund_id: refundId })
               .then(res => {
-                if (res.status) {
-                  wx.navigateBack({ changed: true })
-                }
+                _this.getOrderDetail()
               })
           }
         },
@@ -379,10 +384,11 @@ export default {
     getOrderDetail () {
       this.$http.post('/orderDetail', { order_id: this.orderId }).then(res => {
         this.orderDetail = res.data
+        wx.stopPullDownRefresh()
       })
     }
   },
-  mounted () {
+  onShow () {
     this.orderId = this.$root.$mp.query.id
     this.getOrderDetail()
     setTimeout(() => {
@@ -390,7 +396,7 @@ export default {
     }, 240)
   },
   onPullDownRefresh () {
-    this.getcoupon(this.status)
+    this.getOrderDetail()
   },
   onUnload () {
     var pages = getCurrentPages()

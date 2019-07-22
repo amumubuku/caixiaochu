@@ -147,7 +147,7 @@
         </div>
       </div>
       <popup ref="buyPopup" type="bottom">
-        <div class="buy-info">
+        <div class="buy-info" :class="{'nav-bar-view-ipx':isIPX}">
           <div class="good-des">
             <div class="buy-content">
               <div class="good-cover">

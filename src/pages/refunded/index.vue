@@ -83,6 +83,8 @@
           </div>
         </div>
       </div>
+      <p class="refunded-des">“单独商品”的退款金额除配送费后按实际支付金额退款，如您选择
+“全部商品”则按照全部退款返还您支付的全部金额</p>
     </div>
 
     <div class="footer">

@@ -39,7 +39,7 @@
           <div class="map" v-if="curSwitch">
             <div class="head-wrp">
               <img src="http://p2.icaixiaochu.com/location.png" alt />
-              <p>广州市南沙区双山大道3号121号房</p>
+              <p>{{fee.address}}</p>
             </div>
             <div class="content-wrp">
               <div class="map-bg">
@@ -99,12 +99,12 @@
         </div>
         <div class="shop-count small">
           <p class="label">配送费</p>
-          <p>¥{{curSwitch ? 0: goodTotal >= delivery.price_shipping_out? 0: fee }}</p>
+          <p>¥{{curSwitch ? 0: goodTotal >= delivery.price_shipping_out? 0: fee.fee }}</p>
         </div>
       </div>
       <div class="note">
         <span>订单备注</span>
-        <input type="text" v-model="remark" placeholder="可输入备注，最多50字" maxlength="40" />
+        <input type="text" v-model="remark" :placeholder="curSwitch?'订单备注堂食或打包':'可输入备注，最多50字'" maxlength="40" />
       </div>
     </div>
 
@@ -182,7 +182,7 @@ export default {
         ? 0
         : this.goodTotal >= this.delivery.price_shipping_out
           ? 0
-          : this.fee
+          : this.fee.fee
       this.goods.forEach(element => {
         total += element.number * element.real_price
       })
@@ -235,8 +235,8 @@ export default {
     },
     previewImage () {
       wx.previewImage({
-        current: 'https://img.icaixiaochu.com/map-img.png', // 当前显示图片的http链接
-        urls: ['https://img.icaixiaochu.com/map-img.png'] // 需要预览的图片http链接列表
+        current: 'https://img.icaixiaochu.com/address-map.png', // 当前显示图片的http链接
+        urls: ['https://img.icaixiaochu.com/address-map.png'] // 需要预览的图片http链接列表
       })
     },
 
@@ -318,6 +318,14 @@ export default {
           if (!/^1[3456789]\d{9}$/.test(phone)) {
             wx.showToast({
               title: '请填写到店自取手机号',
+              icon: 'none',
+              duration: 2000
+            })
+            return false
+          }
+          if (!this.remark) {
+            wx.showToast({
+              title: '请填写到店自取备注',
               icon: 'none',
               duration: 2000
             })

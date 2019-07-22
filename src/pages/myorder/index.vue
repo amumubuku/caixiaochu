@@ -78,7 +78,7 @@
                 <div class="flex-right">
                   <p
                     class="order-state"
-                  >{{item.status == 0? '待支付':item.status == 1? '待配送':item.status == 2? '待收货': '已完成'}}</p>
+                  >{{item.status == 0? '待支付':item.status == 1? '待配送':item.status == 2? '待收货': item.status == 3?'已完成':item.status == 4?'待取货':'已取消'}}</p>
                 </div>
               </div>
               <div class="good-list">
@@ -117,7 +117,7 @@
                 <div class="flex-right">
                   <p
                     class="order-state"
-                  >{{item.status == 0? '待支付':item.status == 1? '待配送':item.status == 2? '待收货': '已完成'}}</p>
+                  >{{item.status == 0? '待支付':item.status == 1? '待配送':item.status == 2? '待收货': item.status == 3?'已完成':item.status == 4?'待取货':'已取消'}}</p>
                 </div>
               </div>
               <div class="good-list">
@@ -157,7 +157,7 @@
                 <div class="flex-right">
                   <p
                     class="order-state"
-                  >{{item.status == 0? '待支付':item.status == 1? '待配送':item.status == 2? '待收货': '已完成'}}</p>
+                  >{{item.status == 0? '待支付':item.status == 1? '待配送':item.status == 2? '待收货': item.status == 3?'已完成':item.status == 4?'待取货':'已取消'}}</p>
                 </div>
               </div>
               <div class="good-list">
@@ -197,7 +197,7 @@
                 <div class="flex-right">
                   <p
                     class="order-state"
-                  >{{item.status == 0? '待支付':item.status == 1? '待配送':item.status == 2? '待收货': '已完成'}}</p>
+                  >{{item.status == 0? '待支付':item.status == 1? '待配送':item.status == 2? '待收货': item.status == 3?'已完成':item.status == 4?'待取货':'已取消'}}</p>
                 </div>
               </div>
               <div class="good-list">
