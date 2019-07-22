@@ -57,7 +57,7 @@
               </div>
             </div>
             <div class="null-oder-wrp" v-if="!orders.all.length>=1">
-              <img src="https://img.icaixiaochu.com/7LhCHrYBQSsHrtgV.png" alt />
+              <img src="https://img.icaixiaochu.com/order-bg.png" alt />
               <p>你还没有订单~快去逛逛吧~！</p>
               <button class="btn" @click="toHome()">去逛逛</button>
             </div>
@@ -97,7 +97,7 @@
             </div>
           </scroll-view>
           <div class="null-oder-wrp" v-if="!orders.unPay.length>=1">
-            <img src="https://img.icaixiaochu.com/7LhCHrYBQSsHrtgV.png" alt />
+            <img src="https://img.icaixiaochu.com/order-bg.png" alt />
             <p>你还没有订单~快去逛逛吧~!</p>
             <button class="btn" @click="toHome()">去逛逛</button>
           </div>
@@ -137,7 +137,7 @@
             </div>
           </scroll-view>
           <div class="null-oder-wrp" v-if="!orders.unShipping.length>=1">
-            <img src="https://img.icaixiaochu.com/7LhCHrYBQSsHrtgV.png" alt />
+            <img src="https://img.icaixiaochu.com/order-bg.png" alt />
             <p>你还没有订单~快去逛逛吧~!</p>
             <button class="btn" @click="toHome()">去逛逛</button>
           </div>
@@ -176,7 +176,7 @@
             </div>
           </scroll-view>
           <div class="null-oder-wrp" v-if="!orders.shipping.length>=1">
-            <img src="https://img.icaixiaochu.com/7LhCHrYBQSsHrtgV.png" alt />
+            <img src="https://img.icaixiaochu.com/order-bg.png" alt />
 
             <p>你还没有订单~快去逛逛吧~!</p>
             <button class="btn" @click="toHome()">去逛逛</button>
@@ -217,7 +217,7 @@
             </div>
           </scroll-view>
           <div class="null-oder-wrp" v-if="!orders.finish.length>=1">
-            <img src="https://img.icaixiaochu.com/7LhCHrYBQSsHrtgV.png" alt />
+            <img src="https://img.icaixiaochu.com/order-bg.png" alt />
             <p>你还没有订单~快去逛逛吧~!</p>
             <button class="btn" @click="toHome()">去逛逛</button>
           </div>
