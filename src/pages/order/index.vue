@@ -56,7 +56,7 @@
                   <p class="text1">{{delivery_time}}</p>
                   <p class="text2">自取时间</p>
                 </div>
-                <div class="more" >
+                <div class="more">
                   <img src="http://p2.icaixiaochu.com/more.png" alt />
                 </div>
               </div>
@@ -82,7 +82,9 @@
               <img src="http://p2.icaixiaochu.com/more.png" alt />
             </div>
           </div>
-          <collapse :selected="true" :goods="goods"></collapse>
+          <div class="order-goods">
+            <collapse :selected="true" :goods="goods"></collapse>
+          </div>
         </div>
       </div>
       <div class="good-info">
@@ -104,7 +106,12 @@
       </div>
       <div class="note">
         <span>订单备注</span>
-        <input type="text" v-model="remark" :placeholder="curSwitch?'订单备注堂食或打包':'可输入备注，最多50字'" maxlength="40" />
+        <input
+          type="text"
+          v-model="remark"
+          :placeholder="curSwitch?'订单备注堂食或打包':'可输入备注，最多50字'"
+          maxlength="40"
+        />
       </div>
     </div>
 
@@ -129,20 +136,28 @@
         </div>
       </div>
     </div>
-    <popup ref="seleceNow" type="bottom" className="seleceTime">
+    <popup ref="seleceNow" type="bottom" class="seleceTime">
       <div class="time-wrp">
         <div class="top">
           选择送达时间
           <div class="cancel" @click="hideSelect">
-             <img src="https://img.icaixiaochu.com/cancel.png" alt="">
+            <img src="https://img.icaixiaochu.com/cancel.png" alt />
           </div>
         </div>
         <div class="content">
           <div class="month">{{month}}</div>
           <div class="time-list" v-if="timelist">
-            <picker-view class="picker-view" @change="changTime"  indicator-class="picker-box" indicator-style="color: #FEBC65;" value="0">
+            <picker-view
+              class="picker-view"
+              @change="changTime"
+              indicator-class="picker-box"
+              indicator-style="color: #FEBC65;"
+              value="0"
+            >
               <picker-view-column>
-                <div v-for="(item, index) in timelist" :key="index"><span style="line-height: 34px">{{item}}</span></div>
+                <div v-for="(item, index) in timelist" :key="index">
+                  <span style="line-height: 34px">{{item}}</span>
+                </div>
               </picker-view-column>
             </picker-view>
           </div>

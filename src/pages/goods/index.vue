@@ -84,6 +84,19 @@
               <span style="color:#F52D3C;">{{currentTime}}</span> 送达
             </span>
           </div>
+          <div class="good-spot">
+            <div class="spot-title">
+              <img src="https://img.icaixiaochu.com/shopt.png" alt />
+              <p>亮点</p>
+            </div>
+            <div class="spot-content">
+              <div class="spot-des">
+                <p>选取颗粒饱满，鲜嫩的玉米，营养丰富。</p>
+                <p>咬下去口感甜嫩，所以被称作“甜玉米”。</p>
+                <p>直接水煮做主食，或煲汤、煮粥都合适。</p>
+              </div>
+            </div>
+          </div>
 
           <div class="good-detail">
             <div class="switch-fuc">
@@ -140,7 +153,7 @@
                       alt
                     />
                   </div>
-                </div> -->
+                </div>-->
               </div>
             </div>
           </div>

@@ -170,7 +170,7 @@
                 </div>
                 <div class="order-fun-handle">
                   <div class="order-detail" @click="orderDetail(item)">查看详情</div>
-                  <div class="good-content-btn" @click="shipping(item)">确认收货</div>
+                  <div class="good-content-btn" @click="completeOrder(item)">确认收货</div>
                 </div>
               </div>
             </div>
@@ -315,11 +315,16 @@ export default {
         this.Refresh()
       }
     },
-    shipping (item) {
+    completeOrder (item) {
       let _this = this
       wx.showModal({
         title: '是否已收到商品',
         content: '请确认收到商品后再确定收货?',
+        showCancel: true,
+        cancelText: '取消',
+        cancelColor: '#797979',
+        confirmText: '确定',
+        confirmColor: '#FEA835',
         success (res) {
           if (res.confirm) {
             _this.$http

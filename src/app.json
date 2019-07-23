@@ -35,7 +35,8 @@
     "pages/payorder/main",
     "pages/refunded/main",
     "pages/refundeddetail/main",
-    "pages/service/main"
+    "pages/service/main",
+    "pages/comment/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -92,17 +92,6 @@ export default {
     },
     ...mapActions(['create_db'])
   },
-  mounted () {
-    // console.log(this.goods)
-    // this.categoryGoodData = this.goods.map((ele) => {
-    //   this.cart.forEach(element => {
-    //     if (ele.goods_id === element.good_id) {
-    //       ele.cartNum = element.count
-    //     }
-    //   })
-    //   return ele
-    // })
-  },
   watch: {
     goods: {
       handler (newVal, oldVal) {

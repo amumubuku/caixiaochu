@@ -1,0 +1,70 @@
+.comment {
+  background: #f4f4f4;
+  padding: 0 10px;
+
+  .comment-content {
+    text-align: center;
+    .text {
+      font-size: 22px;
+      font-weight: bold;
+      line-height: 30px;
+      color: rgba(0, 0, 0, .87);
+      padding-top: 44px;
+    }
+
+    .order-leva {
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 21px;
+      color: rgba(0, 0, 0, .5);
+      padding: 8px 0 16px 0;
+    }
+    .comments-level {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: 22px;
+      img {
+        height: 25px;
+        width: 24px;
+        margin:  0 6px;
+      }
+    }
+
+    .centent {
+      height: 125px;
+      border-radius: 10px;
+      background: #fff;
+
+      .text {
+        padding: 8px;
+        padding-top: 10px;
+        flex: 1;
+        width: 100%;
+        height: 100%; //<----这里是重点，textarea的高度
+        font-size: 16px;
+        line-height: 26px;
+        color: #000000;
+        box-sizing: border-box;
+      }
+    }
+  }
+
+  .comment-imgs {}
+
+  .submit {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 28px;
+    width: 131px;
+    height: 50px;
+    margin: 0 auto;
+    color: #fff;
+    line-height: 50px;
+    text-align: center;
+    background: linear-gradient(270deg, rgba(250, 177, 68, 1) 0%, rgba(252, 142, 89, 1) 100%);
+    box-shadow: 0px 8px 20px rgba(254, 168, 53, 0.55);
+    border-radius: 100px;
+  }
+}
