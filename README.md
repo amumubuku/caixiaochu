@@ -1,6 +1,7 @@
-# caixiaochu
+# caixiaochu 
 
-> 菜小厨小程序源代码 @周维光
+
+> 菜小厨小程序源代码 @周维光 v2
 
 ## Build Setup
 
@@ -32,6 +33,3 @@ npm build:my
 
 # 生成 bundle 分析报告
 npm run build --report
-```
-
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

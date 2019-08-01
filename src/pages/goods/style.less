@@ -393,6 +393,7 @@
           line-height: 18px;
           color: rgba(0, 0, 0, .87);
           border-radius: 10px;
+          margin-bottom: 3px;
 
           .sku-footer-left {
             display: flex;
@@ -406,6 +407,55 @@
           }
 
         }
+
+        .good-spot {
+          background: rgba(255, 255, 255, 1);
+          border-radius: 10px;
+          padding: 0 12px 10px 12px;
+          box-sizing: border-box;
+
+          .spot-title {
+            display: flex;
+            align-items: center;
+            height: 42px;
+
+            p {
+              font-size: 13px;
+              font-weight: 400;
+              line-height: 18px;
+              color: rgba(0, 0, 0, .87);
+            }
+
+            img {
+              width: 14px;
+              height: 14px;
+              margin-right: 4px;
+            }
+          }
+
+          .spot-content {
+            padding: 10px;
+            border: 1px solid #F4F4F4;
+            border-radius: 10px;
+            overflow: hidden;
+            box-sizing: border-box;
+
+            .spot-des {
+              display: flex;
+              flex-flow: column nowrap;
+              font-size: 13px;
+              font-weight: 400;
+              color: rgba(0, 0, 0, .87);
+              background: #F4F4F4;
+              box-sizing: border-box;
+              border-radius: 10px;
+              line-height: 25px;
+              padding: 10px 0 10px 43px;
+
+
+            }
+          }
+        }
       }
 
 
@@ -418,6 +468,7 @@
       width: 375px;
       background-color: #fff;
       padding-bottom: 5px;
+
       .good-des {
         padding: 0 12px;
         height: 150px;
@@ -666,10 +717,10 @@
     .card-right {
       flex: 1;
       height: 40px;
+      line-height: 40px;
       position: relative;
       display: flex;
       align-items: center;
-      line-height: 40px;
       font-size: 15px;
       font-weight: 400;
       color: rgba(255, 255, 255, 1);
@@ -694,24 +745,23 @@
       .add-card {
         flex: 1;
         width: 110px;
-        width: 110px;
         height: 40px;
         background: linear-gradient(90deg, rgba(250, 177, 68, 1) 0%, rgba(252, 142, 89, 1) 100%);
+        box-shadow: 0px 1px 6px rgba(252, 144, 88, 0.5);
         z-index: 11;
       }
 
       .buy {
         width: 110px;
-
         height: 40px;
         background: rgba(255, 99, 4, 1);
-        background: rgba(255, 99, 4, 1);
+        box-shadow: 0px 1px 6px rgba(255, 99, 4, 0.5);
       }
     }
   }
 
   .nav-bar-view-ipx {
-    padding-bottom: 34px;
+    padding-bottom: 34px !important;
     padding-top: 6px;
   }
 }

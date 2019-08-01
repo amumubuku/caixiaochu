@@ -3,7 +3,10 @@
  */
 import request from '@/utils/request'
 import util from '@/utils/util'
-import {setStorageSync, getStorageSync} from '@/utils/storage'
+import {
+  setStorageSync,
+  getStorageSync
+} from '@/utils/storage'
 /**
  * 调用微信登录
  */

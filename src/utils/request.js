@@ -3,7 +3,7 @@
  * @Author: fizz
  * @LastEditors: Please set LastEditors
  * @Date: 2019-04-16 09:40:27
- * @LastEditTime: 2019-07-17 15:20:56
+ * @LastEditTime: 2019-07-26 18:10:41
  */
 var Fly = require('flyio/dist/npm/wx') // npm引入方式
 const fly = new Fly()

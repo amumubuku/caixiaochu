@@ -6,7 +6,7 @@ page {
   position: relative;
   height: auto;
   width: 100%;
-  padding-bottom: 75px;
+  padding-bottom: 100px;
   overflow: auto;
 
   .order-wrp {
@@ -14,6 +14,7 @@ page {
     box-sizing: border-box;
     border-radius: 10px;
   }
+
 
   .order-address {
     background: rgba(255, 255, 255, 1);
@@ -357,7 +358,7 @@ page {
         align-items: center;
         justify-content: space-between;
         border-bottom: 1px solid rgba(112, 112, 112, .1);
-        margin-bottom: 16px;
+
 
         .shop-title {
           width: 52px;
@@ -387,53 +388,118 @@ page {
         }
       }
 
-      .shop-list {
-        .good-item {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 12px;
+      .order-goods {
+        padding: 16px 0;
+        box-sizing: border-box;
+      }
+    }
+  }
 
-          .good-left {
-            display: flex;
+  .coupon-vip-card {
+    height: 86px;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 0 12px;
+    position: relative;
 
-            .good-cove {
-              width: 50px;
-              height: 50px;
-              background: rgba(190, 190, 190, .66);
-              margin-right: 12px;
-            }
+    .card-flex-left {
+      display: flex;
+      align-items: center;
+      flex: 1;
 
-            .order-info {
-              display: flex;
-              justify-content: space-around;
-              flex-flow: column nowrap;
+      .coupon-card-icon {
+        width: 30px;
+        height: 30px;
+        background: linear-gradient(180deg, rgba(248, 118, 183, 1) 0%, rgba(252, 89, 89, 1) 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 6px;
 
-              .order-name {
-                font-size: 14px;
-                font-weight: 400;
-                line-height: 20px;
-                color: rgba(0, 0, 0, .87);
-              }
-
-              .order-num {
-                font-size: 11px;
-                font-weight: 400;
-                line-height: 16px;
-                color: rgba(0, 0, 0, .5);
-              }
-            }
-
-          }
-
-          .good-right {
-            height: 21px;
-            font-size: 13px;
-            font-weight: bold;
-            line-height: 18px;
-            color: rgba(0, 0, 0, .87);
-          }
+        img {
+          width: 22px;
+          height: 22px;
         }
+      }
+
+      .coupon-card-info {
+        .title {
+          font-size: 15px;
+          font-weight: 400;
+          color: rgba(0, 0, 0, .87);
+        }
+
+        .des {
+          font-size: 11px;
+          font-weight: 400;
+          color: rgba(0, 0, 0, .6);
+        }
+
+
+
+      }
+
+    }
+    .vip-card-msg {
+      position: absolute;
+      right: 11px;
+      top: 0;
+      .content {
+        height: 16px;
+        font-size: 11px;
+        font-weight: 500;
+        line-height: 16px;
+        color: rgba(255, 255, 255, 1);
+        padding: 0 8px;
+        background: rgba(75, 75, 75, 1);
+        border-radius: 12px;
+        
+      }
+      .tag {
+        position: absolute;
+        top: 14px;
+        right: 6px;
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 11px solid #4B4B4B;
+      }
+    }
+    
+    .card-flex-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex: 0 0 68px;
+
+   
+
+      p {
+        font-size: 15px;
+        font-weight: bold;
+        color: rgba(0, 0, 0, .87);
+      }
+
+      .select-state {
+        margin-left: 6px;
+        width: 20px;
+        height: 20px;
+        background: rgba(255, 255, 255, 1);
+        border: 1px solid rgba(112, 112, 112, .45);
+        border-radius: 50%;
+      }
+      img {
+        position: relative;
+        top: 3px;
+        left: 2px;
+        width: 28px;
+        height: 28px;
       }
     }
   }
@@ -501,20 +567,19 @@ page {
 
   .submit {
     position: fixed;
-    height: 50px;
-    width: 100%;
+    left: 0;
+    right: 0;
     bottom: 0;
     display: flex;
-    padding: 0 20px;
+    height: 40px;
+    padding: 6px 20px;
     align-items: center;
     justify-content: space-between;
     background-color: #fff;
     z-index: 999;
-    box-sizing: border-box;
 
     .submit-left {
       flex: 1;
-
       .count {
         .price-count {
           display: flex;
@@ -569,7 +634,9 @@ page {
 
 
   }
-
+  .nav-bar-view-ipx {
+    padding-bottom: 34px;
+    }
   .seleceTime {
     position: relative;
     z-index: 99999;
@@ -600,10 +667,11 @@ page {
         border-radius: 50%;
         display: flex;
         justify-content: center;
-        align-items:center;
+        align-items: center;
+
         img {
-          width:15px;
-          height:15px;
+          width: 15px;
+          height: 15px;
         }
 
       }
@@ -616,7 +684,7 @@ page {
       box-sizing: border-box;
       border-top: 1px solid rgba(112, 112, 112, .1);
       height: 100%;
-       
+
       .month {
         width: 71px;
         height: 20px;
@@ -628,6 +696,7 @@ page {
       .time-list {
         margin-left: 34px;
         width: 180px;
+
         .picker-view {
           width: 100%;
           height: 100%;

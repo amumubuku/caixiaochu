@@ -15,6 +15,7 @@ page {
       height: 42px;
       display: flex;
       align-items: center;
+      border-bottom: 1px solid rgba(112, 112, 112, .1);
 
       img {
         width: 14px;
@@ -28,74 +29,9 @@ page {
         color: rgba(0, 0, 0, .87);
       }
     }
-
-    .goods-list {
+    .goods-list{
       padding: 16px 0;
-      border-top: 1px solid rgba(112, 112, 112, .1);
-      .good-item {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 14px;
-        width: 100%;
-
-        .order-detail {
-          display: flex;
-          flex: 1;
-          padding-bottom: 4px;
-          align-items: center;
-
-          .good-cover {
-            width: 50px;
-            height: 50px;
-            background: rgba(190, 190, 190, 0.66);
-            margin-right: 12px;
-
-            img {
-              width: 100%;
-              height: 100%;
-            }
-          }
-
-          .good-des {
-            display: flex;
-            flex-flow: column nowrap;
-            justify-content: space-between;
-            height: 50px;
-            padding: 2px 0;
-            box-sizing: border-box;
-
-            p {
-
-              font-size: 14px;
-              font-weight: 400;
-              color: rgba(0, 0, 0, 0.87);
-            }
-
-            .num {
-              font-size: 11px;
-              font-weight: 400;
-              color: rgba(0, 0, 0, 0.5);
-            }
-          }
-        }
-
-        .good-price {
-          flex: 0 0 56px;
-          height: 21px;
-          font-size: 15px;
-          font-weight: bold;
-          line-height: 21px;
-          color: rgba(0, 0, 0, 0.87);
-          text-align: end;
-        }
-      }
-
-      .good-item:last-child {
-        margin-bottom: 0;
-      }
     }
-
     .handle-wrp {
       height: 84px;
       display: flex;
@@ -160,6 +96,50 @@ page {
           border-radius:23px;
         }
       }
+    }
+  }
+  .null-oder-wrp {
+    position: fixed;
+    bottom: 0;
+    top: 134px;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-flow: column nowrap;
+
+    img {
+      width: 179px;
+      height: 117px;
+    }
+
+    p {
+      padding-top: 24px;
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 26px;
+      color: rgba(0, 0, 0, 1);
+      text-align: center;
+      width: 100%;
+      padding-left: 12px;
+    }
+
+    button {
+      margin-top: 10px;
+      width: 77px;
+      height: 30px;
+      background: rgba(254, 168, 53, 1);
+      box-shadow: 0px 2px 6px rgba(254, 168, 53, 0.75);
+      opacity: 1;
+      border-radius: 15px;
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 30px;
+      color: rgba(255, 255, 255, 1);
+      text-align: center;
+      position: relative;
+      left: 6px;
     }
   }
 }

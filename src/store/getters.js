@@ -1,4 +1,4 @@
-import { setTabBarBadge } from '@/utils'
+import { setTabBarBadge, removeTabBarBadge } from '@/utils'
 const getters = {
   cityName: state => state.user.cityName,
   data: state => state.user.data,
@@ -36,9 +36,7 @@ const getters = {
     if (num >= 1) {
       setTabBarBadge(num.toString())
     } else {
-      wx.removeTabBarBadge({
-        index: 3
-      })
+      removeTabBarBadge()
     }
     wx.setStorageSync('cartInfos', shopInfo)
     return shopInfo

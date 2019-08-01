@@ -47,31 +47,39 @@
         </div>
       </swiper>
     </div>
-    <div class="img-list">
-      <img :src="item" alt v-for="(item, index) in imglist" :key="index" />
-    </div>
     <button class="weui-btn" @click="chooseImage">选择图片</button>
+    <popup ref="couponModal" type="center" className="coupon-modal">
+      <div class="coupon-wrp">
+        <div class="coupon-list">
+          <div class="coupon-item" v-for="(item, index) in couponList" :key="index">
+            <div class="coupon-left">
+              <i style="font-size:13px;">￥</i>
+              {{item.price}}
+            </div>
+            <div class="coupon-right">
+              <p class="limit-price">满{{item.limit_price}}元可用</p>
+              <p class="coupon-day">{{item.day}}天有效</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="receive" @click="receiveCoupon">
+        <div class="receive-btn">
+          <p>领取</p>
+          <img src="https://img.icaixiaochu.com/coupon-tag-icon.png" alt="">
+        </div>
+      </div>
+      <div class="cancel" @click="cancelModal">
+        <img src="https://img.icaixiaochu.com/index-cancel-icon.png" alt="">
+      </div>
+    </popup>
   </div>
 </template>
 
 <script>
-// const orderHandler = {
-//   'all': (data) => {
-//     this.all = res.data
-//   },
-//   'unPay': (data) => {
-//     this.unPay = res.data
-//   },
-//   'unShipping': (data) => {
-//     this.unShipping = res.data
-//   },
-//   'finish': (data) => {
-//     this.finish = res.data
-//   }
-// }
 import store from './store'
 import skeleton from '@/components/skeleton'
-import util from '@/utils/util.js'
+import popup from '@/components/popup'
 export default {
   computed: {
     count () {
@@ -79,7 +87,8 @@ export default {
     }
   },
   components: {
-    skeleton
+    skeleton,
+    popup
   },
   data () {
     return {
@@ -97,10 +106,25 @@ export default {
       scaleY: 1.1524,
       code: 0,
       openid: '',
-      imglist: []
+      imglist: [],
+      couponList: [
+        {
+          price: 30,
+          limit_price: 100,
+          day: 30
+        },
+        {
+          price: 30,
+          limit_price: 100,
+          day: 30
+        }
+      ]
     }
   },
   methods: {
+    cancelModal () {
+      this.$refs.couponModal.toggle('hide')
+    },
     chooseImage () {
       let _this = this
       wx.chooseImage({
@@ -168,7 +192,11 @@ export default {
       }
     }
   },
-  mounted () {}
+  mounted () {
+    setTimeout(() => {
+      this.$refs.couponModal.toggle('show')
+    }, 30)
+  }
 }
 </script>
 <style lang="less" scoped>

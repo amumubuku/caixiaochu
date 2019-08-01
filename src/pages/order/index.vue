@@ -56,7 +56,7 @@
                   <p class="text1">{{delivery_time}}</p>
                   <p class="text2">自取时间</p>
                 </div>
-                <div class="more" >
+                <div class="more">
                   <img src="http://p2.icaixiaochu.com/more.png" alt />
                 </div>
               </div>
@@ -82,7 +82,30 @@
               <img src="http://p2.icaixiaochu.com/more.png" alt />
             </div>
           </div>
-          <collapse :selected="true" :goods="goods"></collapse>
+          <div class="order-goods">
+            <collapse :selected="true" :goods="goods"></collapse>
+          </div>
+        </div>
+      </div>
+      <div class="coupon-vip-card" v-if="activityGift.status">
+        <div class="card-flex-left">
+          <div class="coupon-card-icon">
+            <img src="https://img.icaixiaochu.com/red-cred-icon.png" alt />
+          </div>
+          <div class="coupon-card-info">
+            <p class="title">{{activityGift.title}}</p>
+            <p class="des" style="padding:3px;">{{activityGift.desc}}</p>
+            <p class="des">{{activityGift.desc2}}</p>
+          </div>
+        </div>
+        <div class="vip-card-msg" v-show="!cardState">
+          <div class="content">{{activityGift.tips}}</div>
+          <div class="tag"></div>
+        </div>
+        <div class="card-flex-right" @click="toggleCardState">
+          <p>¥{{activityGift.price}}</p>
+          <img v-show="cardState" src="https://img.icaixiaochu.com/121.png" alt />
+          <div v-show="!cardState" class="select-state"></div>
         </div>
       </div>
       <div class="good-info">
@@ -104,11 +127,16 @@
       </div>
       <div class="note">
         <span>订单备注</span>
-        <input type="text" v-model="remark" :placeholder="curSwitch?'订单备注堂食或打包':'可输入备注，最多50字'" maxlength="40" />
+        <input
+          type="text"
+          v-model="remark"
+          :placeholder="curSwitch?'订单备注堂食或打包':'可输入备注，最多50字'"
+          maxlength="40"
+        />
       </div>
     </div>
 
-    <div class="submit">
+    <div class="submit" :class="{'nav-bar-view-ipx':isIPX}">
       <div class="submit-left">
         <div class="count">
           <div class="price-count">
@@ -134,15 +162,23 @@
         <div class="top">
           选择送达时间
           <div class="cancel" @click="hideSelect">
-             <img src="https://img.icaixiaochu.com/cancel.png" alt="">
+            <img src="https://img.icaixiaochu.com/cancel.png" alt />
           </div>
         </div>
         <div class="content">
           <div class="month">{{month}}</div>
           <div class="time-list" v-if="timelist">
-            <picker-view class="picker-view" @change="changTime"  indicator-class="picker-box" indicator-style="color: #FEBC65;" value="0">
+            <picker-view
+              class="picker-view"
+              @change="changTime"
+              indicator-class="picker-box"
+              indicator-style="color: #FEBC65;"
+              :value="value"
+            >
               <picker-view-column>
-                <div v-for="(item, index) in timelist" :key="index"><span style="line-height: 34px">{{item}}</span></div>
+                <div v-for="(item, index) in timelist" :key="index">
+                  <span style="line-height: 34px">{{item}}</span>
+                </div>
               </picker-view-column>
             </picker-view>
           </div>
@@ -171,7 +207,11 @@ export default {
       tel: '',
       timelist: '',
       delivery: '',
-      delivery_time: ''
+      delivery_time: '',
+      cardState: false,
+      isIPX: null,
+      value: [],
+      activityGift: ''
     }
   },
   computed: {
@@ -186,7 +226,8 @@ export default {
       this.goods.forEach(element => {
         total += element.number * element.real_price
       })
-      this.price = (total - couponPrice + ~~fee).toFixed(2)
+      let activityGiftPrice = parseFloat(this.cardState ? this.activityGift.price : 0)
+      this.price = (total - couponPrice + ~~fee + activityGiftPrice).toFixed(2)
       this.goodTotal = total
       return total.toFixed(2)
     },
@@ -219,11 +260,23 @@ export default {
     this.getDefaultAddress()
     this.UseCoupon()
     this.DeliveryInfo()
+    this.getTimeList()
+    this.getActivityGift()
+    this.isIPX = wx.getStorageSync('isIPX') || ''
   },
   methods: {
+    toggleCardState () {
+      this.cardState = !this.cardState
+      if (!this.cardState) {
+        if (this.conponData && this.conponData.id == 0) {
+          this.setCoupondata('')
+        }
+      }
+    },
     changTime (value) {
       let index = value.mp.detail.value[0]
       this.delivery_time = this.timelist[index]
+      this.value[0] = index
     },
     DeliveryInfo () {
       this.$http.post('/getPriceSend').then(res => {
@@ -245,7 +298,7 @@ export default {
     },
     selectCoupons () {
       wx.navigateTo({
-        url: `../coupons/main?total=${this.goodTotal}`
+        url: `../coupons/main?total=${this.goodTotal}&has_gif=${this.cardState}`
       })
     },
     getShippingFee () {
@@ -264,6 +317,7 @@ export default {
         .then(res => {
           if (res.data.length >= 1) {
             this.setCoupondata(res.data[0])
+            return
           }
           this.setCoupondata('')
         })
@@ -281,15 +335,25 @@ export default {
         url: `../myaddress/main`
       })
     },
+    getActivityGift () {
+      this.$http.post('couponsGift').then(res => {
+        this.activityGift = res.data
+        console.log(res.data)
+      })
+    },
+    getTimeList () {
+      this.$http.post('/getStoreTime').then(res => {
+        this.timelist = res.data
+        this.delivery_time = res.data[0]
+        this.value[0] = 0
+      })
+    },
     selectTime () {
       var date = new Date()
       var nowMonth = date.getMonth() + 1
       var strDate = date.getDate()
       this.month = `${nowMonth}- ${strDate}`
-      this.$http.post('/getStoreTime').then(res => {
-        this.timelist = res.data
-        this.$refs.seleceNow.toggle('show')
-      })
+      this.$refs.seleceNow.toggle('show')
     },
     ...mapMutations({
       setCoupondata: 'SET_COUPONDATA',
@@ -301,7 +365,7 @@ export default {
         if (this.goodTotal < this.delivery.price_send) {
           wx.showModal({
             title: '',
-            content: `不满${this.delivery.price_send}元起送价, 不支持配送`,
+            content: `除配送费, 商品不满${this.delivery.price_send}元起送价`,
             showCancel: false,
             confirmText: '确定',
             confirmColor: '#FEA835',
@@ -335,12 +399,14 @@ export default {
         this.$http
           .post('/createOrder', {
             address_id: this.curSwitch ? '' : this.defaultAddress.id,
-            coupon_id: this.conponData ? this.conponData.id : 0,
+            coupon_id: this.conponData && this.conponData.id !== 0 ? this.conponData.id : 0,
             goods: JSON.stringify(this.goods),
             delivery_time: this.delivery_time,
             remark: this.remark ? this.remark : ' ',
             delivery_type: this.curSwitch,
-            tel: phone
+            tel: phone,
+            has_gift: this.cardState ? 1 : 0,
+            is_used_gift: this.conponData && this.conponData.id === 0 ? 1 : 0
           })
           .then(res => {
             var orderId = res.data.order_id
@@ -351,13 +417,10 @@ export default {
               package: result.package,
               signType: 'MD5',
               paySign: result.paySign,
-              success: function (res) {
-                wx.navigateTo({
-                  url: `../orderdetail/main?id=${orderId}`
-                })
-              },
-              fail: function (res) {
-                wx.navigateTo({
+              success: function (res) {},
+              fail: function (res) {},
+              complete: function () {
+                wx.redirectTo({
                   url: `../orderdetail/main?id=${orderId}`
                 })
               }

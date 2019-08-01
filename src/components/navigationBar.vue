@@ -60,7 +60,8 @@ export default {
       platform: '',
       model: '',
       brand: '',
-      system: ''
+      system: '',
+      diffCustom: true
     }
   },
   beforeMount () {
