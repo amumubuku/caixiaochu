@@ -14,7 +14,7 @@
           </div>
           <div class="footer-info">
             <div class="footer-title">
-              <img class="tag-icon" :src="item.label_id" alt v-if="item.label_id" />
+              <img class="tag-icon" :src="item.label_id"  lazy-load alt v-if="item.label_id" />
               <h5 class="footer-text">{{item.title}}</h5>
             </div>
             <div class="footer-menu">

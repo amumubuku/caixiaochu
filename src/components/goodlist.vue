@@ -63,16 +63,15 @@ export default {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
-  padding: 0 16px;
+
   box-sizing: border-box;
   .list {
     position: relative;
     width: 164px;
     height: 248px;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
     border-radius: 6px;
     overflow: hidden;
-    margin-bottom: 15px;
     background-color: #fff;
     box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.1);
     .footer-info {

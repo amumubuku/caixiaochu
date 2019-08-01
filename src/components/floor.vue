@@ -7,7 +7,7 @@
     <div class="floor-wrp">
       <div class="floor-list" v-for="(item, index) in categoryAreaList" :key="index">
         <div class="floor-banner" @click="jumpCategory(item.category_id)">
-          <img :src="item.image" alt>
+          <img :src="item.image" lazy-load="true" alt>
         </div>
         <slide :skulist="item.goods" :id="item.category_id" @jump="jumpCategory"/>
       </div>

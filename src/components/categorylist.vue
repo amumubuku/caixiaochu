@@ -1,20 +1,21 @@
 <template>
   <div class="sku-container">
     <div class="skulist-wrp">
-      <scroll-view
-        class="good-list"
-        scroll-y="true"
-        enable-back-to-top="true"
-        @scroll="scroll"
-      >
-        <div v-for="(item, index) in categoryGoodData" :key="index" @click="goodDetail(item)" class="sku-item">
+      <scroll-view class="good-list" scroll-y="true" enable-back-to-top="true" @scroll="scroll">
+        <div
+          v-for="(item, index) in categoryGoodData"
+          :key="index"
+          @click="goodDetail(item)"
+          class="sku-item"
+        >
           <div class="icon">
-            <img :src="item.cover" mode="aspectFill" alt>
+            <div class="invalid-box" v-if="item.sku.stock < 1">已售空</div>
+            <img :src="item.cover" mode="aspectFill" alt />
           </div>
           <div class="good-detal">
             <div class="good-top">
               <div class="good-info">
-                <img class="tag-icon" :src="item.label_id" alt v-if="item.label_id">
+                <img class="tag-icon" :src="item.label_id" alt v-if="item.label_id" lazy-load />
                 <text class="good-name">{{item.title}}</text>
               </div>
               <text class="good-title">{{item.description}}</text>
@@ -30,12 +31,16 @@
                     :class="item.sku.vip_price>1 ? 'dash-price' : 'dash-price small'"
                   >¥{{item.sku.vip_price>1 ? item.sku.vip_price : item.sku.normal_price}}</div>
                   <div class="vip-price" v-if="item.sku.vip_price>1">
-                    <img src="http://p2.icaixiaochu.com/vip-icon.png" alt>
+                    <img src="http://p2.icaixiaochu.com/vip-icon.png" alt />
                   </div>
                 </div>
               </div>
-              <div class="menu-right extend" @click.stop="create(item)">
-                <img src="http://p2.icaixiaochu.com/card.png" alt>
+              <div
+                class="menu-right extend"
+                :class="{'normal': item.sku.stock < 1}"
+                @click.stop="create(item)"
+              >
+                <img src="http://p2.icaixiaochu.com/card.png" alt />
               </div>
             </div>
           </div>
@@ -92,21 +97,10 @@ export default {
     },
     ...mapActions(['create_db'])
   },
-  mounted () {
-    // console.log(this.goods)
-    // this.categoryGoodData = this.goods.map((ele) => {
-    //   this.cart.forEach(element => {
-    //     if (ele.goods_id === element.good_id) {
-    //       ele.cartNum = element.count
-    //     }
-    //   })
-    //   return ele
-    // })
-  },
   watch: {
     goods: {
       handler (newVal, oldVal) {
-        this.categoryGoodData = newVal.map((ele) => {
+        this.categoryGoodData = newVal.map(ele => {
           this.cart.forEach(element => {
             if (ele.goods_id === element.good_id) {
               ele.cartNum = element.count
@@ -155,9 +149,27 @@ export default {
         .icon {
           flex: 0 0 105px;
           height: 105px;
+          position: relative;
           img {
             max-width: 105px;
             max-height: 105px;
+          }
+          .invalid-box {
+            width: 63px;
+            height: 30px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 30px;
+            color: rgba(255, 255, 255);
+            text-align: center;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
           }
         }
         .good-detal {
@@ -299,7 +311,12 @@ export default {
                 position: relative;
                 left: -0.7px;
               }
+              
             }
+            .normal {
+                background: rgba(178, 178, 178, 1);
+                box-shadow: 0px 2px 6px rgba(178, 178, 178, 0.75);
+              }
           }
         }
       }

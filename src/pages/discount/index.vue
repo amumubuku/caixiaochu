@@ -1,10 +1,12 @@
 <template>
   <div class="discount">
-        <navigation-bar :title="'9.9元专区'"
-            :navBackgroundColor="'#fff'"
-            :titleColor="'#000'"
-            :back-visible="true"
-            :home-path="'/pages/index/main'"></navigation-bar>
+    <navigation-bar
+      :title="'9.9元专区'"
+      :navBackgroundColor="'#fff'"
+      :titleColor="'#000'"
+      :back-visible="true"
+      :home-path="'/pages/index/main'"
+    ></navigation-bar>
     <banner :banner="bannerData" />
     <div class="discount-wrp">
       <goodlist :goods="goods" />

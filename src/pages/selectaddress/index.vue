@@ -34,7 +34,7 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex'
 import { dobounce } from '../../utils/util'
-import QQMapWX from '../../common/lib/qqmap-wx-jssdk.js'
+import QQMapWX from 'wx-qqmap-jssdk'
 import {reverseGeocoder} from '@/utils/address'
 const qqMapSdk = new QQMapWX({
   key: '5GXBZ-7PPWJ-UM6F2-K7AUH-KPQNQ-CFBE5'

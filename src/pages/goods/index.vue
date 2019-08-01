@@ -84,7 +84,19 @@
               <span style="color:#F52D3C;">{{currentTime}}</span> 送达
             </span>
           </div>
-
+          <!-- <div class="good-spot">
+            <div class="spot-title">
+              <img src="https://img.icaixiaochu.com/shopt.png" alt />
+              <p>亮点</p>
+            </div>
+            <div class="spot-content">
+              <div class="spot-des">
+                <p>选取颗粒饱满，鲜嫩的玉米，营养丰富。</p>
+                <p>咬下去口感甜嫩，所以被称作“甜玉米”。</p>
+                <p>直接水煮做主食，或煲汤、煮粥都合适。</p>
+              </div>
+            </div>
+          </div>-->
           <div class="good-detail">
             <div class="switch-fuc">
               <div
@@ -140,7 +152,7 @@
                       alt
                     />
                   </div>
-                </div> -->
+                </div>-->
               </div>
             </div>
           </div>
@@ -217,10 +229,7 @@ import wxParse from 'mpvue-wxparse'
 import util from '@/utils/util'
 import popup from '@/components/popup'
 import formButton from '@/components/form-button'
-import { setStorageSync, getStorageSync } from '@/utils/storage'
 import navigationBar from '@/components/navigationBar.vue'
-let app = getApp()
-
 export default {
   data () {
     return {
@@ -238,9 +247,6 @@ export default {
   },
   computed: {
     ...mapGetters(['user'])
-  },
-  onError (err) {
-    console.log(err)
   },
   components: { popup, wxParse, formButton, navigationBar },
   methods: {
@@ -427,6 +433,7 @@ export default {
         sku_id: this.goods.sku[0].id
       }
       this.setGood([goods])
+      this.$refs.buyPopup.toggle('hide')
     },
     add () {
       if (this.goods.is_limit) {
@@ -457,44 +464,19 @@ export default {
         })
         .then(res => {
           this.goods = res.data
+          this.Hour()
         })
     },
     ...mapActions(['create_db', 'setGood'])
   },
-  onUnload () {
-    if (this.$refs.buyPopup) {
-      this.$refs.buyPopup.toggle('hide')
-    }
-  },
-  mounted (e) {
-    this.Hour()
-    let _this = this
-    if (!_this.globalData.isIPX) {
-      wx.getSystemInfo({
-        success: result => {
-          if (result.model.search('iPhone X') != -1) {
-            _this.globalData.isIPX = true
-          }
-          wx.setStorageSync('model', result.model)
-        },
-        fail: () => {},
-        complete: () => {}
-      })
-    }
-    this.isIPX = _this.globalData.isIPX
-    var goodId = ''
-    var scene = wx.getLaunchOptionsSync().scene
-    if (scene === 1012) {
-      goodId = wx.getLaunchOptionsSync().query.scene
+  onLoad (options) {
+    this.isIPX = wx.getStorageSync('isIPX') || ''
+    if (options.id) {
+      this.good_id = options.id
     } else {
-      goodId = this.$root.$mp.query.id
+      this.good_id = options.scene
     }
-    if (goodId) {
-      setStorageSync('goodId', goodId)
-    } else {
-      goodId = getStorageSync('goodId')
-    }
-    this.good_id = goodId
+
     this.goodDetail()
   },
   onShareAppMessage: function (res) {

@@ -74,20 +74,76 @@ export default {
       this.formData.is_default = e.mp.detail.value
     },
     chooseAddr () {
-      wx.chooseLocation({
-        success: (res) => {
-          let pos = {
-            lat: res.latitude.toString(),
-            lng: res.longitude.toString()
+      let _this = this
+      wx.getSetting({
+        success (res) {
+          if (res.authSetting['scope.userLocation']) {
+            wx.chooseLocation({
+              success: (res) => {
+                let pos = {
+                  lat: res.latitude.toString(),
+                  lng: res.longitude.toString()
+                }
+                let address = res.name
+                _this.$http.post('/inDistance', pos).then(res => {
+                  if (res.status === 1) {
+                    _this.formData.lng = pos.lng
+                    _this.formData.lat = pos.lat
+                    _this.formData.city = address
+                  }
+                })
+              }
+            })
+          } else {
+            wx.showModal({
+              title: '',
+              content: '添加地址需要获取的地理位置,请授权小程序获取你的位置',
+              showCancel: false,
+              confirmText: '确定',
+              confirmColor: '#FEA835',
+              success: result => {
+                wx.openSetting({
+                  success: (result) => {
+                    if (result.authSetting['scope.userLocation']) {
+                      wx.chooseLocation({
+                        success: (res) => {
+                          let pos = {
+                            lat: res.latitude.toString(),
+                            lng: res.longitude.toString()
+                          }
+                          let address = res.name
+                          _this.$http.post('/inDistance', pos).then(res => {
+                            if (res.status === 1) {
+                              _this.formData.lng = pos.lng
+                              _this.formData.lat = pos.lat
+                              _this.formData.city = address
+                            }
+                          })
+                        }
+                      })
+                    } else {
+                      wx.showToast({
+                        title: '授权失败',
+                        icon: 'none',
+                        image: '',
+                        duration: 1500,
+                        mask: false,
+                        success: (result) => {
+
+                        },
+                        fail: () => {},
+                        complete: () => {}
+                      })
+                    }
+                  },
+                  fail: () => {},
+                  complete: () => {}
+                })
+              },
+              fail: () => {},
+              complete: () => {}
+            })
           }
-          let address = res.address
-          this.$http.post('/inDistance', pos).then(res => {
-            if (res.status === 1) {
-              this.formData.lng = pos.lng
-              this.formData.lat = pos.lat
-              this.formData.city = address
-            }
-          })
         }
       })
     },

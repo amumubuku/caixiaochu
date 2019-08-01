@@ -198,30 +198,7 @@ export default {
       causes: [],
       causeId: '',
       causeTitle: '',
-      coupons: [
-        {
-          coupon_id: 4,
-          expire_time: '2019-06-27',
-          id: 5,
-          is_used: 1,
-          price: 30,
-          threshold_price: '0.00',
-          time_create: 1559269705,
-          time_used: 1560338581,
-          title: '新人优惠卷'
-        },
-        {
-          coupon_id: 4,
-          expire_time: '2019-06-27',
-          id: 5,
-          is_used: 1,
-          price: 30,
-          threshold_price: '0.00',
-          time_create: 1559269705,
-          time_used: 1560338581,
-          title: '新人优惠卷'
-        }
-      ]
+      coupons: []
     }
   },
 
@@ -397,16 +374,6 @@ export default {
   },
   onPullDownRefresh () {
     this.getOrderDetail()
-  },
-  onUnload () {
-    var pages = getCurrentPages()
-    var currentPage = pages[pages.length - 2]
-    var url = currentPage.route
-    if (url === 'pages/order/main') {
-      wx.navigateBack({
-        delta: 1
-      })
-    }
   }
 }
 </script>
