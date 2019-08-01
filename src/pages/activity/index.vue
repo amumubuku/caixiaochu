@@ -1,10 +1,12 @@
 <template>
   <div class="activity">
-     <navigation-bar :title="'限时抢'"
-            :navBackgroundColor="'#fff'"
-            :titleColor="'#000'"
-            :back-visible="true"
-            :home-path="'/pages/index/main'"></navigation-bar>
+    <navigation-bar
+      :title="'限时抢'"
+      :navBackgroundColor="'#fff'"
+      :titleColor="'#000'"
+      :back-visible="true"
+      :home-path="'/pages/index/main'"
+    ></navigation-bar>
     <div class="time-list">
       <scroll-view
         width="100%"
@@ -59,7 +61,7 @@
         >
           <div class="good-cover">
             <div class="tag-box" v-if="index ===0 ">必抢精品</div>
-            <img :src="item.cover"  mode="aspectFill" alt>
+            <img :src="item.cover" mode="aspectFill" alt />
           </div>
           <div class="good-info">
             <div class="good-title">{{item.title}}</div>
@@ -68,7 +70,7 @@
               <div class="progress-bar">
                 <div
                   class="inner"
-                  :style="{width: item.sku.sold >= item.sku.stock ? 1 * 135 + 'px' : item.sku.sold / item.sku.stock * 135 + 'px'}"
+                  :style="{width: item.sku.stock <1 ? 1 * 135 + 'px' : item.sku.sold / (item.sku.stock + item.sku.sold) * 135 + 'px'}"
                 ></div>
               </div>
               <span>已售{{item.percent}}%</span>
@@ -83,13 +85,13 @@
                 v-if="spikeStatus === 0||spikeStatus === 2 "
                 class="spike-end"
               >{{spikeStatus===0?'已结束':'即将开始'}}</p>
-              <div class="buy" v-else :class="[item.sku.sold >= item.sku.stock?'buy-tag': '']">
-                <p>{{item.sku.sold >= item.sku.stock ? '已售罄':'马上抢'}}</p>
+              <div class="buy" v-else :class="[ item.sku.stock < 1?'buy-tag': '']">
+                <p>{{ item.sku.stock < 1 ? '已售罄':'马上抢'}}</p>
                 <img
                   src="https://img.icaixiaochu.com/1n7tGgHQk7USEDBG.png"
                   v-if="item.sku.sold != item.sku.stock"
                   alt
-                >
+                />
               </div>
             </div>
           </div>
@@ -97,7 +99,7 @@
       </scroll-view>
     </div>
     <div class="null-good-list" v-if="!goodList.length >= 1">
-      <img src="https://img.icaixiaochu.com/1@2x.pngFO9zGMz3P6mUD3Wc.png" alt>
+      <img src="https://img.icaixiaochu.com/1@2x.png" alt />
       <p>暂无商品发布</p>
     </div>
   </div>
@@ -204,9 +206,7 @@ export default {
       this.goodList = []
       this.spikeStatus = item.status
       this.currentTab = index
-      this.scrollId = index < 3
-        ? 'scroll_0'
-        : 'scroll_' + (index - 2)
+      this.scrollId = index < 3 ? 'scroll_0' : 'scroll_' + (index - 2)
       this.currentId = item.id
       this.$http
         .post('/fetchPurchaseGoods', {
@@ -217,7 +217,9 @@ export default {
           if (res.data.data.length >= 1) {
             res.data.data.forEach(element => {
               var ele = element
-              ele.percent = Math.floor(ele.sku.sold / (ele.sku.stock + ele.sku.sold) * 100)
+              ele.percent = Math.floor(
+                ele.sku.sold / (ele.sku.stock + ele.sku.sold) * 100
+              )
               data.push(ele)
             })
           }
@@ -231,6 +233,15 @@ export default {
   mounted () {
     this.navTime()
     this.countDown()
+  },
+  onShareAppMessage: function (res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+    }
+    return {
+      title: '新品推荐',
+      path: 'pages/activity/main'
+    }
   }
 }
 </script>

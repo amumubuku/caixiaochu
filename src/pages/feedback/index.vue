@@ -1,18 +1,46 @@
 <template>
   <div class="feedback">
     <div class="centent" v-if="!isSuccess">
-      <textarea
-        placeholder="请输入您的宝贵意见，我们将为您不断改进"
-        auto-focus
-        fixed="true"
-        v-model="text"
-        class="text"
-        maxlength="5000"
-      />
+      <div class="text-box">
+        <textarea
+          placeholder="请填写10字以上的问题，以便我们提供更好的帮助及优化"
+          auto-focus
+          v-model="text"
+          class="text"
+          maxlength="5000"
+        />
+      </div>
+      <div class="feedback-imgs">
+        <p class="title">相关截图（选填）</p>
+        <div class="img-list">
+          <div
+            class="img-item"
+            v-for="(item, index) in selectImgs"
+            :key="index"
+            @click="previewImage(item)"
+          >
+            <img :src="item" alt />
+            <div class="delete" @click.stop="deteleImg(index)">
+              <img src="https://img.icaixiaochu.com/detele-icon.png" alt />
+            </div>
+          </div>
+          <div class="select-img" @click="chooseImage">
+            <img src="https://img.icaixiaochu.com/camera-icon.png" alt />
+            <p>添加图片</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-wrp" v-if="!isSuccess">
+      <p>输入有效联系方式以便我们联系你(选填)</p>
+      <div class="contact">
+        <p>联系方式</p>
+        <input type="text"  v-model="contact" placeholder="邮箱/手机号" />
+      </div>
     </div>
 
     <div class="isSuccess" v-if="isSuccess">
-      <img src="https://img.icaixiaochu.com/G84XO8i0zMcZvyt5.png" alt>
+      <img src="https://img.icaixiaochu.com/G84XO8i0zMcZvyt5.png" alt />
       <p>意见反馈成功</p>
     </div>
     <form @submit="submit" report-submit="true">
@@ -29,16 +57,77 @@ export default {
     return {
       text: '',
       isSuccess: false,
-      submitText: '提交'
+      submitText: '提交',
+      selectImgs: [],
+      uploadImgs: [],
+      contact: ''
     }
   },
   methods: {
+    deteleImg (index) {
+      this.selectImgs.splice(index, 1)
+      this.uploadImgs.splice(index, 1)
+    },
+    chooseImage () {
+      let _this = this
+      if (_this.selectImgs.length >= 3) {
+        wx.showToast({
+          title: '只能上传3张图片',
+          icon: 'none',
+          image: '',
+          duration: 1500,
+          mask: false,
+          success: (result) => {
+
+          },
+          fail: () => {},
+          complete: () => {}
+        })
+        return
+      }
+      wx.chooseImage({
+        count: 3 - _this.selectImgs.length,
+        sizeType: ['original', 'compressed'],
+        sourceType: ['album', 'camera'],
+        success: result => {
+          _this.selectImgs = _this.selectImgs.concat(result.tempFilePaths)
+          this.upload(result.tempFilePaths)
+        },
+        fail: () => {},
+        complete: () => {}
+      })
+    },
+    previewImage (imgUrl) {
+      wx.previewImage({
+        current: imgUrl, // 当前显示图片的http链接
+        urls: this.selectImgs// 需要预览的图片http链接列表
+      })
+    },
+    upload (data) {
+      let token = wx.getStorageSync('token') || ''
+      data.forEach(element => {
+        wx.uploadFile({
+          url: 'https://icaixiaochu.com/api/upload',
+          filePath: element,
+          name: '111',
+          formData: {
+            token
+          },
+          success: (result) => {
+            this.uploadImgs.push(JSON.parse(result.data).data)
+          },
+          fail: (err) => {
+            console.log(err)
+          },
+          complete: () => {}
+        })
+      })
+    },
     submit () {
       if (this.isSuccess) {
         wx.navigateBack({ changed: true })
         return
       }
-
       if (this.text === '') {
         wx.showModal({
           content: '你还未输入意见',
@@ -47,7 +136,12 @@ export default {
         })
         return
       }
-      this.$http.post('submitOpinion', { content: this.text }).then(res => {
+      let form = {
+        content: this.text,
+        image: this.uploadImgs.join(','),
+        contact: this.contact
+      }
+      this.$http.post('submitOpinion', form).then(res => {
         if (res.status === 1) {
           this.isSuccess = true
           this.submitText = '完成'
@@ -62,17 +156,10 @@ export default {
       })
     }
   },
-  mounted () {
-    console.log(this.$data)
-    this.$data = {
-      text: '',
-      isSuccess: false,
-      submitText: '提交'
-    }
-  }
+  mounted () {}
 }
 </script>
-<style lang="less" scoped>
+<style lang="less">
 @import "./style.less";
 </style>
 

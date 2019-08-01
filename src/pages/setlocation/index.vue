@@ -39,7 +39,7 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
-import QQMapWX from 'qqmap-wx-jssdk'
+import QQMapWX from 'wx-qqmap-jssdk'
 import {reverseGeocoder} from '@/utils/address'
 import { dobounce } from '../../utils/util'
 import util from '@/utils/util'

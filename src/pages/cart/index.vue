@@ -122,7 +122,7 @@
           </div>
           <div class="card-info-rifht" @click="subOrder">
             <form>
-              <div class="style1">立即支付</div>
+              <div class="style1">立即结算</div>
                <!-- v-if="delivery.price_send <=cartInfos.price" -->
               <!-- <div class="style2" v-else>还差{{deliveryPrice}}元</div> -->
             </form>
@@ -145,7 +145,8 @@ export default {
   data () {
     return {
       goodsList: [],
-      delivery: ''
+      delivery: '',
+      noticeMsg: ''
     }
   },
   computed: {
@@ -159,6 +160,9 @@ export default {
   },
   mounted () {
     this.DeliveryInfo()
+    this.$http.post('/getNotice').then(res => {
+      this.notice = res.data
+    })
   },
   onShow () {
     if (wx.getStorageSync('userInfo') && wx.getStorageSync('token')) {

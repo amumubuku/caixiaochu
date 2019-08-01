@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import App from './App'
-import '../static/sdk/ald-stat'
 import store from './store/index'
 import request from './utils/request'
 Vue.prototype.$http = request
@@ -11,4 +10,3 @@ Vue.prototype.$store = store
 
 const app = new Vue(App)
 app.$mount()
-Vue.prototype.globalData = getApp().globalData

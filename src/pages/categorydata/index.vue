@@ -38,7 +38,7 @@ export default {
       data: [],
       currentId: '',
       navList: [],
-      keyWords: '请输入关键字',
+      keyWords: '搜索商品',
       categoryListData: [],
       parent_id: 1,
       loading: false
@@ -62,6 +62,7 @@ export default {
         })
         .then(res => {
           this.navList = res.data
+          if (res.data < 1) return false
           this.currentId = res.data[0].id
           this.getCurGoodData(res.data[0].id)
         })

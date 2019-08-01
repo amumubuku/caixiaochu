@@ -10,7 +10,7 @@
         <form class="form" @click="toSearchPage">
           <div class="btn">
             <img src="http://p2.icaixiaochu.com/search.png" alt />
-            <span>请输入关键字</span>
+            <span>搜索商品</span>
           </div>
         </form>
       </div>
@@ -52,7 +52,7 @@
               <text>{{Activity[1].btn_str}}</text>
             </div>
             <div class="icon">
-              <img :src="Activity[1].image" mode="aspectFill" alt />
+              <img :src="Activity[1].image" lazy-load mode="aspectFill" alt />
             </div>
           </div>
           <div class="but" @click="toCoupon">
@@ -130,6 +130,31 @@
         <recommend :goods="recommendGoods" />
       </div>
     </div>
+    <popup ref="couponModal" type="center" className="coupon-modal">
+      <div class="coupon-wrp">
+        <div class="coupon-list">
+          <div class="coupon-item" v-for="(item, index) in couponModalData.coupons" :key="index">
+            <div class="coupon-left">
+              <i style="font-size:13px;">￥</i>
+              {{item.price}}
+            </div>
+            <div class="coupon-right">
+              <p class="limit-price">满{{item.threshold_price}}元可用</p>
+              <p class="coupon-day">{{item.effective_time}}天有效</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="receive" @click="receiveCoupon">
+        <div class="receive-btn">
+          <p>{{couponModalData.status? '去使用':'领取'}}</p>
+          <img src="https://img.icaixiaochu.com/coupon-tag-icon.png" alt />
+        </div>
+      </div>
+      <div class="cancel" @click="cancelModal">
+        <img src="https://img.icaixiaochu.com/index-cancel-icon.png" alt />
+      </div>
+    </popup>
   </div>
 </template>
 
@@ -140,8 +165,9 @@ import floor from '@/components/floor'
 import { setTabBarBadge } from '@/utils'
 import { reverseGeocoder } from '@/utils/address'
 import recommend from '@/components/recommend'
+import popup from '@/components/popup'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
-import QQMapWX from 'qqmap-wx-jssdk'
+import QQMapWX from 'wx-qqmap-jssdk'
 const qqMapSdk = new QQMapWX({
   key: '5GXBZ-7PPWJ-UM6F2-K7AUH-KPQNQ-CFBE5'
 })
@@ -155,11 +181,11 @@ export default {
       recommendGoods: [],
       countDownList: [],
       limit: [],
-      goodsList: [{ actEndTime: '' }],
       countDownTime: '',
       page: 1,
       loading: false,
-      Activity: []
+      Activity: [],
+      couponModalData: []
     }
   },
   computed: {
@@ -169,15 +195,10 @@ export default {
     brand,
     banner,
     floor,
-    recommend
+    recommend,
+    popup
   },
-  onReachBottom () {
-    if (this.loading) {
-      this.page++
-      this.loading = false
-      this.getHotGoods(this.page)
-    }
-  },
+
   onShow () {
     if (this.cartInfos.num >= 1) {
       setTabBarBadge(`${this.cartInfos.num}`)
@@ -186,25 +207,63 @@ export default {
         index: 3
       })
     }
+    // wx.getStorage({
+    //   key: 'lock',
+    //   success: result => {
+    //     let diff = t => {
+    //       return Date.now() - t < 24 * 3600 * 1000
+    //     }
+    //     let e = diff(result.data)
+    //     setTimeout(() => {
+    //       this.$refs.couponModal.toggle('show')
+    //     }, 1500)
+    //     if (!e) {
+    //       this.$refs.couponModal.toggle('show')
+    //       wx.setStorageSync('lock', Date.now())
+    //     }
+    //   },
+    //   fail: () => {
+    //     wx.setStorageSync('lock', Date.now())
+    //     this.$refs.couponModal.toggle('show')
+    //   },
+    //   complete: () => {}
+    // })
   },
   mounted () {
     this.getCurLocation()
-    this.getHotGoods()
-    this.getprodectlist()
     this.appInfo()
-    let _this = this
-    wx.getSystemInfo({
-      success: result => {
-        if (result.model.search('iPhone X') != -1) {
-          _this.globalData.isIPX = true
-        }
-        wx.setStorageSync('model', result.model)
-      },
-      fail: () => {},
-      complete: () => {}
-    })
+    this.getActivityCoupon()
   },
   methods: {
+    cancelModal () {
+      this.$refs.couponModal.toggle('hide')
+    },
+    getActivityCoupon () {
+      this.$http.post('/fetchCouponsSend').then(res => {
+        if (res.data) {
+          this.$refs.couponModal.toggle('show')
+          this.couponModalData = res.data
+        }
+      })
+    },
+    receiveCoupon () {
+      if (this.couponModalData.status) {
+        this.$refs.couponModal.toggle('hide')
+        return
+      }
+      this.$http.post('/getCouponSend').then(res => {
+        if (res.status) {
+          wx.navigateTo({
+            url: '../mycoupon/main',
+            success: (result) => {
+            },
+            fail: () => {},
+            complete: () => {}
+          })
+          this.$refs.couponModal.toggle('hide')
+        }
+      })
+    },
     getHotGoods (page = 1) {
       this.$http.get('/fetchHotGoods', { page }).then(res => {
         if (res.data.length < 1 && this.page >= 1) {
@@ -224,7 +283,9 @@ export default {
     appInfo () {
       this.$http.post('/getNav').then(res => {
         this.Activity = res.data
+        this.getprodectlist()
         this.countDown()
+        this.getHotGoods()
       })
     },
     Result (data) {
@@ -253,9 +314,7 @@ export default {
           sec: this.timeFormat(sec)
         }
       } else {
-        // 活动已结束，全部设置为'00'
-        this.appInfo()
-        return
+        return false
       }
 
       this.countDownTime = obj
@@ -330,8 +389,16 @@ export default {
   },
   onPullDownRefresh () {
     this.page = 1
+    this.recommendGoods = []
     this.getHotGoods()
     this.getprodectlist()
+  },
+  onReachBottom () {
+    if (this.loading) {
+      this.page++
+      this.loading = false
+      this.getHotGoods(this.page)
+    }
   },
   onShareAppMessage: function (res) {
     if (res.from === 'button') {

@@ -208,11 +208,10 @@
                   <p>共{{item.goods.length}}件商品</p>
                   <p>实付：¥{{item.money_pay}}</p>
                 </div>
-                <div
-                  class="good-content-btn"
-                  v-if="item.status == 3"
-                  @click="orderDetail(item)"
-                >查看详情</div>
+                <div class="order-fun-handle">
+                  <div class="order-detail" @click="orderDetail(item)">查看详情</div>
+                   <div class="order-comment" @click="comment(item)">评价</div>
+                </div>
               </div>
             </div>
           </scroll-view>
@@ -272,7 +271,7 @@ export default {
           checked: true
         },
         {
-          name: '已完成',
+          name: '待评价',
           type: '4',
           checked: true
         }
@@ -309,6 +308,16 @@ export default {
     }
   },
   methods: {
+    comment (item) {
+      wx.navigateTo({
+        url: `../comment/main?id=${item.order_id}`,
+        success: (result) => {
+
+        },
+        fail: () => {},
+        complete: () => {}
+      })
+    },
     loadingMore () {
       if (this.loading) {
         this.page++

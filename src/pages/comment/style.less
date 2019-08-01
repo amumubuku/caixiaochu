@@ -1,56 +1,167 @@
-.comment {
+page {
   background: #f4f4f4;
-  padding: 0 10px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
 
-  .comment-content {
-    text-align: center;
-    .text {
-      font-size: 22px;
-      font-weight: bold;
-      line-height: 30px;
-      color: rgba(0, 0, 0, .87);
-      padding-top: 44px;
-    }
+.comment {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
 
-    .order-leva {
-      font-size: 15px;
-      font-weight: 400;
-      line-height: 21px;
-      color: rgba(0, 0, 0, .5);
-      padding: 8px 0 16px 0;
-    }
-    .comments-level {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding-bottom: 22px;
-      img {
-        height: 25px;
-        width: 24px;
-        margin:  0 6px;
-      }
-    }
-
-    .centent {
-      height: 125px;
+  .comment-list {
+    .comment-item {
+      height: 390px;
+      background: rgba(255, 255, 255, 1);
       border-radius: 10px;
-      background: #fff;
+      padding: 10px;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: space-between;
+      flex-flow: column nowrap;
 
-      .text {
-        padding: 8px;
-        padding-top: 10px;
-        flex: 1;
-        width: 100%;
-        height: 100%; //<----这里是重点，textarea的高度
-        font-size: 16px;
-        line-height: 26px;
-        color: #000000;
+      .comment-head {
+        display: flex;
+        align-items: center;
+        height: 50px;
+
+        .good-cover {
+          width: 50px;
+          height: 50px;
+          margin-right:10px;
+          border-radius:5px;
+          overflow: hidden;
+
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+
+        .comment-info {
+          height:100%;
+          display: flex;
+          justify-content: space-between;
+          flex-flow: column nowrap;
+          p {
+            padding-left: 3px;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 20px;
+            color: rgba(0, 0, 0, .87);
+          }
+
+          .comments-level {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            img {
+              width: 18px;
+              height: 17px;
+              margin: 0 3px;
+            }
+          }
+        }
+      }
+
+      .comment-centent {
         box-sizing: border-box;
+        height: 162px;
+        margin-bottom: 19px;
+        background: #F9F9FB;
+        border-radius: 10px;
+
+        .text {
+          text-align: start;
+          padding: 8px;
+          padding-top: 10px;
+          flex: 1;
+          width: 100%;
+          height: 100%; //<----这里是重点，textarea的高度
+          font-size: 15px;
+          font-weight: 400;
+          line-height: 21px;
+          color: rgba(0, 0, 0, .5);
+          box-sizing: border-box;
+
+        }
+      }
+
+      .comment-imgs {
+        .title {
+          font-size: 15px;
+          font-weight: 400;
+          line-height: 21px;
+          color: rgba(0, 0, 0, .87);
+          margin-bottom: 19px;
+        }
+
+        .img-list {
+          display: flex;
+
+
+          .img-item {
+            width: 71px;
+            height: 71px;
+            border-radius: 5px;
+            margin-right: 16px;
+            position: relative;
+
+            img {
+              width: 100%;
+              height: 100%;
+            }
+
+            .delete {
+              position: absolute;
+              width: 16px;
+              height: 16px;
+              top: -8px;
+              right: -8px;
+              background: rgba(229, 229, 229, 1);
+              border-radius: 50%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+
+              img {
+                width: 100%;
+                height: 100%;
+              }
+
+            }
+          }
+
+          .select-img {
+            width: 71px;
+            height: 71px;
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-flow: column;
+
+            img {
+              width: 22px;
+              height: 22px;
+              padding-bottom: 5px;
+            }
+
+            p {
+              font-size: 8px;
+              font-weight: 400;
+              line-height: 11px;
+              color: rgba(0, 0, 0, .36);
+            }
+          }
+        }
       }
     }
   }
-
-  .comment-imgs {}
 
   .submit {
     position: fixed;

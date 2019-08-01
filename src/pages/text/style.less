@@ -1,23 +1,117 @@
-.banner-container {
-  width: 100vw;
-  height: 524rpx;
-}
-.slide-image {
-  width: 550rpx;
-  height: 328rpx;
-  z-index: 200;
-  border-radius: 16rpx;
-}
-.text-box {
-  height: 34px;
-  margin: 12px 0;
-  background-color: red;
-}
-.img-list{
-  width: 120px;
-  height: 120px;
-  img {
-    width: 100%;
-    height: 100%;
+.text {
+  .coupon-modal {
+    .coupon-wrp {
+      position: relative;
+      width: 301px;
+      height: 361px;
+      background: url('https://img.icaixiaochu.com/index-coupon.png') no-repeat;
+      color: #000;
+      background-size: 100% 100%;
+      background-origin: content-box;
+
+      .coupon-list {
+        width: 201px;
+        height: 154px;
+        position: absolute;
+        right: 0;
+        left: 0;
+        bottom: 35px;
+        margin: auto;
+
+        .coupon-item {
+          width: 201px;
+          height: 77px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          .coupon-left {
+            flex: 0 0 81px;
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: bold;
+            line-height: 50px;
+            color: rgba(252, 68, 83, 1);
+          }
+
+          .coupon-right {
+            flex: 1;
+            padding: 16px 0 0 12px;
+            height: 100%;
+            .limit-price {
+              width: 87px;
+              height: 21px;
+              font-size: 15px;
+              font-weight: 400;
+              color: rgba(0, 0, 0, .87);
+              padding-bottom: 7px;
+            }
+
+            .coupon-day {
+              font-size: 12px;
+              font-weight: 400;
+              color: rgba(255, 255, 255, 1);
+              padding-left: 5px;
+            }
+
+          }
+
+
+        }
+
+      }
+    }
+
+    .receive {
+      width: 301px;
+      height: 85px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom-right-radius: 10px;
+      border-bottom-left-radius: 10px;
+
+      .receive-btn {
+        width: 180px;
+        height: 42px;
+        background: linear-gradient(270deg, rgba(253, 105, 75, 1) 0%, rgba(252, 51, 91, 1) 100%);
+        box-shadow: 0px 3px 10px rgba(252, 76, 83, 0.5);
+        border-radius: 21px;
+        font-size: 17px;
+        font-weight: 400;
+        line-height: 24px;
+        color: rgba(255, 255, 255, .87);
+        text-align: center;
+        line-height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        p {
+          margin-right: 4px;
+        }
+
+        img {
+          width: 6px;
+          height: 6px;
+        }
+      }
+    }
+
+    .cancel {
+      width: 32px;
+      height: 32px;
+      margin: 0 auto;
+      margin-top: 16px;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
   }
 }
