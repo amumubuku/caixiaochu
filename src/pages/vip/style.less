@@ -178,7 +178,7 @@
 
             img {
               position: relative;
-              top: -1px;
+              top: -.5px;
               width: 11px;
               height: 11px;
               margin-left: 6px;
@@ -707,6 +707,119 @@
           line-height: 21px;
           color: rgba(107, 92, 78, 1);
         }
+      }
+
+      .vip-modal-footer {
+        position: absolute;
+        width: 142px;
+        height: 44px;
+        bottom: 22px;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        background: rgba(107, 92, 78, 1);
+        box-shadow: 0px 6px 15px rgba(165, 117, 71, 0.62);
+        border-radius: 22px;
+        font-size: 21px;
+        font-weight: 400;
+        line-height: 44px;
+        color: rgba(255, 255, 255, 1);
+        text-align: center;
+      }
+    }
+  }
+
+  .couponModal {
+    .vip-modal {
+      width: 328px;
+      height: 375px;
+      position: relative;
+      background: url('https://img.icaixiaochu.com/go.png') no-repeat;
+      background-size: 100% 100%;
+      background-origin: content-box;
+
+      .card-bg {
+        position: absolute;
+        top: -24px;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        width: 231px;
+        height: 116px;
+        background: url('https://img.icaixiaochu.com/vip-bg-v2.png') no-repeat;
+        background-size: 100% 100%;
+        background-origin: content-box;
+
+      }
+
+      .vip-modal-content {
+        height: 240rpx;
+        opacity: 1;
+        padding: 0 36rpx;
+        position: relative;
+        padding-top: 78px;
+
+        .head-content {
+          height: 135px;
+          border-bottom: 1px dashed rgba(112, 112, 112, 1);
+          text-align: center;
+
+          .bg {
+            font-size: 48rpx;
+            color: #8f700d;
+            text-align: center;
+            line-height: 86rpx;
+            height: 86rpx;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            ._img {
+              height: 24px;
+              width: 140px;
+            }
+          }
+
+          h3 {
+            font-size: 30px;
+            font-weight: 800;
+            color: rgba(107, 92, 78, 1);
+          }
+
+          ._p {
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 21px;
+            color: rgba(107, 92, 78, 1);
+          }
+        }
+
+        .footer-content {
+          height: 86px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          .p1 {
+            font-size:15px;
+            font-weight:bold;
+            line-height:21px;
+            color:rgba(107,92,78,1);
+            padding-bottom: 5px;
+          }
+          .p2 {
+            font-size:13px;
+            font-weight:500;
+            color:rgba(107,92,78,.5);
+          }
+          .footer-right {
+            font-size:20px;
+            font-weight:800;
+            color:rgba(107,92,78,1);
+          }
+        }
+
+
       }
 
       .vip-modal-footer {

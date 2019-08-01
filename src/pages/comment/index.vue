@@ -9,17 +9,17 @@
           <div class="comment-info">
             <p>{{item.goods_title}}</p>
             <div class="comments-level">
-              <div class="rate" v-for="(item, k) in  item.level" :key="k">
+              <div class="rate" v-for="(data, k) in  item.level" :key="k">
                 <img
                   src="https://img.icaixiaochu.com/%E6%98%9F_%E5%AE%9E@2x.png"
-                  @click="changeRate(index)"
-                  v-if="index <= tempValue"
+                  @click="changeRate(item,k)"
+                  v-if="k <= item.tempValue"
                   alt
                 />
                 <img
                   src="https://img.icaixiaochu.com/1111@2x.png"
                   v-else
-                  @click="changeRate(index)"
+                  @click="changeRate(item,k)"
                   alt
                 />
               </div>
@@ -30,7 +30,7 @@
           <textarea
             placeholder="写下您对这笔交易的评价吧~"
             auto-focus
-            v-model="text"
+            v-model="item.content"
             class="text"
             maxlength="5000"
           />
@@ -40,16 +40,16 @@
           <div class="img-list">
             <div
               class="img-item"
-              v-for="(item, i) in item.uploadimg"
+              v-for="(img, i) in item.selectImgs"
               :key="i"
-              @click="previewImage(item)"
+              @click="previewImage(img,item)"
             >
-              <img :src="item" alt />
-              <div class="delete" @click.stop="deteleImg(i)">
+              <img :src="img" alt />
+              <div class="delete" @click.stop="deteleImg(item,i)">
                 <img src="https://img.icaixiaochu.com/detele-icon.png" alt />
               </div>
             </div>
-            <div class="select-img" @click="chooseImage">
+            <div class="select-img" @click="chooseImage(item)">
               <img src="https://img.icaixiaochu.com/camera-icon.png" alt />
               <p>添加图片</p>
             </div>
@@ -57,7 +57,7 @@
         </div>
       </div>
     </div>
-    <div class="submit">提交</div>
+    <div class="submit" @click="submitForm">提交</div>
   </div>
 </template>
 
@@ -65,17 +65,17 @@
 export default {
   data () {
     return {
-      selectImgs: [],
-      uploadImgs: [],
-      level: 5,
-      tempValue: -1,
       orderId: '',
       commentList: ''
     }
   },
   methods: {
-    changeRate (value) {
-      this.tempValue = value
+    changeRate (item, value) {
+      item.tempValue = value
+    },
+    deteleImg (item, index) {
+      item.selectImgs.splice(index, 1)
+      item.uploadImgs.splice(index, 1)
     },
     subComment () {
       wx.showModal({
@@ -89,8 +89,8 @@ export default {
         complete: () => {}
       })
     },
-    chooseImage () {
-      let _this = this
+    chooseImage (item) {
+      let _this = item
       if (_this.selectImgs.length >= 3) {
         wx.showToast({
           title: '只能上传3张图片',
@@ -110,30 +110,30 @@ export default {
         sourceType: ['album', 'camera'],
         success: result => {
           _this.selectImgs = _this.selectImgs.concat(result.tempFilePaths)
-          this.upload(result.tempFilePaths)
+          this.upload(result.tempFilePaths, _this)
         },
         fail: () => {},
         complete: () => {}
       })
     },
-    previewImage (imgUrl) {
+    previewImage (imgUrl, item) {
       wx.previewImage({
         current: imgUrl, // 当前显示图片的http链接
-        urls: this.selectImgs // 需要预览的图片http链接列表
+        urls: item.selectImgs // 需要预览的图片http链接列表
       })
     },
-    upload (data) {
+    upload (data, seft) {
       let token = wx.getStorageSync('token') || ''
       data.forEach(element => {
         wx.uploadFile({
           url: 'https://icaixiaochu.com/api/upload',
           filePath: element,
-          name: '111',
+          name: 'caixiaochu',
           formData: {
             token
           },
           success: result => {
-            this.uploadImgs.push(JSON.parse(result.data).data)
+            seft.uploadImgs.push(JSON.parse(result.data).data)
           },
           fail: err => {
             console.log(err)
@@ -147,12 +147,40 @@ export default {
         let normal = res.data.goods
         normal.forEach(ele => {
           ele.image = []
-          ele.uploadImg = []
+          ele.uploadImgs = []
+          ele.selectImgs = []
           ele.level = 5
           ele.tempValue = -1
           ele.content = ''
         })
         this.commentList = normal
+      })
+    },
+    submitForm () {
+      let submitState = this.commentList.every(ele => {
+        if (ele.content && ele.tempValue > 0) {
+          return true
+        }
+        return false
+      })
+      this.commentList.image = this.commentList.uploadImgs
+      let form = JSON.stringify(this.commentList)
+      if (!submitState) return false
+
+      this.$http.post('/SubmitEvaluate', {data: form}).then(res => {
+        if (res.status) {
+          wx.showModal({
+            title: '',
+            content: '感谢你的评价',
+            showCancel: false,
+            confirmText: '确定',
+            confirmColor: '#FEA835',
+            success: result => {
+            },
+            fail: () => {},
+            complete: () => {}
+          })
+        }
       })
     }
   },

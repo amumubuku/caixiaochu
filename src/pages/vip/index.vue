@@ -69,7 +69,7 @@
                 <p>小厨VIP特权</p>
                 <div class="tag-icon"></div>
               </div>
-              <div class="vip-row-right">
+              <div class="vip-row-right" @click="interPopup">
                 <p v-if="user.is_vip">
                   会员期间为您节省
                   <span
@@ -181,22 +181,29 @@
         <div class="vip-modal-footer" @click="toggleVipModal">我知道了</div>
       </div>
     </popup>
-    <popup ref="integPopup" type="center">
-      <div class="coupon-price">
-        <div class="top">
-          <p>自你{{user.vip_start_time}}成为会员</p>
-          <div class="bg">
-            <img src="http://p2.icaixiaochu.com/huiyuanshuoming.png" alt mode="aspectFit" />
+    <popup ref="integPopup" type="center" className="couponModal">
+      <div class="vip-modal">
+        <div class="card-bg"></div>
+        <div class="vip-modal-content">
+          <div class="head-content">
+            <p>自你{{user.vip_start_time}}成为会员</p>
+            <div class="bg">
+              <img
+                src="https://img.icaixiaochu.com/%E4%BC%9A%E5%91%98%E6%9C%9F%E9%97%B4%E5%B7%B2%E4%B8%BA%E6%82%A8%E8%8A%82%E7%9C%81@2x.png"
+                alt
+              />
+            </div>
+            <h3 class="my-coupon-price">¥{{user.money_save}}</h3>
           </div>
-          <p class="my-coupon-price">¥{{user.money_save}}</p>
-        </div>
-        <div class="footer">
-          <div class="footer-left">
-            <p>会员专享价</p>
-            <p style="color:rgba(130,96,8,.5);font-size:12px;">大量商品享低价</p>
+          <div class="footer-content">
+            <div class="footer-left">
+              <p class="p1">会员专享价</p>
+              <p class="p2">大量商品享折扣</p>
+            </div>
+            <div class="footer-right">¥{{user.money_save}}</div>
           </div>
-          <div class="footer-right">¥{{user.money_save}}</div>
         </div>
+        <div class="vip-modal-footer" @click="interPopup">我知道了</div>
       </div>
     </popup>
   </div>

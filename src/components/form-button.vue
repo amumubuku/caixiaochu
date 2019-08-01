@@ -6,7 +6,6 @@
 </template>
 
 <script>
-import {getStorageSync} from '@/utils/storage'
 export default {
   data () {
     return {
@@ -15,7 +14,7 @@ export default {
   },
   methods: {
     uploadFormId (e) {
-      if (!getStorageSync('userInfo') && !getStorageSync('token')) {
+      if (!wx.getStorageSync('userInfo') && !wx.getStorageSync('token')) {
         let formId = e.target.formId
         if (formId === 'the formId is a mock one') {
           return false

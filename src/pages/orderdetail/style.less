@@ -75,12 +75,13 @@ page {
     .address-des {
       display: flex;
       align-items: center;
-      justify-content: space-around;
+      justify-content: flex-start;
       height: 100%;
+      width: 100%;
 
       .order-icon {
         display: flex;
-        width: 30px;
+        flex:  0 0 30px;
         height: 30px;
         align-items: center;
         justify-content: center;
@@ -95,6 +96,7 @@ page {
       }
 
       .addr-content {
+        flex: 1;
         height: 48px;
         display: flex;
         flex-flow: column nowrap;
