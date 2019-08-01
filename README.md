@@ -1,6 +1,7 @@
-# caixiaochu
+# caixiaochu 
 
-> 菜小厨小程序源代码 @周维光
+
+> 菜小厨小程序源代码 @周维光 v2
 
 ## Build Setup
 
