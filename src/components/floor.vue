@@ -1,10 +1,10 @@
 <template>
   <div class="floor" v-if="categoryAreaList.length>=1">
-    <shop-head :info="{'title': '商品分类','des': '你想要的这里都有'}" page="../category/main">
+    <activity-top :info="{'title': '商品分类','des': '你想要的这里都有'}" page="../category/main" color="#000">
       <div class="icon-bg">
         <img src="https://img.icaixiaochu.com/category-icon.png" alt />
       </div>
-    </shop-head>
+    </activity-top>
     <div class="floor-wrp">
       <div class="floor-list" v-for="(item, index) in categoryAreaList" :key="index">
         <div class="floor-banner" @click="jumpCategory(item.category_id)">
@@ -18,7 +18,7 @@
 <script>
 import { mapActions } from 'vuex'
 import slide from '@/components/slide'
-import shopHead from '@/components/shop-head'
+import ActivityTop from "@/components/activity-top";
 export default {
   data () {
     return {
@@ -27,7 +27,7 @@ export default {
   },
   components: {
     slide,
-    shopHead
+    ActivityTop
   },
   methods: {
     getCategory () {

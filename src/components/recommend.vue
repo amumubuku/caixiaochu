@@ -1,10 +1,10 @@
 <template>
   <div class="recommend">
-    <shop-head :info="{'title': '为您推荐','des': '发现更多好物'}" v-if="showTitle" >
+    <activity-top :info="{'title': '为您推荐','des': '发现更多好物'}" v-if="showTitle" >
       <div class="icon-bg">
         <img src="https://img.icaixiaochu.com/zan-icon.png" alt />
       </div>
-    </shop-head>
+    </activity-top>
     <div class="recommend-list">
       <div class="good-item" v-for="(item,index) in goods" :key="index" @click="navtodetail(item)">
         <div class="item-top">
@@ -41,7 +41,7 @@
 </template>
 <script>
 import { mapActions } from 'vuex'
-import shopHead from '@/components/shop-head'
+import ActivityTop from "@/components/activity-top"
 export default {
   props: {
     goods: {
@@ -54,7 +54,7 @@ export default {
     }
   },
   components: {
-    shopHead
+    ActivityTop
   },
   methods: {
     create (item) {

@@ -28,7 +28,7 @@
         </div>
       </div>
     </div>
-    <div class="my-coupon" @click="mycoupon">我的优惠劵</div>
+    <div class="my-coupon" @click="myCoupon">我的优惠劵</div>
   </div>
 </template>
 
@@ -60,7 +60,7 @@ export default {
         this.banner = res.data
       })
     },
-    mycoupon () {
+    myCoupon () {
       wx.navigateTo({
         url: `../mycoupon/main`
       })
@@ -89,7 +89,6 @@ export default {
     }
   },
   mounted () {
-    this.getAllcoupon()
     this.getBnaner()
   }
 }

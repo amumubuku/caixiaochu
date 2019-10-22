@@ -1,32 +1,35 @@
 <template>
-  <div class="top-tag">
-    <div class="top-flex-left">
+  <div class="module-wrp" :style="{background: 'url('+bgCover+')'}">
+    <div class="left-content" :style="{color:color}">
       <div class="icon">
         <slot></slot>
       </div>
       <div class="title">{{info.title}}</div>
       <p>{{info.des}}</p>
     </div>
-    <div class="top-flex-right" v-if="page" @click="toPage">
+    <div class="more-btn" v-if="color === '#000'" @click="toPage">
       <p>全部</p>
     </div>
-    <div class="border" v-if="showBorder"></div>
+    <div class="more-btn1" v-else @click="toPage">
+      <p>全部</p>
+      <img src="https://img.icaixiaochu.com/more-icon-v2.png" alt />
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       data: []
-    }
+    };
   },
   props: {
     info: {
       type: Object,
       default: {
-        title: '菜小厨',
-        des: '乐享生活'
+        title: "菜小厨",
+        des: "乐享生活"
       }
     },
     showBorder: {
@@ -35,37 +38,40 @@ export default {
     },
     page: {
       type: String,
-      default: ''
-    }
+      default: ""
+    },
+    color: {
+      type: String,
+      default: "#fff"
+    },
+    bgCover: String
   },
   methods: {
-    toPage () {
-      let page = this.page
+    toPage() {
+      let page = this.page;
       wx.navigateTo({
         url: page,
         success: result => {},
         fail: () => {
           wx.switchTab({
             url: page,
-            success: (result) => {
-
-            },
+            success: result => {},
             fail: () => {},
             complete: () => {}
-          })
+          });
         },
         complete: () => {}
-      })
+      });
     },
-    emitMore () {
-      this.$emit('emitMore')
+    emitMore() {
+      this.$emit("emitMore");
     }
   },
-  mounted () {}
-}
+  mounted() {}
+};
 </script>
 <style lang="less" scoped>
-.top-tag {
+.module-wrp {
   height: 49px;
   display: flex;
   align-items: center;
@@ -75,30 +81,23 @@ export default {
   position: relative;
   margin-bottom: 10px;
   overflow: hidden;
-  .border {
-    width: 100%;
-    height: 1px;
-    position: absolute;
-    left: 42px;
-    bottom: 0;
-    background: rgba(243, 243, 243, 1);
-  }
-  .top-flex-left {
+  background-size: 100% 100%;
+   background-repeat: no-repeat;
+  .left-content {
     display: flex;
     align-items: center;
+    color: #fff;
     .title {
       font-size: 19px;
       font-weight: 800;
-      color: rgba(0, 0, 0, 0.87);
       margin: 0 6px;
     }
     p {
       font-size: 11px;
       font-weight: 400;
-      color: rgba(0, 0, 0, 0.5);
     }
   }
-  .top-flex-right {
+  .more-btn {
     width: 50px;
     height: 24px;
     border: 3px solid rgba(112, 112, 112, 0.1);
@@ -108,6 +107,27 @@ export default {
     line-height: 24px;
     text-align: center;
     color: rgba(0, 0, 0, 1);
+  }
+  .more-btn1 {
+    width: 60px;
+    height: 19px;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0px 3px 10px rgba(0, 144, 185, 0.4);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    p {
+      font-size: 10px;
+      font-weight: 400;
+      line-height: 14px;
+      color: rgba(0, 186, 240, 1);
+      padding-left: 3px;
+    }
+    img {
+      width: 7px;
+      height: 7px;
+    }
   }
 }
 </style>

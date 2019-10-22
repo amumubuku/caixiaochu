@@ -60,21 +60,6 @@ export default {
       fail: () => {},
       complete: () => {}
     })
-
-    this.$http.post('/getNotice').then(res => {
-      if (res.data.is_show) {
-        wx.showModal({
-          title: '',
-          content: res.data.notice_str,
-          showCancel: false,
-          confirmText: '确定',
-          confirmColor: '#FEA835',
-          success: result => {},
-          fail: () => {},
-          complete: () => {}
-        })
-      }
-    })
   },
   computed: {
     ...mapGetters(['cart', 'cartInfos'])
