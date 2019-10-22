@@ -63,22 +63,21 @@ export default {
         .then(res => {
           this.navList = res.data
           if (res.data < 1) return false
-          this.currentId = res.data[0].id
-          this.getCurGoodData(res.data[0].id)
+          this.currentId = this.currentId || res.data[0].id
+          this.getCurGoodData()
         })
     },
     switchCate (item) {
-      var currentID = item.id
-      if (this.currentId === currentID) {
+      if (this.currentId === item.id) {
         return false
       }
-      this.getCurGoodData(currentID)
       this.currentId = item.id
+      this.getCurGoodData()
     },
     getCurGoodData (id) {
       this.$http
         .get('/getCategoryGoods', {
-          category_id: id
+          category_id: this.currentId
         })
         .then(res => {
           this.categoryListData = res.data
@@ -95,6 +94,7 @@ export default {
     this.skuitem = []
     this.navList = []
     this.parent_id = this.$root.$mp.query.id
+    this.currentId = this.$root.$mp.query.currentId || ''
     this.getCatalogList()
   },
   onShareAppMessage: function (res) {
@@ -103,7 +103,7 @@ export default {
     }
     return {
       title: '新品推荐',
-      path: `pages/categorydata/main?id=${this.parent_id}`
+      path: `pages/categorydata/main?id=${this.parent_id}&currentId=${this.currentId}`
     }
   }
 }

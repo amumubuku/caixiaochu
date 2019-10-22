@@ -1,6 +1,10 @@
 <template>
   <div class="recommend">
-    <sub-title :info="{'title': '热门商品','sec': '热销好物'}"></sub-title>
+    <shop-head :info="{'title': '为您推荐','des': '发现更多好物'}" v-if="showTitle" >
+      <div class="icon-bg">
+        <img src="https://img.icaixiaochu.com/zan-icon.png" alt />
+      </div>
+    </shop-head>
     <div class="recommend-list">
       <div class="good-item" v-for="(item,index) in goods" :key="index" @click="navtodetail(item)">
         <div class="item-top">
@@ -37,16 +41,20 @@
 </template>
 <script>
 import { mapActions } from 'vuex'
-import subTitle from '@/components/sub-title'
+import shopHead from '@/components/shop-head'
 export default {
   props: {
     goods: {
       type: Array,
       default: []
+    },
+    showTitle: {
+      type: Boolean,
+      default: false
     }
   },
   components: {
-    subTitle
+    shopHead
   },
   methods: {
     create (item) {
@@ -63,8 +71,27 @@ export default {
 </script>
 <style lang="less">
 .recommend {
-  padding: 0 10px;
+  padding: 0 14px;
   box-sizing: border-box;
+  .icon-bg {
+    width: 18px;
+    height: 18px;
+    background: linear-gradient(
+      180deg,
+      rgba(96, 150, 230, 1) 0%,
+      rgba(199, 135, 234, 1) 100%
+    );
+    box-shadow: 0px 3px 6px rgba(166, 96, 230, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 10px;
+      height: 9px;
+    }
+  }
   .recommend-list {
     display: flex;
     flex-flow: row wrap;
@@ -72,12 +99,12 @@ export default {
     box-sizing: border-box;
     .good-item {
       position: relative;
-      width: 173px;
+      width: calc(50% - 7px);
       height: 248px;
       margin-bottom: 16px;
       border-radius: 6px;
       overflow: hidden;
-      margin-bottom: 10px;
+      margin-bottom: 13px;
       background-color: #fff;
       box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.1);
       .footer-info {

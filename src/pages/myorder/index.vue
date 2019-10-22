@@ -197,7 +197,7 @@
                 <div class="flex-right">
                   <p
                     class="order-state"
-                  >{{item.status == 0? '待支付':item.status == 1? '待配送':item.status == 2? '待收货': item.status == 3?'已完成':item.status == 4?'待取货':'已取消'}}</p>
+                  >{{item.status == 0? '待支付':item.status == 1? '待配送':item.status == 2? '待收货': item.status == 3?'待评价':item.status == 4?'待取货':'已取消'}}</p>
                 </div>
               </div>
               <div class="good-list">
@@ -210,7 +210,7 @@
                 </div>
                 <div class="order-fun-handle">
                   <div class="order-detail" @click="orderDetail(item)">查看详情</div>
-                   <div class="order-comment" @click="comment(item)">评价</div>
+                   <div class="order-comment" @click="comment(item)" v-if="!item.is_evaluated">评价</div>
                 </div>
               </div>
             </div>
@@ -287,16 +287,6 @@ export default {
   computed: {
     contentHeight () {
       return this.winHeight + 'px'
-    }
-  },
-  onUnload () {
-    var pages = getCurrentPages()
-    var currentPage = pages[pages.length - 2]
-    var url = currentPage.route
-    if (url === 'pages/order/main') {
-      wx.navigateBack({
-        delta: 1
-      })
     }
   },
   watch: {
@@ -410,6 +400,7 @@ export default {
     }
   },
   onShow () {
+    this.page = 1
     this.getOrders()
   },
   mounted () {

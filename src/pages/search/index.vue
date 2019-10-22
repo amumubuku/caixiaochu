@@ -43,7 +43,7 @@
       </div>
       <div class="search-result" v-show="searchResult.length >= 1">
         <scroll-view class="search-scroll" scroll-y="true">
-          <goodlist :goods="searchResult"/>
+          <recommend :goods="searchResult"/>
         </scroll-view>
       </div>
       <div class="search-null" v-if="searchState">
@@ -53,7 +53,7 @@
             <span>抱歉，没有找到相关商品</span>
             <span>您可以换个词试试</span>
             <div class="recommend-wrp">
-              <recommend :goods="recommendGoods"/>
+              <recommend :goods="recommendGoods" showTitle="true"/>
             </div>
           </div>
         </scroll-view>
@@ -64,15 +64,13 @@
 
 <script>
 import recommend from '@/components/recommend'
-import goodlist from '@/components/goodlist'
 import { mapGetters, mapActions } from 'vuex'
 import subTitle from '@/components/sub-title'
 import { dobounce } from '../../utils/util'
 export default {
   components: {
     recommend,
-    subTitle,
-    goodlist
+    subTitle
   },
   computed: {
     ...mapGetters(['hitory'])

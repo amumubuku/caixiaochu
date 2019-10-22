@@ -1,10 +1,3 @@
-/*
- * @Description: In User Settings Edit
- * @Author: your name
- * @Date: 2019-04-16 09:40:27
- * @LastEditTime: 2019-07-03 09:26:41
- * @LastEditors: Please set LastEditors
- */
 
 // import api from '@/utils/api'
 import {setStorageSync, getStorageSync} from './storage'

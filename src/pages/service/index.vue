@@ -23,7 +23,7 @@
         </div>
       </div>
     </div>
-    <div class="null-service-wrp" v-if="!serviceData.length>=1">
+    <div class="null-service-wrp" v-if="!serviceData.length">
       <img src="https://img.icaixiaochu.com/order-bg.png" alt />
       <p>暂无售后订单</p>
     </div>

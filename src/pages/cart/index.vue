@@ -40,7 +40,7 @@
                           :class="item.vipPrice > 1 ? 'dash-price' : 'dash-price small'"
                         >¥{{item.vipPrice > 1 ? item.vipPrice : item.price}}</div>
                         <div class="vip-price" v-if="item.vipPrice > 1">
-                          <img src="http://p2.icaixiaochu.com/vip-icon.png" alt />
+                          <img src="https://img.icaixiaochu.com/vip-prive-v2.png" alt />
                         </div>
                       </div>
                     </div>
@@ -65,7 +65,7 @@
       </div>
       <div class="invalid-wrp" v-if="invaldGoods.length >=1">
         <div class="invaild-content">
-           <div class="hand-box" @click="emptyInvalid">
+           <div class="hand-box" @click="emptyInvalidGood">
           <p>{{invaldGoods.length}}件失效商品</p>
           <img src="http://img.icaixiaochu.com/Ki0DpGxbwFdZjPTh.png" alt />
         </div>
@@ -228,7 +228,7 @@ export default {
           this.InfoCart()
         })
     },
-    emptyInvalid () {
+    emptyInvalidGood () {
       let _this = this
       wx.showModal({
         title: '',
@@ -238,7 +238,7 @@ export default {
             _this.invaldGoods.forEach(element => {
               _this.$http.post('/deleteCart', { cart_id: element.id })
             })
-            _this.InfoCart()
+            _this.emptyInvalid()
           } else if (res.cancel) {
             console.log('取消清除')
           }
@@ -310,7 +310,8 @@ export default {
       'toggle_type',
       'delete_db',
       'InfoCart',
-      'setGood'
+      'setGood',
+      'emptyInvalid'
     ])
   }
 }

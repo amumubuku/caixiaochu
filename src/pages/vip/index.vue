@@ -17,17 +17,23 @@
                     <img src="https://img.icaixiaochu.com/login-logo.png" alt />
                   </button>
                 </div>
-                <div class="user-icon" v-if="user">
-                  <img :src="user.avatar_url" alt class="vip-icon" />
+                <div class="user-icon" v-if="user" :class="user.is_vip? '.user-bg':'.vip-user-bg'">
+                  <img :src="user.avatar_url" alt class="user-cover" />
+                  <img v-if="user.is_vip" class="vip-user-tag" src="https://img.icaixiaochu.com/%E8%B5%84%E6%BA%90%201@3x@2x.png" alt="">
                 </div>
               </div>
               <div class="vip-info-box">
                 <div class="vip-content" v-if="user">
-                  <span class="vip-name" v-if="user">{{user.nick_name}}</span>
-                  <span class="member-user" v-if="user.is_vip">优享会员</span>
-                  <span class="or-user" v-if="!user.is_vip">普通用户</span>
+                  <p class="vip-name" v-if="user">{{user.nick_name}}</p>
+
+                  <div class="member-user" v-if="user.is_vip">
+                    <img src="https://img.icaixiaochu.com/%E7%9F%A9%E5%BD%A2%20113%20%E6%8B%B7%E8%B4%9D@2x.png" alt="">
+                  </div>
+                  <div class="or-user" v-if="!user.is_vip">
+                    <img src="https://img.icaixiaochu.com/11%E5%BD%A2%203%20%E6%8B%B7%E8%B4%9D@2x.png" alt="">
+                  </div>
                 </div>
-                <p v-else>未登录</p>
+                <p v-else>点击头像登录</p>
               </div>
             </div>
             <div class="card-flex-msg" @click="toggleVipModal">
@@ -38,20 +44,20 @@
           <div class="vip-card-footer">
             <div
               class="progress-tag"
-              :style="{transform: 'translate3d('+ (progressBar) + 'px, -11px, 0px)'}"
+              :style="{transform: 'translate3d('+ (progressBar) + 'rpx, -22rpx, 0)'}"
             >
-              <P>{{~~(user.money_at > 300? '300+': user.money_at)}}</P>
+              <P>{{user.money_at > 999? '999+': ~~(user.money_at)}}</P>
               <div class="tag"></div>
             </div>
             <div class="vip-progress-wrp">
-              <div class="progress-bar" :style="{width:progressWidth + 'px'}"></div>
+              <div class="progress-bar" :style="{width:progressWidth + 'rpx'}"></div>
               <div class="progress-end-msg"></div>
             </div>
 
             <div class="vip-state-msg">
               <div class="msg-flex-left">
                 <p v-if="user.is_vip">{{user.vip_end_time}}会员到期</p>
-                <p v-else>还需消费{{!user.is_vip ?(~~user.vip_price_at - user.money_at):300}}元可成为会员</p>
+                <p v-else>还需消费{{!user.is_vip ?(~~(user.vip_price_at - user.money_at)):300}}元可成为会员</p>
               </div>
               <div class="msg-flex-right">
                 <span>{{user.vip_price_at}}</span>
@@ -61,7 +67,8 @@
           </div>
         </div>
       </div>
-      <div class="vip-info">
+      <div class="vip-content-wrp">
+ <div class="vip-info">
         <div class="content-wrp">
           <div class="vip-welfare">
             <div class="welfare-top">
@@ -142,7 +149,7 @@
           </div>
           <div class="card-content">
             <img
-              src="https://img.icaixiaochu.com/2.0%E4%BC%9A%E5%91%98%20%E2%80%93%204@3x@2x.png"
+              src="https://img.icaixiaochu.com/%E7%BB%84%201605@3x.png"
               alt
             />
           </div>
@@ -160,10 +167,12 @@
             <p>轻松兑商品</p>
           </div>
           <div class="card-content">
-            <img src="https://img.icaixiaochu.com/%E5%8F%8C%E5%80%8D%E7%A7%AF%E5%88%86@2x.png" alt />
+            <img src="https://img.icaixiaochu.com/%E7%BB%84%201572@3x.png" alt />
           </div>
         </div>
       </div>
+      </div>
+     
     </div>
     <popup ref="vipModal" type="center" className="vip-des-wrp">
       <div class="vip-modal">
@@ -232,13 +241,12 @@ export default {
     progressBar () {
       if (!this.user) return 0
       let percent = this.user.money_at / this.user.vip_price_at
-      return percent > 1 ? 315 - (38 + 7) : percent * 315 - 7
+      return percent >= 289 / 315 ? (289 * 2) : (percent * 280) * 2
     },
     progressWidth () {
-      console.log(!this.user)
       if (!this.user) return 0
       let percent = this.user.money_at / this.user.vip_price_at
-      return percent > 1 ? 315 : percent * 315
+      return percent > 1 ? 315 * 2 : (percent * (315 - 18)) * 2
     }
   },
   methods: {

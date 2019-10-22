@@ -1,22 +1,24 @@
 <template>
-  <div class="order-wrp" v-if="orderDetail">
-    <navigation-bar
-      :title="'订单详情'"
-      :navBackgroundColor="'#fff'"
-      :titleColor="'#000'"
-      :back-visible="true"
-      :home-path="'/pages/index/main'"
-    ></navigation-bar>
+  <div class="order-wrp"
+       v-if="orderDetail">
+    <navigation-bar :title="'订单详情'"
+                    :navBackgroundColor="'#fff'"
+                    :titleColor="'#000'"
+                    :back-visible="true"
+                    :home-path="'/pages/index/main'"></navigation-bar>
     <div class="order-state">
       <div class="order-icon">
-        <img :src="orderIcon" alt />
+        <img :src="orderIcon"
+             alt />
       </div>
       <p>{{orderDetail.status == 0? '待支付':orderDetail.status == 1? '已支付,等待买家发货':orderDetail.status == 2? '待收货': orderDetail.status == 3?'已完成':orderDetail.status == 4? '商家已接单':'已取消'}}</p>
     </div>
-    <div class="address-info" v-if="!orderDetail.delivery_type">
+    <div class="address-info"
+         v-if="!orderDetail.delivery_type">
       <div class="address-des">
         <div class="order-icon">
-          <img src="https://img.icaixiaochu.com/order-icon.png" alt />
+          <img src="https://img.icaixiaochu.com/order-icon.png"
+               alt />
         </div>
         <div class="addr-content">
           <div class="address-title">
@@ -28,24 +30,34 @@
       </div>
     </div>
 
-    <div class="map" v-if="orderDetail.delivery_type">
+    <div class="map"
+         v-if="orderDetail.delivery_type">
       <div class="head-wrp">
-        <img src="http://p2.icaixiaochu.com/location.png" alt />
+        <img src="http://p2.icaixiaochu.com/location.png"
+             alt />
         <p>{{orderDetail.address}}</p>
       </div>
       <div class="content-wrp">
-        <div class="refund-state" v-if="orderDetail.refund" :style="{background:refundState}"  @click="refundedDetail">
+        <div class="refund-state"
+             v-if="orderDetail.refund"
+             :style="{background:refundState}"
+             @click="refundedDetail">
           <p class="refund-text">退款详情：{{refundText}}</p>
-          <img src="https://img.icaixiaochu.com/more-icon.png" alt />
+          <img src="https://img.icaixiaochu.com/more-icon.png"
+               alt />
         </div>
         <div class="map-bg">
-          <img src="https://img.icaixiaochu.com/map-img.png" alt />
+          <img src="https://img.icaixiaochu.com/map-img.png"
+               alt />
         </div>
-        <div class="map-icon" @click="previewImage">
-          <img src="https://img.icaixiaochu.com/map-icon.png" alt />
+        <div class="map-icon"
+             @click="previewImage">
+          <img src="https://img.icaixiaochu.com/map-icon.png"
+               alt />
           <span>查看地图</span>
         </div>
-        <div class="token" @click="previewImage">
+        <div class="token"
+             @click="previewImage">
           <span>取餐号码：{{orderDetail.number}}</span>
         </div>
       </div>
@@ -64,15 +76,14 @@
         </div>
       </div>
     </div>
-    <div
-      class="refunded"
-      @click="refundedDetail"
-      v-if="orderDetail.refund && !orderDetail.delivery_type"
-    >
+    <div class="refunded"
+         @click="refundedDetail"
+         v-if="orderDetail.refund && !orderDetail.delivery_type">
       <p>退款详情</p>
       <div>
         <span :class="{color:refundState}">{{refundText}}</span>
-        <img src="https://img.icaixiaochu.com/more.png" alt />
+        <img src="https://img.icaixiaochu.com/more.png"
+             alt />
       </div>
       <div class="tag-icon"></div>
     </div>
@@ -80,11 +91,14 @@
       <div class="shop-wrp">
         <div class="shop-head">
           <div class="shop-title">商品信息</div>
-          <div class="service" @click="selectTime" v-if="!orderDetail.delivery_type" >
+          <div class="service"
+               @click="selectTime"
+               v-if="!orderDetail.delivery_type">
             <p>立即配送(预计{{orderDetail.extends.delivery_time}}送达)</p>
           </div>
         </div>
-        <collapse :selected="true" :goods="orderDetail.goods"></collapse>
+        <collapse :selected="true"
+                  :goods="orderDetail.goods"></collapse>
       </div>
     </div>
     <div class="order-id">
@@ -119,37 +133,45 @@
     </div>
     <div class="note">
       订单备注
-      <span
-        style="color:rgba(0,0,0,.5);padding-left:22px;"
-      >{{orderDetail.extends.remark ? orderDetail.extends.remark :'无'}}</span>
+      <span style="color:rgba(0,0,0,.5);padding-left:22px;">{{orderDetail.extends.remark ? orderDetail.extends.remark :'无'}}</span>
     </div>
     <div class="prompt-msg">如果收到的商品出现质量、错发、漏发等情况可联系客服</div>
     <div class="order-fuc-wrp">
-      <div class="kefu-btn" v-if="(orderDetail.refund && orderDetail.refund.refund_status > 1) || orderDetail.status ===5 || orderDetail.status ===3">
+      <div class="kefu-btn"
+           v-if="(orderDetail.refund && orderDetail.refund.refund_status > 1) || orderDetail.status ===5 || orderDetail.status ===3">
         <button open-type="contact">联系客服</button>
       </div>
-      <div class="order-wrp-state" v-else>
-        <div
-          class="order-tag"
-          @click="cancelRefunded"
-          v-if="(orderDetail.refund && orderDetail.refund.refund_status===0) && orderDetail.status"
-        >撤销退款申请
+      <div class="order-wrp-state"
+           v-else>
+        <div class="order-tag"
+             @click="cancelRefunded"
+             v-if="(orderDetail.refund && orderDetail.refund.refund_status===0) && orderDetail.status">撤销退款申请
         </div>
-        <div class="order-tag" @click="orderHandle" v-else>{{orderDetail.status && orderDetail.status !=5?'申请退款':'取消订单'}}</div>
+        <div class="order-tag"
+             @click="orderHandle"
+             v-else>{{orderDetail.status && orderDetail.status !=5?'申请退款':'取消订单'}}</div>
         <div class="fnc-btn">
-          <div class="parment"  @click="payment" v-if="orderDetail.status ===0">
+          <div class="parment"
+               @click="payment"
+               v-if="orderDetail.status ===0">
             <p>去支付</p>
-            <img src="https://img.icaixiaochu.com/more-icon.png" alt />
+            <img src="https://img.icaixiaochu.com/more-icon.png"
+                 alt />
           </div>
-          <button open-type="contact" v-else>联系客服</button>
+          <button open-type="contact"
+                  v-else>联系客服</button>
         </div>
       </div>
     </div>
-    <popup ref="couponList" type="center" className="coupon-box">
+    <popup ref="couponList"
+           type="center"
+           className="coupon-box">
       <div class="coupon-wrp">
         <div class="coupon-title">— 可用优惠券 —</div>
         <div class="coupon-list">
-          <div class="coupon-item" v-for="(item,index) in coupons" :key="index">
+          <div class="coupon-item"
+               v-for="(item,index) in coupons"
+               :key="index">
             <div class="flex-left">
               <div class="coupon-price">
                 <i style="font-size:13px;">¥</i>
@@ -167,19 +189,27 @@
             <div class="flex-right">
               <p>有效期至</p>
               <p class="time">{{item.expire_time}}</p>
-              <div class="submit" @click="userCoupon(item)">领取</div>
+              <div class="submit"
+                   @click="userCoupon(item)">领取</div>
             </div>
           </div>
         </div>
         <div class="coupon-bg">
-          <img src="https://img.icaixiaochu.com/coupon-bg.png" alt />
+          <img src="https://img.icaixiaochu.com/coupon-bg.png"
+               alt />
         </div>
       </div>
     </popup>
-    <popup ref="optOnCancel" type="bottom" className="opt-oncancel">
+    <popup ref="optOnCancel"
+           type="bottom"
+           className="opt-oncancel">
       <div class="options-list">
-        <div class="opt-item" v-for="(item, index) in causes" :key="index" @click="selectCause(item)">{{item.title}}</div>
-        <div class="cancel" @click="cancel">取消</div>
+        <div class="opt-item"
+             v-for="(item, index) in causes"
+             :key="index"
+             @click="selectCause(item)">{{item.title}}</div>
+        <div class="cancel"
+             @click="cancel">取消</div>
       </div>
     </popup>
   </div>
@@ -190,7 +220,7 @@ import popup from '@/components/popup'
 import navigationBar from '@/components/navigationBar.vue'
 export default {
   components: { Collapse, navigationBar, popup },
-  data () {
+  data () {  
     return {
       orderId: '',
       orderDetail: '',
@@ -244,7 +274,7 @@ export default {
     selectCause (item) {
       this.causeId = item.id
       this.causeTitle = item.title
-      this.$http.post('/cancelUnpayOrder', {cancel_id: this.causeId, order_id: this.orderId}).then(res => {
+      this.$http.post('/cancelUnpayOrder', { cancel_id: this.causeId, order_id: this.orderId }).then(res => {
         if (res.status) {
           wx.navigateBack({ changed: true })
         }
@@ -254,9 +284,9 @@ export default {
       if (this.orderDetail.status) {
         wx.navigateTo({
           url: `../refunded/main?id=${this.orderId}`,
-          success: result => {},
-          fail: () => {},
-          complete: () => {}
+          success: result => { },
+          fail: () => { },
+          complete: () => { }
         })
       } else {
         this.$http.post('/getCancelCause').then(res => {
@@ -268,9 +298,9 @@ export default {
     refundedDetail () {
       wx.navigateTo({
         url: `../refundeddetail/main?id=${this.orderId}`,
-        success: result => {},
-        fail: () => {},
-        complete: () => {}
+        success: result => { },
+        fail: () => { },
+        complete: () => { }
       })
     },
     cancelRefunded () {
@@ -293,8 +323,8 @@ export default {
               })
           }
         },
-        fail: () => {},
-        complete: () => {}
+        fail: () => { },
+        complete: () => { }
       })
     },
     getOrders (status) {
@@ -332,7 +362,7 @@ export default {
                 : 'finish'
       this.getOrders(this.status)
     },
-    onAnimationfinish () {},
+    onAnimationfinish () { },
     payment () {
       console.log(1)
       this.$http
@@ -368,9 +398,6 @@ export default {
   onShow () {
     this.orderId = this.$root.$mp.query.id
     this.getOrderDetail()
-    setTimeout(() => {
-      // this.$refs.couponList.toggle('show')
-    }, 240)
   },
   onPullDownRefresh () {
     this.getOrderDetail()

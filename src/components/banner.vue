@@ -27,7 +27,6 @@
     </div>
   </div>
 </template>
-
 <script>
 export default {
   props: {
@@ -52,28 +51,31 @@ export default {
         0: item => {
           console.log(item)
           wx.navigateTo({
-            url: `../goods/main?id=${item}`
+            url: `../goods/main?id=${item.value_id}`
           })
         },
         1: item => {
           wx.navigateTo({
-            url: `../skulist/mai?id=${item}`
+            url: `../skulist/mai?id=${item.value_id}`
           })
         },
         2: item => {
           wx.navigateTo({
-            url: `../webview/mai?url=${item}`
+            url: `../webview/mai?url=${item.value_id}`
           })
         },
-        3: item => {}
-        /**
-         *
-         *
-         *
-         *
-         *
-         *
-         */
+        3: (item) => {
+          wx.previewImage({
+            current: item.image,
+            // 数据源
+            urls: [item.image]
+          })
+        },
+        4: (item) => {
+          wx.navigateTo({
+            url: item.value_id
+          })
+        }
       }
       let cb = serverHandle[item.jump_type]
       cb(item.value_id)

@@ -53,8 +53,10 @@
   }
 
   .time-list {
+    position: relative;
     height: 61px;
     border-bottom: 1px solid rgba(243, 243, 243, 1);
+    z-index: 9999;
 
     .nav-scroll {
       width: 100%;
@@ -106,12 +108,12 @@
 
   .null-good-list {
     position: absolute;
-    top: 464rpx;
+    top: 0px;
     width: 100%;
-    height: 100%;
-    margin: 0 auto;
+    height:100%;
+    display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     flex-flow: column nowrap;
     img {
       width: 179px;

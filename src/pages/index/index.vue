@@ -3,7 +3,6 @@
     <div class="header">
       <div class="header-wrp">
         <div class="location-box" @click="toAddresPage">
-          <img src="http://p2.icaixiaochu.com/location.png" alt class="location-icon" />
           <p>{{cityName}}</p>
           <img src="http://p2.icaixiaochu.com/down.png" alt />
         </div>
@@ -16,12 +15,11 @@
       </div>
     </div>
     <div class="app-wrp">
-      <brand />
-      <banner :data="banner" />
-      <div class="catogory">
-        <div class="catogory-wrp">
+      <banner :banner="banner" />
+      <div class="category">
+        <div class="category-wrp">
           <div
-            class="catogory-item"
+            class="category-item"
             v-for="(item,index) in navlist"
             :key="index"
             @click="jumpCatogory(item)"
@@ -31,103 +29,105 @@
           </div>
         </div>
       </div>
-      <div class="activity" v-if="Activity.length>=1">
-        <div class="activity-left" @click="toActivity">
-          <div class="head">
-            <h4>限时抢</h4>
-            <div class="time-row">
-              <div class="time-col">{{countDownTime.hou}}</div>:
-              <div class="time-col">{{countDownTime.min}}</div>:
-              <div class="time-col">{{countDownTime.sec}}</div>
-            </div>
-          </div>
-          <p style="padding-left:13px">{{Activity[0].hour+Activity[0].description}}</p>
-          <img :src="Activity[0].image" mode="aspectFill" alt />
+      <div class="gift-activity">
+        <img src="https://img.icaixiaochu.com/gift-activitypng" mode="scaleToFill" alt="">
+      </div>
+      <div class="dynamic">
+        <div class="border"></div>
+        <div class="dynamic-icon">
+          <img src="https://img.icaixiaochu.com/dy-icon.png" alt />
         </div>
-        <div class="activity-right">
-          <div class="top" @click="toDiscount">
-            <div class="info">
-              <p>{{Activity[1].title}}</p>
-              <span>{{Activity[1].description}}</span>
-              <text>{{Activity[1].btn_str}}</text>
-            </div>
-            <div class="icon">
-              <img :src="Activity[1].image" lazy-load mode="aspectFill" alt />
-            </div>
-          </div>
-          <div class="but" @click="toCoupon">
-            <div class="info">
-              <p>{{Activity[2].title}}</p>
-              <span>{{Activity[2].description}}</span>
-              <text>{{Activity[2].btn_str}}</text>
-            </div>
-            <div class="icon">
-              <img :src="Activity[2].image" alt />
-            </div>
-          </div>
+        <div class="dynamic-content">
+          <swiper
+            class="swiper_container"
+            vertical="true"
+            autoplay="true"
+            circular="true"
+            interval="2500"
+          >
+            <swiper-item v-for="(item, index) in dynamic" :key="index" class="item">
+              <div class="tag">{{item.status ? '新会员': '新订单'}}</div>
+              <p>{{item.str}}</p>
+            </swiper-item>
+          </swiper>
         </div>
       </div>
-      <div class="exclusive">
-        <div class="exclusive-wrp">
-          <div class="ex-title">
-            <div class="text">
-              <div class="head">
-                <div class="new-title">新品推荐</div>
-                <p class="small">不容错过</p>
+      <div class="content-box">
+        <div class="spike" v-if="spikeGood.length">
+          <div class="top-wrp">
+            <div class="top" @click="toActivity">
+              <div class="flex-left">
+                <img src="https://img.icaixiaochu.com/spike-icon.png" alt />
+                <h3>限时抢</h3>
+              </div>
+              <div class="flex-right">
+                <p>{{spike.hour}}点场 距离下场还有</p>
+                <div class="time-row">
+                  <div class="time-col">{{countDownTime.hou}}</div>:
+                  <div class="time-col">{{countDownTime.min}}</div>:
+                  <div class="time-col">{{countDownTime.sec}}</div>
+                </div>
               </div>
             </div>
-            <div class="more" @click="tonewarea">
-              <p class="more-small">查看更多</p>
-              <img src="http://p2.icaixiaochu.com/more.png" alt class="more-icon" />
+          </div>
+
+          <div class="main">
+            <slide :goods="spike.data"></slide>
+          </div>
+        </div>
+        <div class="couple">
+          <div class="msg-tag">
+            <p>只有一次机会哦！</p>
+            <span></span>
+          </div>
+          <div class="couple-wrp">
+            <shop-head
+              :info="{'title': '新人专享','des': '很高兴认识你^_^'}"
+              showBorder="true"
+              page="../discount/main"
+            >
+              <div class="icon-bg">
+                <img src="https://img.icaixiaochu.com/love-icon.png" alt />
+              </div>
+            </shop-head>
+            <div class="shop">
+              <slide :goods="coupleGood"></slide>
             </div>
           </div>
+        </div>
+        <div class="member">
+          <div class="top">
+            <shop-head
+              :info="{'title': '会员专区','des': '专属于你的优惠'}"
+              showBorder="true"
+              page="../member/main"
+            >
+              <div class="icon-bg">
+                <img src="https://img.icaixiaochu.com/membar-icon.png" alt />
+              </div>
+            </shop-head>
+          </div>
+
           <div class="shop">
-            <scroll-view width="100%" class="scroll" scroll-x="true">
-              <div class="shop-list" v-if="newSkulist.length>=1">
-                <div
-                  class="list"
-                  v-for="(item,index) in newSkulist"
-                  :key="index"
-                  @click.stop="navtodetail(item)"
-                  :class="{'text-danger': index === newSkulist.length-1}"
-                >
-                  <div class="item-top">
-                    <img :src="item.cover" mode="aspectFill" alt />
-                  </div>
-                  <div class="footer-info">
-                    <div class="footer-title">
-                      <h5 class="footer-text">{{item.title}}</h5>
-                    </div>
-                    <div class="footer-menu">
-                      <div class="menu-left">
-                        <div class="price">
-                          <span class="icon">¥</span>
-                          <span>{{item.sku.market_price}}</span>
-                        </div>
-                        <div class="dash-price-info">
-                          <div class="dash-price small">¥{{item.sku.normal_price}}</div>
-                        </div>
-                      </div>
-                      <div class="menu-right" @click.stop="addCard(item)">
-                        <img src="http://p2.icaixiaochu.com/card.png" alt />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="more-goods" @click.stop="tonewarea">
-                  <div class="content">
-                    <p>查看更多</p>
-                    <img src="https://img.icaixiaochu.com/76BRQDjYW5N60AnQ" alt />
-                  </div>
-                </div>
-              </div>
-            </scroll-view>
+            <slide :goods="vipGood"></slide>
           </div>
         </div>
+        <floor />
+        <div class="hot-container">
+          <recommend :goods="recommendGoods" showTitle="true" />
+        </div>
       </div>
-      <floor />
-      <div class="hot-container">
-        <recommend :goods="recommendGoods" />
+    </div>
+    <div class="coupon-gift" @click="toCoupon" v-if="coupon">
+      <div class="coupon-info">
+        <span>{{coupon.data[0]}}月{{coupon.data[1]}}日</span>
+        <span>后过期</span>
+      </div>
+      <div class="coupon-tip">
+        <p>
+          <i style="font-size:7px;color:rgba(255, 0, 0, 1);">￥</i>{{coupon.price}}
+        </p>
+        <span>代金券</span>
       </div>
     </div>
     <popup ref="couponModal" type="center" className="coupon-modal">
@@ -159,10 +159,11 @@
 </template>
 
 <script>
-import brand from '@/components/brand'
 import banner from '@/components/bannerslide'
+import shopHead from '@/components/shop-head'
 import floor from '@/components/floor'
-import { setTabBarBadge } from '@/utils'
+import slide from '@/components/slide'
+import { setTabBarBadge, removeTabBarBadge } from '@/utils'
 import { reverseGeocoder } from '@/utils/address'
 import recommend from '@/components/recommend'
 import popup from '@/components/popup'
@@ -174,67 +175,75 @@ const qqMapSdk = new QQMapWX({
 export default {
   data () {
     return {
-      newSkulist: [],
+      coupleGood: [],
       location: '',
       navlist: [],
       banner: [],
       recommendGoods: [],
-      countDownList: [],
       limit: [],
       countDownTime: '',
       page: 1,
       loading: false,
       Activity: [],
-      couponModalData: []
+      couponModalData: [],
+      dynamic: [],
+      vipGood: [],
+      spike: [],
+      spikeGood: [],
+      coupon: ''
     }
   },
   computed: {
     ...mapGetters(['data', 'cityName', 'city', 'cart', 'cartInfos'])
   },
   components: {
-    brand,
     banner,
     floor,
     recommend,
-    popup
+    popup,
+    slide,
+    shopHead
   },
 
   onShow () {
+    this.couponGift()
     if (this.cartInfos.num >= 1) {
       setTabBarBadge(`${this.cartInfos.num}`)
     } else {
-      wx.removeTabBarBadge({
-        index: 3
-      })
+      removeTabBarBadge()
     }
-    // wx.getStorage({
-    //   key: 'lock',
-    //   success: result => {
-    //     let diff = t => {
-    //       return Date.now() - t < 24 * 3600 * 1000
-    //     }
-    //     let e = diff(result.data)
-    //     setTimeout(() => {
-    //       this.$refs.couponModal.toggle('show')
-    //     }, 1500)
-    //     if (!e) {
-    //       this.$refs.couponModal.toggle('show')
-    //       wx.setStorageSync('lock', Date.now())
-    //     }
-    //   },
-    //   fail: () => {
-    //     wx.setStorageSync('lock', Date.now())
-    //     this.$refs.couponModal.toggle('show')
-    //   },
-    //   complete: () => {}
-    // })
   },
   mounted () {
-    this.getCurLocation()
-    this.appInfo()
-    this.getActivityCoupon()
+    Promise.all([this.getHotGoods(), this.getCurLocation(), this.getActivityCoupon(), this.getDynamic(), this.getSpike(), this.countDown(),
+      this.getprodectlist(), this.getVipgoods()]).then(res => {
+    })
   },
   methods: {
+    couponGift () {
+      this.$http.post('/getCouponShow').then(res => {
+        this.coupon = res.data
+        this.coupon.price = Math.floor(res.data.price)
+        this.coupon.data = res.data.expired_time.split('-')
+      })
+    },
+    getSpike () {
+      this.$http.post('/fetchPurchasingGoods').then(res => {
+        if (!res.data) return
+        this.spike = res.data
+        this.spikeGood = res.data.data
+        this.countDown()
+      })
+    },
+    getVipgoods () {
+      this.$http.get('/getVipGoods', { type: 'limit' }).then(res => {
+        this.vipGood = res.data
+      })
+    },
+    getDynamic () {
+      this.$http.post('/getDynamic').then(res => {
+        this.dynamic = res.data
+      })
+    },
     cancelModal () {
       this.$refs.couponModal.toggle('hide')
     },
@@ -248,21 +257,28 @@ export default {
     },
     receiveCoupon () {
       if (this.couponModalData.status) {
+        wx.navigateTo({
+          url: '../mycoupon/main',
+          success: result => {},
+          fail: () => {},
+          complete: () => {}
+        })
         this.$refs.couponModal.toggle('hide')
         return
+      } else {
+        this.$http.post('/getCouponSend').then(res => {
+          if (res.status) {
+            wx.navigateTo({
+              url: '../mycoupon/main',
+              success: result => {},
+              fail: () => {},
+              complete: () => {}
+              })
+            this.$refs.couponModal.toggle('hide')
+          }
+        })
       }
-      this.$http.post('/getCouponSend').then(res => {
-        if (res.status) {
-          wx.navigateTo({
-            url: '../mycoupon/main',
-            success: (result) => {
-            },
-            fail: () => {},
-            complete: () => {}
-          })
-          this.$refs.couponModal.toggle('hide')
-        }
-      })
+      
     },
     getHotGoods (page = 1) {
       this.$http.get('/fetchHotGoods', { page }).then(res => {
@@ -280,14 +296,6 @@ export default {
         )
       })
     },
-    appInfo () {
-      this.$http.post('/getNav').then(res => {
-        this.Activity = res.data
-        this.getprodectlist()
-        this.countDown()
-        this.getHotGoods()
-      })
-    },
     Result (data) {
       let ret = []
       ret.push(...data)
@@ -298,7 +306,7 @@ export default {
     },
     countDown () {
       let newTime = new Date().getTime()
-      let countDownTime = this.Activity[0].time
+      let countDownTime = this.spike.time
       let endTime = new Date(countDownTime).getTime()
       let obj = null
       if (endTime - newTime > 0) {
@@ -349,16 +357,20 @@ export default {
       })
     },
     getprodectlist () {
-      this.$http.get('/getIndexHead').then(res => {
+      this.$http.get('/getIndexHeadNew').then(res => {
         this.banner = res.data.slide_show
         this.navlist = res.data.navlist
-        this.$http.get('/getNewGoods').then(res => {
-          this.newSkulist = res.data
+        this.$http.get('/getRecommendGoods').then(res => {
+          this.coupleGood = res.data
         })
       })
       wx.stopPullDownRefresh()
     },
     jumpCatogory (item) {
+      if (!item.id) {
+        this.toActivity()
+        return
+      }
       wx.navigateTo({
         url: `../categorydata/main?id=${item.id}`
       })
@@ -381,7 +393,7 @@ export default {
     ...mapActions(['setUser', 'InfoCart']),
     getCurLocation () {
       reverseGeocoder(qqMapSdk).then(res => {
-        this.setCityname(res.result.address)
+        this.setCityname(res.result.pois[0].title)
         this.cityList = res.result.pois
         this.city = res.result.address_component.city
       })
@@ -392,6 +404,7 @@ export default {
     this.recommendGoods = []
     this.getHotGoods()
     this.getprodectlist()
+    this.getActivityCoupon()
   },
   onReachBottom () {
     if (this.loading) {

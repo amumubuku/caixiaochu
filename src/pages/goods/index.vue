@@ -124,35 +124,30 @@
             </div>
 
             <div class="good-comments" v-if="!curSwitch">
-              <div class="comments-item">
-                <!-- <div class="comments-top">
+              <div class="comments-item" v-for="(item, index) in comments" :key="index">
+                <div class="comments-top">
                   <div class="comments-left">
                     <div class="user-cover">
-                      <img :src="user.avatar_url" alt />
+                      <img :src="item.avatar_url" alt />
                     </div>
-                    <div class="user-name">{{user.nick_name}}</div>
-                    <div class="comments-level">
-                      <img src="https://img.icaixiaochu.com/1111@2x.png" alt />
-                      <img src="https://img.icaixiaochu.com/1111@2x.png" alt />
-                      <img src="https://img.icaixiaochu.com/1111@2x.png" alt />
-                      <img src="https://img.icaixiaochu.com/1111@2x.png" alt />
-                      <img src="https://img.icaixiaochu.com/%E6%98%9F_%E5%AE%9E@2x.png" alt />
+                    <div class="user-name">{{item.nick_name}}</div>
+                    <div class="comments-level" v-for="(data, k) in  5" :key="k">
+                      <img
+                        src="https://img.icaixiaochu.com/%E6%98%9F_%E5%AE%9E@2x.png"
+                        v-if="k <= item.score"
+                        alt
+                      />
+                      <img src="https://img.icaixiaochu.com/1111@2x.png" v-else alt />
                     </div>
                   </div>
-                  <div class="comments-right">2019-07-12 19:30</div>
+                  <div class="comments-right">{{item.time_create}}</div>
                 </div>
                 <div class="comments-des">
-                  <div class="comments-text">
-                    菜小厨生鲜商城上线啦，菜小厨生鲜商城上线啦，
-                    菜小厨生鲜商城上线啦...
-                  </div>
+                  <div class="comments-text">{{item.content}}</div>
                   <div class="comments-imgs">
-                    <img
-                      src="https://img.icaixiaochu.com/79d8c9ca226e186847a59ee2258445e50f2ab8df1562224708.png"
-                      alt
-                    />
+                    <img v-for="(data, i) in item.image" :key="i" :src="data"  alt="">
                   </div>
-                </div>-->
+                </div>
               </div>
             </div>
           </div>
@@ -242,7 +237,8 @@ export default {
       currentTime: '',
       is_cart: true,
       isIPX: null,
-      curSwitch: 1
+      curSwitch: 1,
+      comments: []
     }
   },
   computed: {
@@ -374,6 +370,13 @@ export default {
     hide () {
       this.$refs.canvasdrawer.toggle('hide')
     },
+    getGoodComment () {
+      this.$http
+        .post('/fetchEvaluate', { goods_id: this.good_id, page: 1 })
+        .then(res => {
+          this.comments = res.data
+        })
+    },
     eventSave () {
       wx.saveImageToPhotosAlbum({
         filePath: this.shareImage,
@@ -465,6 +468,7 @@ export default {
         .then(res => {
           this.goods = res.data
           this.Hour()
+          this.getGoodComment()
         })
     },
     ...mapActions(['create_db', 'setGood'])

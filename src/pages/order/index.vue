@@ -124,6 +124,10 @@
           <p class="label">配送费</p>
           <p>¥{{curSwitch ? 0: goodTotal >= delivery.price_shipping_out? 0: fee.fee }}</p>
         </div>
+        <div class="shop-count small" v-if="cardState">
+          <p class="label">优惠劵礼包</p>
+          <p>¥{{activityGift.price}}</p>
+        </div>
       </div>
       <div class="note">
         <span>订单备注</span>
@@ -256,9 +260,10 @@ export default {
     this.setGoods([])
   },
   mounted () {
+    this.cardState = false
     this.getShippingFee()
     this.getDefaultAddress()
-    this.UseCoupon()
+    // this.UseCoupon()
     this.DeliveryInfo()
     this.getTimeList()
     this.getActivityGift()
@@ -316,7 +321,7 @@ export default {
         })
         .then(res => {
           if (res.data.length >= 1) {
-            this.setCoupondata(res.data[0])
+            // this.setCoupondata(res.data[0])
             return
           }
           this.setCoupondata('')
@@ -435,6 +440,15 @@ export default {
           })
         }, 150)
       }
+    }
+  },
+  watch: {
+    cardState (newVal, oldVal) {
+      if (newVal) {
+        this.setCoupondata(this.activityGift.coupon)
+        return
+      }
+      this.setCoupondata('')
     }
   }
 }

@@ -1,192 +1,136 @@
 <template>
-  <div class="home_wrap">
-    <swiper
-      class="home_swiper"
-      :style="{ height: '175px'}"
-      :previous-margin="previousMargin"
-      :next-margin="nextMargin"
-      :circular="circular"
-      @change="handleChange($event)"
-      :autoplay="autoplay"
-      :interval="interval"
-      :duration="duration"
-      :current="curIndex"
-
-    >
-      <block v-for="(item, index) in data" :key="index">
-        <swiper-item>
-          <div
-            :class="curIndex===index ? 'active_item' : 'item'"
-            :animation="index == curIndex ? animationData : animationData2"
-            class="slider"
-            @click="jump(item)"
-          >
-            <img :src="item.image" mode="scaleToFill" alt>
-          </div>
-        </swiper-item>
-      </block>
-    </swiper>
-    <div class="dots">
-      <span
-        class="dot"
-        v-for="(item, index) in data"
-        :key="index"
-        :class="[index === curIndex ? 'disable' : '']"
-      ></span>
+  <div class="banner">
+    <div class="banner-wrp">
+      <swiper
+        :indicator-dots="indicatorDots"
+        :autoplay="autoplay"
+        :interval="interval"
+        :duration="duration"
+        :circular="circular"
+        @change="swiperChange"
+        @animationfinish="animationfinish"
+        :current="currentPageIndex"
+        style="height:100px"
+      >
+        <div v-for="(item, index) in banner" :key="index" @click="jump(item)">
+          <swiper-item class="swiper-item">
+            <img :src="item.image" class="slide-image" mode="scaleToFill" />
+          </swiper-item>
+        </div>
+      </swiper>
+     
     </div>
+     <div class="dots">
+        <span
+          class="dot"
+          v-for="(item, index) in banner"
+          :key="index"
+          :class="[index === currentPageIndex ? 'disable' : '']"
+        ></span>
+      </div>
   </div>
 </template>
-
 <script>
 export default {
-  data () {
-    return {
-      curIndex: 0,
-      circular: true, // 设置衔接滑动
-      previousMargin: '26px',
-      nextMargin: '26px',
-      animationData: {}, // 卡片放大动画
-      animationData2: {}, // 卡片缩小动画
-      autoplay: true,
-      interval: 3000,
-      duration: 300
-    }
-  },
   props: {
-    data: {
+    banner: {
       type: Array,
       default: []
     }
   },
-  mounted () {
-    this.changeNormal()
-    this.changeActive()
+  data() {
+    return {
+      indicatorDots: false,
+      autoplay: true,
+      interval: 2000,
+      duration: 400,
+      circular: true,
+      currentPageIndex: 0
+    };
   },
   methods: {
-    jump (item) {
+    jump(item) {
       let serverHandle = {
         0: item => {
-          console.log(item)
+          console.log(item);
           wx.navigateTo({
             url: `../goods/main?id=${item.value_id}`
-          })
+          });
         },
         1: item => {
           wx.navigateTo({
             url: `../skulist/mai?id=${item.value_id}`
-          })
+          });
         },
         2: item => {
           wx.navigateTo({
             url: `../webview/mai?url=${item.value_id}`
-          })
+          });
         },
-        3: (item) => {
+        3: item => {
           wx.previewImage({
             current: item.image,
             // 数据源
             urls: [item.image]
-          })
+          });
         },
-        4: (item) => {
+        4: item => {
           wx.navigateTo({
             url: item.value_id
-          })
+          });
         }
+      };
 
-        /**
-         *
-         *
-         *
-         *
-         *
-         *
-         */
-      }
-      let cb = serverHandle[item.jump_type]
-      cb(item)
+      let cb = serverHandle[item.jump_type];
+      cb(item);
     },
-    handleChange (e) {
-      this.curIndex = e.mp.detail.current
-      this.changeActive()
-      this.changeNormal()
+    swiperChange(e) {
+      this.currentPageIndex = e.mp.detail.current;
     },
-    // 收缩
-    changeNormal () {
-      var animation2 = wx.createAnimation({
-        duration: 300,
-        timingFunction: 'ease'
-      })
-      this.animation2 = animation2
-      animation2
-        .scale(0.92)
-        .opacity(0.3)
-        .step()
-      this.animationData2 = animation2.export()
-    },
-    // 展开
-    changeActive () {
-      var animation = wx.createAnimation({
-        duration: 300,
-        timingFunction: 'ease'
-      })
-      this.animation = animation
-      animation
-        .scale(1)
-        .opacity(1)
-        .step()
-      this.animationData = animation.export()
+    animationfinish(e) {
+      this.currentPageIndex = e.mp.detail.current;
     }
   }
-}
+};
 </script>
-
 <style lang="less" scoped>
-.home_wrap {
-  position: relative;
-}
-.home_swiper {
-  position: relative;
-  height: 180px !important;
-}
-.item {
-  transform: scale(0.92);
-  transform-origin: 50% 50% 0px;
-  opacity: 0.3;
-}
-.active_item {
-  transform: scale(1);
-  opacity: 1;
-}
-.slider {
-  height: 175px;
-  border-radius: 10px;
-  overflow: hidden;
-  img {
-    height: 100%;
-    width: 100%;
-    background-color: #bebebe;
-  }
-}
-// 指示点
-.dots {
-  display: flex;
-  justify-content: flex-end;
-  position: absolute;
-  bottom: 12px;
+.banner {
   width: 100%;
-  padding-right: 47px;
-  box-sizing: border-box;
-  .dot {
-    width: 6px;
-    height: 6px;
-    margin: 0 3px;
-    height: 6px;
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 50%;
+  .banner-wrp {
+    position: relative;
+    .swiper-item {
+      padding: 0 10px;
+      box-sizing: border-box;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .slide-image {
+        width: 100%;
+        height: 100%;
+        margin: 0 auto;
+        border-radius: 6px;
+      }
+    }
+    
   }
-  .disable {
-    background-color: rgba(255, 255, 255, 1);
-  }
+  .dots {
+      display: flex;
+      justify-content: center;
+      margin-top: 8px;
+      .dot {
+        width: 4px;
+        height: 4px;
+        margin: 0 5px;
+        background-color: #ECECEC;
+        border-radius: 50%;
+        transition: width .4s;
+      }
+      .disable {
+        width: 20px;
+        background-color: #FEA835;
+        border-radius: 2px;
+      }
+    }
 }
 </style>

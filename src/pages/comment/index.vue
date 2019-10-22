@@ -13,7 +13,7 @@
                 <img
                   src="https://img.icaixiaochu.com/%E6%98%9F_%E5%AE%9E@2x.png"
                   @click="changeRate(item,k)"
-                  v-if="k <= item.tempValue"
+                  v-if="k <= item.score"
                   alt
                 />
                 <img
@@ -40,7 +40,7 @@
           <div class="img-list">
             <div
               class="img-item"
-              v-for="(img, i) in item.selectImgs"
+              v-for="(img, i) in item.uploadImgs"
               :key="i"
               @click="previewImage(img,item)"
             >
@@ -66,12 +66,12 @@ export default {
   data () {
     return {
       orderId: '',
-      commentList: ''
+      commentList: []
     }
   },
   methods: {
     changeRate (item, value) {
-      item.tempValue = value
+      item.score = value
     },
     deteleImg (item, index) {
       item.selectImgs.splice(index, 1)
@@ -149,25 +149,23 @@ export default {
           ele.image = []
           ele.uploadImgs = []
           ele.selectImgs = []
-          ele.level = 5
-          ele.tempValue = -1
+          ele.level = 4
+          ele.score = 4
           ele.content = ''
         })
         this.commentList = normal
       })
     },
     submitForm () {
-      let submitState = this.commentList.every(ele => {
-        if (ele.content && ele.tempValue > 0) {
-          return true
-        }
-        return false
+      this.commentList.forEach(element => {
+        element.image = element.uploadImgs.join(',')
       })
-      this.commentList.image = this.commentList.uploadImgs
-      let form = JSON.stringify(this.commentList)
-      if (!submitState) return false
+      let data = JSON.stringify(this.commentList)
 
-      this.$http.post('/SubmitEvaluate', {data: form}).then(res => {
+      this.$http.post('/SubmitEvaluate', {
+        order_id: this.orderId,
+        json: data
+      }).then(res => {
         if (res.status) {
           wx.showModal({
             title: '',
@@ -176,6 +174,7 @@ export default {
             confirmText: '确定',
             confirmColor: '#FEA835',
             success: result => {
+              wx.navigateBack({ changed: true })
             },
             fail: () => {},
             complete: () => {}

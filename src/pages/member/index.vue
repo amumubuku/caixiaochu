@@ -7,14 +7,14 @@
             :home-path="'/pages/index/main'"></navigation-bar>
       <banner :banner="banner"/>
       <div class="member-wrp">
-      <goodlist :goods="goods"/>
+      <recommend :goods="goods"/>
       </div>
   </div>
 </template>
 
 <script>
 import banner from '@/components/banner'
-import goodlist from '@/components/goodlist'
+import recommend from '@/components/recommend'
 import navigationBar from '@/components/navigationBar.vue'
 export default {
   data () {
@@ -25,7 +25,7 @@ export default {
   },
   components: {
     banner,
-    goodlist,
+    recommend,
     navigationBar
   },
   methods: {

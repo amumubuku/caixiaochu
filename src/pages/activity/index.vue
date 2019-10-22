@@ -189,7 +189,7 @@ export default {
         })
         return
       }
-      if (item.sku.sold === item.sku.stock) {
+      if (item.sku.stock < 1) {
         wx.showToast({
           title: '商品已售罄',
           icon: 'none',

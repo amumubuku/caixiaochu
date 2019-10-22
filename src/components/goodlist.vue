@@ -73,7 +73,6 @@ export default {
     border-radius: 6px;
     overflow: hidden;
     background-color: #fff;
-    box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.1);
     .footer-info {
       display: flex;
       flex-flow: column nowrap;
