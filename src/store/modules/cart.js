@@ -11,6 +11,9 @@ const mutations = {
   UPDATE_CART: (state, data) => {
     state.cartList.push(data)
   },
+  EMPTY_INVALID: (state) => {
+    state.invaldGoods = []
+  },
   UPDATE_INVALID: (state, data) => {
     state.invaldGoods.push(data)
   },
@@ -157,6 +160,9 @@ const actions = {
         url: `../login/main`
       })
     }
+  },
+  emptyInvalid ({commit}) {
+    commit('EMPTY_INVALID')
   },
   add_db ({
     commit

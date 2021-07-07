@@ -44,14 +44,16 @@ export default {
   data () {
     return {
       coupons: [],
-      total: 1
+      total: 1,
+      params: {}
     }
   },
   methods: {
     async UseCoupon () {
       this.$http
         .post('/getAbleUseCou', {
-          price: this.total
+          price: this.params.total,
+          has_gift: this.params.has_gif === 'true' ? 1 : 0
         })
         .then(res => {
           this.coupons = res.data
@@ -70,7 +72,8 @@ export default {
     })
   },
   mounted () {
-    this.total = this.$root.$mp.query.total
+    this.params = this.$root.$mp.query
+    console.log(typeof this.params.has_gif)
     this.UseCoupon()
   }
 }

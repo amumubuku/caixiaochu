@@ -41,10 +41,6 @@ function request (url, method, data, header = {}) {
         wx.hideLoading()
         resolve(res.data)
       },
-      // fail: function (error) {
-      //   wx.hideLoading()
-      //   resolve(false)
-      // },
       complete: function () {
         wx.hideLoading()
       }
@@ -91,10 +87,19 @@ export function getStorageOpenid () {
   }
 }
 export function setTabBarBadge (text, index = 3) {
-  wx.setTabBarBadge({
-    index,
-    text
-  })
+  if (wx.canIUse('removeTabBarBadge')) {
+    wx.setTabBarBadge({
+      index,
+      text
+    })
+  }
+}
+export function removeTabBarBadge (index = 3) {
+  if (wx.canIUse('removeTabBarBadge')) {
+    wx.removeTabBarBadge({
+      index
+    })
+  }
 }
 
 export function getOpenid () {

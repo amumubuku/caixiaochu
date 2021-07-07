@@ -3,7 +3,7 @@
     <div class="search-wrp">
       <div class="input-container">
         <div class="search-box">
-          <img src="http://p2.icaixiaochu.com/search.png" alt class="search-icon">
+          <img src="https://img.icaixiaochu.com/search-icon.png" alt class="search-icon">
           <input
             type="text"
             v-model="keyWords"
@@ -12,18 +12,14 @@
             @focus="empty"
             @confirm="search(keyWords)"
           >
-          <img
-            src="http://p2.icaixiaochu.com/remove.png"
-            @click="empty"
-            v-show="keyWords"
-            class="remove-icon extend"
-            alt
-          >
+          <div  @click="empty"
+            v-if="keyWords"
+            class="remove-icon extend">
+            <img src="https://img.icaixiaochu.com/empty-icon.png" alt=""></div>
         </div>
-        <p @click="search(keyWords)" class="search-btn">搜索</p>
       </div>
       <div class="search-contain" v-show="searchResult.length <= 0">
-        <div class="search-history header" v-if="hitory.length > 1">
+        <div class="search-history header" v-if="hitory.length >= 1">
           <text>历史搜索</text>
           <img src="http://p2.icaixiaochu.com/delete.png" alt @click="clearHistory">
         </div>
@@ -47,7 +43,7 @@
       </div>
       <div class="search-result" v-show="searchResult.length >= 1">
         <scroll-view class="search-scroll" scroll-y="true">
-          <goodlist :goods="searchResult"/>
+          <recommend :goods="searchResult"/>
         </scroll-view>
       </div>
       <div class="search-null" v-if="searchState">
@@ -57,7 +53,7 @@
             <span>抱歉，没有找到相关商品</span>
             <span>您可以换个词试试</span>
             <div class="recommend-wrp">
-              <recommend :goods="recommendGoods"/>
+              <recommend :goods="recommendGoods" showTitle="true"/>
             </div>
           </div>
         </scroll-view>
@@ -68,22 +64,20 @@
 
 <script>
 import recommend from '@/components/recommend'
-import goodlist from '@/components/goodlist'
 import { mapGetters, mapActions } from 'vuex'
 import subTitle from '@/components/sub-title'
 import { dobounce } from '../../utils/util'
 export default {
   components: {
     recommend,
-    subTitle,
-    goodlist
+    subTitle
   },
   computed: {
     ...mapGetters(['hitory'])
   },
   data () {
     return {
-      text: '请输入关键字',
+      text: '搜索商品',
       keyWords: '',
       searchHot: [],
       searchResult: [],

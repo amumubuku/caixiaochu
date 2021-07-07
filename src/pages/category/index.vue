@@ -20,7 +20,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { setTabBarBadge } from '@/utils'
+import { setTabBarBadge, removeTabBarBadge } from '@/utils'
 import searchnav from '@/components/searchnav'
 
 export default {
@@ -30,7 +30,7 @@ export default {
   data () {
     return {
       caregorys: [],
-      keyWords: '请输入关键字'
+      keyWords: '搜索商品'
     }
   },
   computed: {
@@ -40,9 +40,7 @@ export default {
     if (this.cartInfos.num >= 1) {
       setTabBarBadge(`${this.cartInfos.num}`)
     } else {
-      wx.removeTabBarBadge({
-        index: 3
-      })
+      removeTabBarBadge()
     }
   },
   methods: {

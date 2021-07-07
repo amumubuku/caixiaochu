@@ -84,7 +84,19 @@
               <span style="color:#F52D3C;">{{currentTime}}</span> 送达
             </span>
           </div>
-
+          <!-- <div class="good-spot">
+            <div class="spot-title">
+              <img src="https://img.icaixiaochu.com/shopt.png" alt />
+              <p>亮点</p>
+            </div>
+            <div class="spot-content">
+              <div class="spot-des">
+                <p>选取颗粒饱满，鲜嫩的玉米，营养丰富。</p>
+                <p>咬下去口感甜嫩，所以被称作“甜玉米”。</p>
+                <p>直接水煮做主食，或煲汤、煮粥都合适。</p>
+              </div>
+            </div>
+          </div>-->
           <div class="good-detail">
             <div class="switch-fuc">
               <div
@@ -112,35 +124,30 @@
             </div>
 
             <div class="good-comments" v-if="!curSwitch">
-              <div class="comments-item">
-                <!-- <div class="comments-top">
+              <div class="comments-item" v-for="(item, index) in comments" :key="index">
+                <div class="comments-top">
                   <div class="comments-left">
                     <div class="user-cover">
-                      <img :src="user.avatar_url" alt />
+                      <img :src="item.avatar_url" alt />
                     </div>
-                    <div class="user-name">{{user.nick_name}}</div>
-                    <div class="comments-level">
-                      <img src="https://img.icaixiaochu.com/1111@2x.png" alt />
-                      <img src="https://img.icaixiaochu.com/1111@2x.png" alt />
-                      <img src="https://img.icaixiaochu.com/1111@2x.png" alt />
-                      <img src="https://img.icaixiaochu.com/1111@2x.png" alt />
-                      <img src="https://img.icaixiaochu.com/%E6%98%9F_%E5%AE%9E@2x.png" alt />
+                    <div class="user-name">{{item.nick_name}}</div>
+                    <div class="comments-level" v-for="(data, k) in  5" :key="k">
+                      <img
+                        src="https://img.icaixiaochu.com/%E6%98%9F_%E5%AE%9E@2x.png"
+                        v-if="k <= item.score"
+                        alt
+                      />
+                      <img src="https://img.icaixiaochu.com/1111@2x.png" v-else alt />
                     </div>
                   </div>
-                  <div class="comments-right">2019-07-12 19:30</div>
+                  <div class="comments-right">{{item.time_create}}</div>
                 </div>
                 <div class="comments-des">
-                  <div class="comments-text">
-                    菜小厨生鲜商城上线啦，菜小厨生鲜商城上线啦，
-                    菜小厨生鲜商城上线啦...
-                  </div>
+                  <div class="comments-text">{{item.content}}</div>
                   <div class="comments-imgs">
-                    <img
-                      src="https://img.icaixiaochu.com/79d8c9ca226e186847a59ee2258445e50f2ab8df1562224708.png"
-                      alt
-                    />
+                    <img v-for="(data, i) in item.image" :key="i" :src="data"  alt="">
                   </div>
-                </div> -->
+                </div>
               </div>
             </div>
           </div>
@@ -217,10 +224,7 @@ import wxParse from 'mpvue-wxparse'
 import util from '@/utils/util'
 import popup from '@/components/popup'
 import formButton from '@/components/form-button'
-import { setStorageSync, getStorageSync } from '@/utils/storage'
 import navigationBar from '@/components/navigationBar.vue'
-let app = getApp()
-
 export default {
   data () {
     return {
@@ -233,14 +237,12 @@ export default {
       currentTime: '',
       is_cart: true,
       isIPX: null,
-      curSwitch: 1
+      curSwitch: 1,
+      comments: []
     }
   },
   computed: {
     ...mapGetters(['user'])
-  },
-  onError (err) {
-    console.log(err)
   },
   components: { popup, wxParse, formButton, navigationBar },
   methods: {
@@ -368,6 +370,13 @@ export default {
     hide () {
       this.$refs.canvasdrawer.toggle('hide')
     },
+    getGoodComment () {
+      this.$http
+        .post('/fetchEvaluate', { goods_id: this.good_id, page: 1 })
+        .then(res => {
+          this.comments = res.data
+        })
+    },
     eventSave () {
       wx.saveImageToPhotosAlbum({
         filePath: this.shareImage,
@@ -427,6 +436,7 @@ export default {
         sku_id: this.goods.sku[0].id
       }
       this.setGood([goods])
+      this.$refs.buyPopup.toggle('hide')
     },
     add () {
       if (this.goods.is_limit) {
@@ -457,44 +467,20 @@ export default {
         })
         .then(res => {
           this.goods = res.data
+          this.Hour()
+          this.getGoodComment()
         })
     },
     ...mapActions(['create_db', 'setGood'])
   },
-  onUnload () {
-    if (this.$refs.buyPopup) {
-      this.$refs.buyPopup.toggle('hide')
-    }
-  },
-  mounted (e) {
-    this.Hour()
-    let _this = this
-    if (!_this.globalData.isIPX) {
-      wx.getSystemInfo({
-        success: result => {
-          if (result.model.search('iPhone X') != -1) {
-            _this.globalData.isIPX = true
-          }
-          wx.setStorageSync('model', result.model)
-        },
-        fail: () => {},
-        complete: () => {}
-      })
-    }
-    this.isIPX = _this.globalData.isIPX
-    var goodId = ''
-    var scene = wx.getLaunchOptionsSync().scene
-    if (scene === 1012) {
-      goodId = wx.getLaunchOptionsSync().query.scene
+  onLoad (options) {
+    this.isIPX = wx.getStorageSync('isIPX') || ''
+    if (options.id) {
+      this.good_id = options.id
     } else {
-      goodId = this.$root.$mp.query.id
+      this.good_id = options.scene
     }
-    if (goodId) {
-      setStorageSync('goodId', goodId)
-    } else {
-      goodId = getStorageSync('goodId')
-    }
-    this.good_id = goodId
+
     this.goodDetail()
   },
   onShareAppMessage: function (res) {

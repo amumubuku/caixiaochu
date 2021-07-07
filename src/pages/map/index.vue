@@ -48,9 +48,9 @@ export default {
   },
   mounted () {
     this.getCurrentPosition()
-    setInterval(() => {
-      this.getCurrentPosition()
-    }, 3000)
+    // setInterval(() => {
+    //   this.getCurrentPosition()
+    // }, 3000)
   },
   methods: {
     // 选择地址

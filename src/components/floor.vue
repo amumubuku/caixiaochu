@@ -1,15 +1,16 @@
 <template>
   <div class="floor" v-if="categoryAreaList.length>=1">
-    <div class="head">
-      <div class="title">热门分类</div>
-      <p>热销好物</p>
-    </div>
+    <shop-head :info="{'title': '商品分类','des': '你想要的这里都有'}" page="../category/main">
+      <div class="icon-bg">
+        <img src="https://img.icaixiaochu.com/category-icon.png" alt />
+      </div>
+    </shop-head>
     <div class="floor-wrp">
       <div class="floor-list" v-for="(item, index) in categoryAreaList" :key="index">
         <div class="floor-banner" @click="jumpCategory(item.category_id)">
-          <img :src="item.image" alt>
+          <img :src="item.image" lazy-load="true" alt />
         </div>
-        <slide :skulist="item.goods" :id="item.category_id" @jump="jumpCategory"/>
+        <slide :goods="item.goods" :id="item.category_id" @jump="jumpCategory" showMore="true" />
       </div>
     </div>
   </div>
@@ -17,6 +18,7 @@
 <script>
 import { mapActions } from 'vuex'
 import slide from '@/components/slide'
+import shopHead from '@/components/shop-head'
 export default {
   data () {
     return {
@@ -24,7 +26,8 @@ export default {
     }
   },
   components: {
-    slide
+    slide,
+    shopHead
   },
   methods: {
     getCategory () {
@@ -55,37 +58,32 @@ export default {
 </script>
 <style lang="less" scoped>
 .floor {
-  width: 100%;
-  .head {
+  .icon-bg {
+    width: 18px;
+    height: 18px;
+    background: linear-gradient(
+      180deg,
+      rgba(248, 122, 104, 1) 0%,
+      rgba(241, 165, 89, 1) 100%
+    );
+    box-shadow: 0px 3px 6px rgba(248, 122, 104, 0.2);
+    border-radius: 50%;
     display: flex;
-    padding-left: 16px;
     align-items: center;
-    padding-bottom: 24px;
+    justify-content: center;
 
-    .title {
-      font-size: 19px;
-      font-weight: bold;
-      line-height: 26px;
-      color: rgba(64, 64, 64, 0.87);
-      padding-right: 5px;
-    }
-
-    p {
-      font-size: 13px;
-      font-weight: 500;
-      line-height: 12px;
-      color: rgba(64, 64, 64, 0.49);
-      padding-left: 5px;
-      border-left: 1px solid #707070;
+    img {
+      width: 10px;
+      height: 9px;
     }
   }
   .floor-wrp {
     .floor-list {
-      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 14px;
+      background: #fff;
       .floor-banner {
-        height: 116px;
-        width: 343px;
-        margin: 0 auto;
+        height: 133px;
         img {
           height: 100%;
           width: 100%;

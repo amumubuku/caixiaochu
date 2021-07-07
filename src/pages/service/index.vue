@@ -6,7 +6,7 @@
         <p>{{orderItem.refund_status ===0?'等待商家处理':orderItem.refund_status===1? '退款成功':orderItem.refund_status===2?'拒绝退款':'主动撤销退款'}}</p>
       </div>
       <div class="goods-list">
-         <collapse :selected="true" :goods="orderItem.goods"></collapse>
+        <collapse :selected="true" :goods="orderItem.goods"></collapse>
       </div>
       <div class="handle-wrp">
         <div class="order-info">
@@ -15,9 +15,17 @@
         </div>
         <div class="handle-col">
           <div class="handle-btn-detail" @click="refundDetail(orderItem.order_id)">查看详情</div>
-          <div class="handle-btn-del" v-if="orderItem.refund_status >0">删除订单</div>
+          <div
+            class="handle-btn-del"
+            @click="deleteService(orderItem)"
+            v-if="orderItem.refund_status >0"
+          >删除订单</div>
         </div>
       </div>
+    </div>
+    <div class="null-service-wrp" v-if="!serviceData.length">
+      <img src="https://img.icaixiaochu.com/order-bg.png" alt />
+      <p>暂无售后订单</p>
     </div>
   </div>
 </template>
@@ -30,7 +38,7 @@ export default {
       noteText: '',
       imgList: [],
       selectState: false,
-      serviceData: ''
+      serviceData: []
     }
   },
   computed: {
@@ -46,12 +54,34 @@ export default {
     this.serviceList()
   },
   methods: {
+    deleteService (data) {
+      console.log(data)
+      let _this = this
+      wx.showModal({
+        title: '确认删除售后订单?',
+        content: '删除后,售后订单不会在展示',
+        showCancel: true,
+        cancelText: '取消',
+        cancelColor: '#797979',
+        confirmText: '确定',
+        confirmColor: '#FEA835',
+        success: result => {
+          if (result.confirm) {
+            _this.$http.post('/', {}).then(res => {
+              if (res.status) {
+                _this.serviceList()
+              }
+            })
+          }
+        },
+        fail: () => {},
+        complete: () => {}
+      })
+    },
     refundDetail (id) {
       wx.navigateTo({
         url: `../refundeddetail/main?id=${id}`,
-        success: (result) => {
-
-        },
+        success: result => {},
         fail: () => {},
         complete: () => {}
       })

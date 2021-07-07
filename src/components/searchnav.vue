@@ -1,7 +1,7 @@
 <template>
   <div class="search">
     <div class="search-wrp" @click="toSearchPage">
-      <img src="http://p2.icaixiaochu.com/search.png" alt>
+      <img src="https://img.icaixiaochu.com/search-icon.png" alt />
       <span>{{text}}</span>
     </div>
   </div>
@@ -27,37 +27,34 @@ export default {
       })
     }
   },
-  mounted () {
-  }
+  mounted () {}
 }
 </script>
 <style lang="less" scoped>
 .search {
   height: 30px;
   width: 100%;
-  padding: 12px 0;
+  padding: 10px 0;
   padding-bottom: 20rpx;
-  border-bottom: 1rpx solid #F3F3F3;
+  border-bottom: 1rpx solid #f3f3f3;
   z-index: 2;
   background: #fff;
   .search-wrp {
     margin: 0 16px;
-    background: rgba(238, 238, 238, 1);
-    border-radius: 18px;
     display: flex;
     align-items: center;
     height: 30px;
-    padding-left: 7px;
+    padding-left: 4px;
     img {
       width: 20px;
       height: 20px;
+      margin-right: 8px;
     }
     span {
-      font-size: 12px;
-      font-family: PingFang SC;
+      font-size: 15px;
       font-weight: 500;
-      line-height: 17px;
-      color: #aeaeae;
+      line-height: 21px;
+      color: rgba(0, 0, 0, 0.5s);
     }
   }
 }

@@ -302,9 +302,10 @@ export default {
       }
       this.$http.post('/applyRefund', formData).then(res => {
         if (res.status) {
-          wx.navigateTo({
+          wx.redirectTo({
             url: `../refundeddetail/main?id=${this.orderId}`,
             success: (result) => {
+
             },
             fail: () => {},
             complete: () => {}

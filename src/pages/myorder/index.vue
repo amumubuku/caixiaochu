@@ -170,7 +170,7 @@
                 </div>
                 <div class="order-fun-handle">
                   <div class="order-detail" @click="orderDetail(item)">查看详情</div>
-                  <div class="good-content-btn" @click="shipping(item)">确认收货</div>
+                  <div class="good-content-btn" @click="completeOrder(item)">确认收货</div>
                 </div>
               </div>
             </div>
@@ -197,7 +197,7 @@
                 <div class="flex-right">
                   <p
                     class="order-state"
-                  >{{item.status == 0? '待支付':item.status == 1? '待配送':item.status == 2? '待收货': item.status == 3?'已完成':item.status == 4?'待取货':'已取消'}}</p>
+                  >{{item.status == 0? '待支付':item.status == 1? '待配送':item.status == 2? '待收货': item.status == 3?'待评价':item.status == 4?'待取货':'已取消'}}</p>
                 </div>
               </div>
               <div class="good-list">
@@ -208,11 +208,10 @@
                   <p>共{{item.goods.length}}件商品</p>
                   <p>实付：¥{{item.money_pay}}</p>
                 </div>
-                <div
-                  class="good-content-btn"
-                  v-if="item.status == 3"
-                  @click="orderDetail(item)"
-                >查看详情</div>
+                <div class="order-fun-handle">
+                  <div class="order-detail" @click="orderDetail(item)">查看详情</div>
+                   <div class="order-comment" @click="comment(item)" v-if="!item.is_evaluated">评价</div>
+                </div>
               </div>
             </div>
           </scroll-view>
@@ -272,7 +271,7 @@ export default {
           checked: true
         },
         {
-          name: '已完成',
+          name: '待评价',
           type: '4',
           checked: true
         }
@@ -290,16 +289,6 @@ export default {
       return this.winHeight + 'px'
     }
   },
-  onUnload () {
-    var pages = getCurrentPages()
-    var currentPage = pages[pages.length - 2]
-    var url = currentPage.route
-    if (url === 'pages/order/main') {
-      wx.navigateBack({
-        delta: 1
-      })
-    }
-  },
   watch: {
     activeIndex: {
       handler (newVal, oldVal) {
@@ -309,17 +298,32 @@ export default {
     }
   },
   methods: {
+    comment (item) {
+      wx.navigateTo({
+        url: `../comment/main?id=${item.order_id}`,
+        success: (result) => {
+
+        },
+        fail: () => {},
+        complete: () => {}
+      })
+    },
     loadingMore () {
       if (this.loading) {
         this.page++
         this.Refresh()
       }
     },
-    shipping (item) {
+    completeOrder (item) {
       let _this = this
       wx.showModal({
         title: '是否已收到商品',
         content: '请确认收到商品后再确定收货?',
+        showCancel: true,
+        cancelText: '取消',
+        cancelColor: '#797979',
+        confirmText: '确定',
+        confirmColor: '#FEA835',
         success (res) {
           if (res.confirm) {
             _this.$http
@@ -396,6 +400,7 @@ export default {
     }
   },
   onShow () {
+    this.page = 1
     this.getOrders()
   },
   mounted () {

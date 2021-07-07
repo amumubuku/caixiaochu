@@ -7,7 +7,7 @@
             :home-path="'/pages/index/main'"></navigation-bar>
     <banner :banner="banner"/>
     <div class="newarea-wrp">
-      <goodlist :goods="goods"/>
+      <recommend :goods="goods"/>
     </div>
     <div class="null-coupon-wrp" v-if="!goods.length>=1">
       <img src="https://img.icaixiaochu.com/3CdMibRjn1kKjMMA.png" alt>
@@ -18,7 +18,7 @@
 
 <script>
 import banner from '@/components/banner'
-import goodlist from '@/components/goodlist'
+import recommend from '@/components/recommend'
 import navigationBar from '@/components/navigationBar.vue'
 export default {
   data () {
@@ -29,7 +29,7 @@ export default {
   },
   components: {
     banner,
-    goodlist,
+    recommend,
     navigationBar
   },
   methods: {

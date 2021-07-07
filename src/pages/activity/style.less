@@ -16,19 +16,24 @@
     box-sizing: border-box;
     color: rgba(0, 0, 0, .87);
     line-height: 40px;
-    .spike-left{
+
+    .spike-left {
       flex: 1;
     }
+
     .spike-right {
       flex: 1;
       display: flex;
       justify-content: flex-end;
+
       p {
         padding-right: 6px;
       }
+
       .time-row {
         display: flex;
         align-items: center;
+
         .time-col {
           width: 36rpx;
           background: #000000;
@@ -48,8 +53,10 @@
   }
 
   .time-list {
+    position: relative;
     height: 61px;
     border-bottom: 1px solid rgba(243, 243, 243, 1);
+    z-index: 9999;
 
     .nav-scroll {
       width: 100%;
@@ -57,7 +64,7 @@
 
       .nav-list {
         display: flex;
-      
+
 
         .time-item {
           flex: 0 0 75px;
@@ -100,16 +107,14 @@
   }
 
   .null-good-list {
-    position: fixed;
-    bottom: 0;
-    top: 134px;
-    left: 0;
-    right: 0;
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height:100%;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     flex-flow: column nowrap;
-
     img {
       width: 179px;
       height: 143px;
@@ -134,6 +139,7 @@
     bottom: 0;
     left: 0;
     right: 0;
+
     .scroll {
       width: 100%;
       height: 100%;

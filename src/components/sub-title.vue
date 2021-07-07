@@ -30,7 +30,7 @@ export default {
 <style lang="less" scoped>
 .head {
   display: flex;
-  padding-left: 16px;
+  padding-left: 10px;
   align-items: center;
   padding-bottom: 18px;
   .title {

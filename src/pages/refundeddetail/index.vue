@@ -153,16 +153,6 @@ export default {
     this.refundedId = this.$root.$mp.query.id
     this.refundedDetail()
   },
-  onUnload () {
-    var pages = getCurrentPages()
-    var currentPage = pages[pages.length - 2]
-    var url = currentPage.route
-    if (url === 'pages/refunded/main') {
-      wx.navigateBack({
-        delta: 1
-      })
-    }
-  },
   methods: {
     refundedDetail () {
       this.$http.post('/refundDetail', {order_id: this.refundedId}).then(res => {

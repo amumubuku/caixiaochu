@@ -75,12 +75,13 @@ page {
     .address-des {
       display: flex;
       align-items: center;
-      justify-content: space-around;
+      justify-content: flex-start;
       height: 100%;
+      width: 100%;
 
       .order-icon {
         display: flex;
-        width: 30px;
+        flex:  0 0 30px;
         height: 30px;
         align-items: center;
         justify-content: center;
@@ -95,6 +96,7 @@ page {
       }
 
       .addr-content {
+        flex: 1;
         height: 48px;
         display: flex;
         flex-flow: column nowrap;
@@ -525,7 +527,7 @@ page {
         height: 50px;
         text-align: center;
         line-height: 50px;
-        background: rgba(254, 168, 53, 1);
+        background:linear-gradient(270deg,rgba(250,177,68,1) 0%,rgba(252,142,89,1) 100%);
         box-shadow: 0px 8px 20px rgba(254, 168, 53, 0.55);
         border-radius: 0px 100px 100px 0px;
   
@@ -546,7 +548,7 @@ page {
     .kefu-btn {
       width: 323px;
       height: 50px;
-      background: linear-gradient(270deg, rgba(250, 177, 68, 1) 0%, rgba(252, 142, 89, 1) 100%);
+      background:linear-gradient(270deg,rgba(250,177,68,1) 0%,rgba(252,142,89,1) 100%);
       box-shadow: 0px 8px 20px rgba(254, 168, 53, 0.55);
       border-radius: 25px;
       font-size: 19px;
@@ -612,55 +614,52 @@ page {
         }
       }
 
-      .shop-list {
-        .good-item {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 12px;
-          padding: 12px 0;
+      // .shop-list {
+      //   .good-item {
+      //     display: flex;
+      //     justify-content: space-between;
+      //     align-items: center;
+      //     .good-left {
+      //       display: flex;
 
-          .good-left {
-            display: flex;
+      //       .good-cove {
+      //         width: 50px;
+      //         height: 50px;
+      //         background: rgba(190, 190, 190, .66);
+      //         margin-right: 12px;
+      //       }
 
-            .good-cove {
-              width: 50px;
-              height: 50px;
-              background: rgba(190, 190, 190, .66);
-              margin-right: 12px;
-            }
+      //       .order-info {
+      //         display: flex;
+      //         justify-content: space-around;
+      //         flex-flow: column nowrap;
 
-            .order-info {
-              display: flex;
-              justify-content: space-around;
-              flex-flow: column nowrap;
+      //         .order-name {
+      //           font-size: 14px;
+      //           font-weight: 400;
+      //           line-height: 20px;
+      //           color: rgba(0, 0, 0, .87);
+      //         }
 
-              .order-name {
-                font-size: 14px;
-                font-weight: 400;
-                line-height: 20px;
-                color: rgba(0, 0, 0, .87);
-              }
+      //         .order-num {
+      //           font-size: 11px;
+      //           font-weight: 400;
+      //           line-height: 16px;
+      //           color: rgba(0, 0, 0, .5);
+      //         }
+      //       }
 
-              .order-num {
-                font-size: 11px;
-                font-weight: 400;
-                line-height: 16px;
-                color: rgba(0, 0, 0, .5);
-              }
-            }
+      //     }
 
-          }
-
-          .good-right {
-            height: 21px;
-            font-size: 13px;
-            font-weight: bold;
-            line-height: 18px;
-            color: rgba(0, 0, 0, .87);
-          }
-        }
-      }
+      //     .good-right {
+      //       height: 21px;
+      //       font-size: 13px;
+      //       font-weight: bold;
+      //       line-height: 18px;
+      //       color: rgba(0, 0, 0, .87);
+      //     }
+      //   }
+      // }
     }
   }
 
